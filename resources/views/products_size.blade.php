@@ -58,7 +58,7 @@
                 <div>{{ $product->site }}</div>
               </td>
               <td class="table-text">
-                <div>{{ number_format($product->qty,2) }}</div>
+                <div>{{ number_format($product->qty,0) }}</div>
               </td>
               <td class="table-text">
                 <div>{{ $product->uofm }}</div>
