@@ -17,37 +17,63 @@
   <link href="/assets/css/main.css" rel="stylesheet">
   {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
+
   <style>
     body {
       padding-top: 75px;
       font-family: lato, source sans pro, sans-serif;
     }
+
+    .search {
+      border: 1px solid #666;
+      border-radius: 5px;
+      padding: 10px 20px;
+     min-width: 600px;
+      max-height: 500px;
+      background-color: white;
+      margin-right: 20px;
+      overflow-y: auto;
+    }
   </style>
+  @livewireStyles
 </head>
 
 <body id="app-layout">
 
-  <nav class="navbar navbar-default navbar-fixed-top">
+  <nav class="navbar navbar-default navbar-fixed-top justify-content-between">
     <div class="container navbar-container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
+      <div class="col-md-8">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
 
-        <a class="navbar-brand" href="/collections" style="padding: 10px;">
-          <img class="invert_effect" src="/assets/images/logo.png" style="width: 75%;">
-        </a>
+          <a class="navbar-brand" href="/collections" style="padding: 10px;">
+            <img class="invert_effect" src="/assets/images/logo.png" style="width: 75%;">
+          </a>
 
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/collections">Home</a></li>
+            <li><a href="/collections/">Material</a></li>
+            <li><a href="/collections/series/">Series</a></li>
+          </ul>
+        </div>
       </div>
-      <div id="navbar" class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
-          <li><a href="/collections">Home</a></li>
-          <li><a href="/collections/">Material</a></li>
-          <li><a href="/collections/series/">Series</a></li>
-        </ul>
+      <div class="col-md-4" style="padding-top: 7px;">
+
+        <div>
+
+
+
+          @livewire('search-product')
+
+        </div>
       </div>
     </div>
 
@@ -139,6 +165,30 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+  @livewireScripts
+
+
+  <script>
+    $(document).on('keydown', function(e) {
+      if (e.keyCode === 27) { // ESC
+        $('.searchDiv').fadeOut(1000);
+        setTimeout(function() {
+          document.getElementById('txtSearch').value = "";
+          document.getElementById('divSearch').innerHTML = "";
+        }, 1000);
+      }
+    });
+
+    $(document).ready(function() {
+      $('.txtShowDiv').focus(function() {
+        $('.searchDiv').fadeIn(1000);
+      }).focusout(function() {
+        $('.searchDiv').fadeOut(1000);
+      });
+    });
+
+</script>
+
 </body>
 
 </html>

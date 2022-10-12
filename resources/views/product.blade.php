@@ -102,12 +102,12 @@
           $image = $product->series_img_url;
         }
 
-        $qty = number_format($product->qty,2);
-        $uofm = strtolower(str_replace('each','piece',strtolower($product->uofm)));
-        
-        if(str_replace('each','piece',strtolower($product->uofm)) == 'piece'){
-          $qty = number_format($product->qty,0);
-          $uofm = $uofm.'s';
+        $qty = number_format($product->qty, 2);
+        $uofm = strtolower(str_replace('each', 'piece', strtolower($product->uofm)));
+
+        if (str_replace('each', 'piece', strtolower($product->uofm)) == 'piece') {
+          $qty = number_format($product->qty, 0);
+          $uofm = $uofm . 's';
         }
 
         $current_item = $product->sku;
@@ -220,10 +220,10 @@
               <td class="table-text">
                 <?php
 
-                if($current_item == $product->sku){
-                  echo '<div><b><span style="color: #999;"> '.$product->sku .'</span></b></div>';
+                if ($current_item == $product->sku) {
+                  echo '<div><b><span style="color: #999;"> ' . $product->sku . '</span></b></div>';
                 } else {
-                  echo '<div><a href="/products/'.$product->sku.'">'. $product->sku .'</a></div>';
+                  echo '<div><a href="/products/' . $product->sku . '">' . $product->sku . '</a></div>';
                 }
 
                 ?>
@@ -266,3 +266,4 @@
   </div>
 </div>
 @endsection
+
