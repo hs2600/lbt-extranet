@@ -158,7 +158,6 @@ Route::get('/', function () {
         })
         ->select('product_colors.*')
         ->where('products.sku', '=', $id)
-        ->where('product_colors.sku', '!=', $id)
         ->get()
       ])
       ;
