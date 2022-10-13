@@ -36,8 +36,8 @@
       @foreach ($products as $product)
       <a href="/collections">Collections</a>
       / <a href="/collections/{{ strtolower($product->material) }}">{{ $product->material }}</a>
-      / <a href="/collections/{{ strtolower($product->material) }}/{{ strtolower($product->series) }}">{{ $product->series }}</a>
-      / <a href="/collections/{{ strtolower($product->material) }}/{{ strtolower($product->series) }}/{{ strtolower(str_replace('/', '_', $product->size)) }}">{{ $product->size }}</a>
+      / <a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}">{{ str_replace('Ã©', 'é', $product->series) }}</a>
+      / <a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}/{{ strtolower(str_replace('/', '_', $product->size)) }}">{{ $product->size }}</a>
       @endforeach
     </div>
     <hr>
@@ -53,12 +53,13 @@
 
         $image = $product->img_url;
         $material_desc = $product->material_desc;
-
+        $series = str_replace('Ã©', 'é', $product->series);
+        //$series = $product->series;
         //print_r($_SERVER);
 
         //if item image url is blank, use local image if exists, otherwise use series image
         if ($product->img_url == '') {
-          $image = $product->material . '/' . $product->series;
+          $image = $product->material . '/' . $series;
           $image = '/assets/images/products/' . $image;
           $finish = $product->finish;
 
@@ -66,7 +67,7 @@
             $finish = '-';
           }
 
-          $filename = $image . '/' . $product->series . '_' . $product->size . '_' . $product->color . '_' . $finish . '.jpg';
+          $filename = $image . '/' . $series . '_' . $product->size . '_' . $product->color . '_' . $finish . '.jpg';
           $filename = strtolower(str_replace(' ', '_', $filename));
           $filename = str_replace('_-', '', $filename);
           $filename = str_replace('hexagon', 'hex', $filename);
@@ -87,7 +88,7 @@
 
         //if item has image url and is not located on http path, use local path
         if ($product->img_url != '' and strpos($product->img_url, 'http') === false) {
-          $image = $product->material . '/' . $product->series . '/' . $product->img_url;
+          $image = $product->material . '/' . $series . '/' . $product->img_url;
           $image = strtolower(str_replace(' ', '_', $image));
           $image = '/assets/images/products/' . $image;
         }
@@ -98,7 +99,7 @@
         }
 
         //if item image url is blank and series image url exists, use series url path
-        if ($product->img_url == '' and $exists = false and $product->series_img_url != '') {
+        if ($product->img_url == '' and $exists == false and $product->series_img_url != '') {
           $image = $product->series_img_url;
         }
 
@@ -111,6 +112,8 @@
         }
 
         $current_item = $product->sku;
+
+        $image = str_replace('é', 'e', $image);
 
         ?>
 
@@ -130,7 +133,7 @@
         </div>
         <div class="col-sm-6">
           <label class="">Series:</label>
-          <span>{{ $product->series }}</span>
+          <span>{{ str_replace('Ã©', 'é', $product->series) }}</span>
         </div>
         <div class="col-sm-6">
           <label class="">Size:</label>
@@ -220,6 +223,8 @@
               <td class="table-text">
                 <?php
 
+                $series = str_replace('Ã©', 'é', $product->series);
+
                 if ($current_item == $product->sku) {
                   echo '<div><b><span style="color: #999;"> ' . $product->sku . '</span></b></div>';
                 } else {
@@ -235,7 +240,7 @@
                 <div>{{ $product->description }}</div>
               </td>
               <td class="table-text">
-                <div>{{ $product->series }}</div>
+                <div>{{ $series }}</div>
               </td>
               <td class="table-text">
                 <div>{{ $product->size }}</div>

@@ -6,7 +6,7 @@
     <div style="background-color: rgba(5,64,60,0.65); padding: 20px 0px;">
     <div class="container">
       <div class="row center-block">
-        <h1>{{ $series }}</h1>
+        <h1>{{ ucwords(str_replace('Ã©', 'é', $series)) }}</h1>
       </div>
       <div class="center-block text-justify">
         <h4 style="font-family: Times New Roman;">
@@ -24,14 +24,14 @@
 
     <div class="panel-default">
       <div class="panel-body">
-        <a href="/collections">Collections</a> / <a href="/collections/{{ $material }}">{{ $material }}</a> / {{ $series }}
+        <a href="/collections">Collections</a> / <a href="/collections/{{ $material }}">{{ $material }}</a> / {{ ucwords(str_replace('Ã©', 'é', $series)) }}
       </div>
     </div>
 
     @if (count($products) > 0)
     <div class="panel panel-default">
       <div class="panel-heading">
-        {{ $series }} Collections
+        {{ ucwords(str_replace('Ã©', 'é', $series)) }} Collections
       </div>
 
       <div class="panel-body">
@@ -43,7 +43,7 @@
             @foreach ($products as $product)
             <tr>
               <td class="table-text">
-                <div><a href="/collections/{{ strtolower($product->material) }}/{{ strtolower($product->series) }}/{{ strtolower(str_replace('/', '_', $product->size)) }}"> {{ $product->size }} </a></div>
+                <div><a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}/{{ strtolower(str_replace('/', '_', $product->size)) }}"> {{ $product->size }} </a></div>
               </td>
             </tr>
             @endforeach

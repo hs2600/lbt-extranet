@@ -84,7 +84,7 @@ Route::get('/', function () {
             'products' => Product::orderBy('size', 'asc')
                       ->selectRaw('material, series, size')
                       ->where('material', '=', $material)
-                      ->where('series', '=', $series)
+                      ->where('series', '=', str_replace('é', 'Ã©', $series))
                       ->where('status', '!=', '1')
                       ->groupBy('material', 'series', 'size')
                       ->get()
@@ -112,7 +112,7 @@ Route::get('/', function () {
         return view('products_size', [
           'products' => Product::orderBy('item', 'asc')
                         ->where('material', '=', $material)
-                        ->where('series', '=', $series)
+                        ->where('series', '=', str_replace('é', 'Ã©', $series))
                         ->where('size', '=', str_replace('_', '/', $size))
                         ->paginate(10)
         ])

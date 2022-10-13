@@ -6,7 +6,7 @@
 
     <div class="panel-default">
       <div class="panel-body" style="padding-top: 0px;">
-        <a href="/collections">Collections</a> / <a href="/collections/{{ $material }}">{{ $material }}</a> / <a href="/collections/{{ $material }}/{{ $series }}">{{ $series }}</a> / {{ str_replace('_', '/', $size) }}
+        <a href="/collections">Collections</a> / <a href="/collections/{{ $material }}">{{ $material }}</a> / <a href="/collections/{{ $material }}/{{ $series }}">{{ ucwords($series) }}</a> / {{ str_replace('_', '/', $size) }}
       </div>
     </div>
 
@@ -43,7 +43,7 @@
                 <div>{{ $product->description }}</div>
               </td>
               <td class="table-text">
-                <div>{{ $product->series }}</div>
+                <div>{{ str_replace('Ã©', 'é', $product->series) }}</div>
               </td>
               <td class="table-text">
                 <div>{{ $product->size }}</div>
