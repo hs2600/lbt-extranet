@@ -12,14 +12,18 @@ class SearchProduct extends Component
     public function render()
     {
         sleep(1);
+        $products = Product::where('description','like', '%'.$this->search.'%')->paginate(50);
+        $productsAll = Product::where('description','like', '%'.$this->search.'%')->get();
+        $items = Product::where('item','=', $this->search)->get();
+
         if($this->search == ''){
             return view('livewire.search-product',['products' => $this->search]);
         } else {
-        return view('livewire.search-product', [
-            'products' => Product::where('description','like', '%'.$this->search.'%')
-            ->paginate(50),
-            ])
+            return view('livewire.search-product')
+            ->with(['products' => $products])
+            ->with(['items' => $items])
             ->with('search', $this->search)
+            ->with('count', $productsAll->count())
             ;
     }}
 }
