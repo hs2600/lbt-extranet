@@ -31,7 +31,7 @@
 </div>
 
 <div class="container">
-  <div class="col-md">
+  <div class="row">
     <div class="panel-body" style="padding: 0px 15px;">
       @foreach ($products as $product)
       <a href="/collections">Collections</a>

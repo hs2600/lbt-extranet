@@ -86,7 +86,7 @@
 
         </div>
 
-        {{ $collections->onEachSide(2)->links() }}
+        {{ $collections->links() }}
     </div>
 </div>
 @endsection

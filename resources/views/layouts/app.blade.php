@@ -1,160 +1,223 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.104.2">
+    <title>Lunada Bay Tile Extranet</title>
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>Lunada Bay Tile Extranet</title>
-
-  <!-- Fonts -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
-  <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
-
-  <!-- Styles -->
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/assets/css/main.css" rel="stylesheet">
-  {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
-
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
-
+  
   <style>
-    body {
-      padding-top: 75px;
-      font-family: lato, source sans pro, sans-serif;
-    }
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
 
-  </style>
-  @livewireStyles
-</head>
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
 
-<body id="app-layout">
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
 
-  <nav class="navbar navbar-default navbar-fixed-top justify-content-between">
-    <div class="container navbar-container">
-      <div class="col-md-8">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
 
-          <a class="navbar-brand" href="/collections" style="padding: 10px;">
-            <img class="invert_effect" src="/assets/images/logo.png" style="width: 75%;">
-          </a>
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
 
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="/collections">Home</a></li>
-            <li><a href="/collections/">Material</a></li>
-            <li><a href="/collections/series/">Series</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-md-4" style="padding-top: 7px;">
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
 
-        <div>
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="/assets/css/navbar.css" rel="stylesheet">
+    <link href="/assets/css/main.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+  
+    @livewireStyles
+
+  </head>
+  <body class="d-flex flex-column h-100">
+    
+<main>
+
+  <nav class="navbar navbar-expand-lg bg-light sticky-top" aria-label="Eighth navbar example" style="border-bottom: 2px solid #999;">
+    <div class="container">
+
+      <a class="navbar-brand" href="/collections" style="padding: 10px;">
+        <img class="invert_effect" src="/assets/images/logo.png" style="width: 75%;">
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample07">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/collections">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/collections">Collections</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="/collections" data-bs-toggle="dropdown" aria-expanded="false">Material</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/collections/ceramic">Ceramic</a></li>
+              <li><a class="dropdown-item" href="/collections/concrete">Concrete</a></li>
+              <li><a class="dropdown-item" href="/collections/glass">Glass</a></li>
+              <li><a class="dropdown-item" href="/collections/jonathan adler">Jonathan Adler</a></li>
+              <li><a class="dropdown-item" href="/collections/tommy bahama">Tommy Bahama</a></li>
+            </ul>
+          </li>
 
 
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="/collections/series" data-bs-toggle="dropdown" aria-expanded="false">Series</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/collections/ceramic/shelter island">Shelter Island</a></li>
+              <li><a class="dropdown-item" href="/collections/ceramic/momentum">Momentum</a></li>
+              <li><a class="dropdown-item" href="/collections/ceramic/linen">Linen</a></li>
+              <li><a class="dropdown-item" href="/collections/glass/tommy bahama">Tommy Bahama</a></li>
+              <li><a class="dropdown-item" href="/collections/glass/birdscape">Birdscape</a></li>
+            </ul>
+          </li>
 
-          @livewire('search-product')
-
-        </div>
+        </ul>
+        @livewire('search-product')        
       </div>
     </div>
-
   </nav>
 
   @yield('content')
 
+</main>
 
-  <footer class="footer">
-    <div class="container">
 
-      <div class="d-none d-lg-block" style="height:25px"></div>
-
-      <div class="row">
-        <div class="col-sm-1 col-md-1 col-lg-1"></div>
-
-        <div class="col-sm-3 col-md-3 col-lg-3">
-          <div class="bs-component">
-            COLLECTIONS<br>
-            <a href="/collections/ceramic">Ceramic</a><br>
-            <a href="/collections/concrete">Concrete</a><br>
-            <a href="/collections/glass">Glass</a><br>
-            <a href="/collections/ceramic/jonathan adler">Jonathan Adler</a><br>
-            <a href="/collections/glass/tommy bahama">Tommy Bahama</a><br>
-            <a href="/collections/">All</a><br>
+<footer class="footer" style="margin-top: auto!important;">
+      <div class="container">
+  
+        <div class="d-none d-lg-block" style="height:25px"></div>
+  
+        <div class="row">
+          <div class="col-sm-1 col-md-1 col-lg-1"></div>
+  
+          <div class="col-sm-3 col-md-3 col-lg-3">
+            <div class="bs-component">
+              COLLECTIONS<br>
+              <a href="/collections/ceramic">Ceramic</a><br>
+              <a href="/collections/concrete">Concrete</a><br>
+              <a href="/collections/glass">Glass</a><br>
+              <a href="/collections/ceramic/jonathan adler">Jonathan Adler</a><br>
+              <a href="/collections/glass/tommy bahama">Tommy Bahama</a><br>
+              <a href="/collections/">All</a><br>
+            </div>
+          </div>
+  
+          <div class="col-sm-3 col-md-3 col-lg-3">
+            <div class="bs-component">
+              FEATURED<br>
+              <a href="/collections/ceramic/shelter island">Shelter Island</a><br>
+              <a href="/collections/ceramic/momentum">Momentum</a><br>
+              <a href="/collections/ceramic/linen">Linen</a><br>
+              <a href="/collections/glass/tommy bahama">Tommy Bahama</a><br>
+              <a href="/collections/glass/birdscape">Birdscape</a><br>
+              <a href="/collections/series">All</a><br>
+            </div>
+          </div>
+  
+          <div class="col-sm-5 col-md-5 col-lg-5">
+            <div class="bs-component">
+              NEED ASSISTANCE?<br>
+              <a href="mailto:Info@Thousandfold.store">
+                Info@LunadaBayTile.com
+              </a><br><br>
+              <span style="font-size: 25px;">
+                <ul>
+                  <li style="margin-right: 25px; display: inline;">
+                    <a href="http://twitter.com/lunadabaytile" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                  </li>
+                  <li style="margin-right: 25px; display: inline;">
+                    <a href="http://pinterest.com/lunadabaytile" target="_blank"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a>
+                  </li>
+                  <li style="margin-right: 25px; display: inline;">
+                    <a href="https://www.instagram.com/lunadabaytile" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                  </li>
+                  <li style="margin-right: 25px; display: inline;">
+                    <a href="http://houzz.com/lunada-bay-tile" target="_blank"><i class="fa fa-houzz" aria-hidden="true"></i></a>
+                  </li>
+                  
+                  <li style="margin-right: 25px; display: inline;">
+                    <a href="http://linkedin.com/company/lunadabaytile" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                  </li>
+                  
+                  <li style="margin-right: 25px; display: inline;">
+                    <a href="http://youtube.com/lunadabaytile" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a>
+                  </li>
+  
+                </ul>
+              </span>
+            </div>
+  
           </div>
         </div>
-
-        <div class="col-sm-3 col-md-3 col-lg-3">
-          <div class="bs-component">
-            FEATURED<br>
-            <a href="/collections/ceramic/shelter island">Shelter Island</a><br>
-            <a href="/collections/ceramic/momentum">Momentum</a><br>
-            <a href="/collections/ceramic/linen">Linen</a><br>
-            <a href="/collections/glass/tommy bahama">Tommy Bahama</a><br>
-            <a href="/collections/glass/birdscape">Birdscape</a><br>
-            <a href="/collections/series">All</a><br>
+  
+        <div class="row">
+          <hr style="border: 0.5px solid #ccc;">
+          <div class="col-sm-6 col-md-6 col-lg-6">
+            <div class="d-lg-block" style="height:40px; font-size: 13px ;">
+              © 2022 Lunada Bay Tile. All rights reserved.
+            </div>
           </div>
-        </div>
-
-        <div class="col-sm-5 col-md-5 col-lg-5">
-          <div class="bs-component">
-            NEED ASSISTANCE?<br>
-            <a href="mailto:Info@Thousandfold.store">
-              Info@LunadaBayTile.com
-            </a><br><br>
-            <span style="font-size: 25px;">
-              <ul>
-                <li style="margin-right: 25px; display: inline;">
-                  <a href="http://twitter.com/lunadabaytile" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                </li>
-                <li style="margin-right: 25px; display: inline;">
-                  <a href="http://pinterest.com/lunadabaytile" target="_blank"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a>
-                </li>
-                <li style="margin-right: 25px; display: inline;">
-                  <a href="https://www.instagram.com/lunadabaytile" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                </li>
-                <li style="margin-right: 25px; display: inline;">
-                  <a href="http://houzz.com/lunada-bay-tile" target="_blank"><i class="fa fa-houzz" aria-hidden="true"></i></a>
-                </li>
-                </li>
-                <li style="margin-right: 25px; display: inline;">
-                  <a href="http://linkedin.com/company/lunadabaytile" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                </li>
-                </li>
-                <li style="margin-right: 25px; display: inline;">
-                  <a href="http://youtube.com/lunadabaytile" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a>
-                </li>
-
-              </ul>
-            </span>
-          </div>
-
         </div>
       </div>
-
-      <div class="row">
-        <hr style="border: 0.5px solid #ccc;">
-        <div class="col-sm-6 col-md-6 col-lg-6">
-          <div class="d-lg-block" style="height:40px; font-size: 13px ;">
-            © 2022 Lunada Bay Tile. All rights reserved.
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
+    </footer>
 
   <!-- JavaScripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+
+  <script src="/assets/js/bootstrap.bundle.min.js"></script>    
 
   <script>
     var status = 0;
@@ -186,14 +249,15 @@
     });
 
     $(document).ready(function() {
-      $('.txtShowDiv').focusout(function() {
+      $('.txtShowDivx').focusout(function() {
         $('.searchDiv').fadeOut(1000);
       })
     });
 
   </script>
 
-  @livewireScripts
-</body>
-
+  @livewireScripts    
+  
+  
+  </body>
 </html>
