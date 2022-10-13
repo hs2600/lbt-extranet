@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Product;
 use Livewire\Component;
+use Illuminate\Support\Str;
 
 class SearchProduct extends Component
 {
@@ -12,8 +13,12 @@ class SearchProduct extends Component
     public function render()
     {
         sleep(1);
-        $products = Product::where('description','like', '%'.$this->search.'%')->paginate(50);
-        $productsAll = Product::where('description','like', '%'.$this->search.'%')->get();
+        $products = Product::where('description','like', '%'.$this->search.'%')
+                ->orWhere('item', 'like', '%'.$this->search.'%')
+                ->paginate(50);
+        $productsAll = Product::where('description','like', '%'.$this->search.'%')
+                ->orWhere('item', 'like', '%'.$this->search.'%')
+                ->get();
         $items = Product::where('item','=', $this->search)->get();
 
         if($this->search == ''){

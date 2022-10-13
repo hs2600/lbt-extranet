@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Laravel Quickstart - Basic</title>
+  <title>Lunada Bay Tile Extranet</title>
 
   <!-- Fonts -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
@@ -25,16 +25,6 @@
       font-family: lato, source sans pro, sans-serif;
     }
 
-    .search {
-      border: 1px solid #666;
-      border-radius: 5px;
-      padding: 10px 20px;
-      min-width: 600px;
-      max-height: 500px;
-      background-color: white;
-      margin-right: 20px;
-      overflow-y: auto;
-    }
   </style>
   @livewireStyles
 </head>
