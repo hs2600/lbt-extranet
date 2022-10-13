@@ -29,7 +29,7 @@
       border: 1px solid #666;
       border-radius: 5px;
       padding: 10px 20px;
-     min-width: 600px;
+      min-width: 600px;
       max-height: 500px;
       background-color: white;
       margin-right: 20px;
@@ -165,13 +165,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
-  @livewireScripts
-
 
   <script>
+    var status = 0;
+
     $(document).on('keydown', function(e) {
       if (e.keyCode === 27) { // ESC
-        $('.searchDiv').fadeOut(1000);
+        $('.searchDiv').fadeOut(500);
         setTimeout(function() {
           document.getElementById('txtSearch').value = "";
           document.getElementById('divSearch').innerHTML = "";
@@ -182,13 +182,28 @@
     $(document).ready(function() {
       $('.txtShowDiv').focus(function() {
         $('.searchDiv').fadeIn(1000);
-      }).focusout(function() {
-        $('.searchDiv').fadeOut(1000);
-      });
+      })
     });
 
-</script>
+    window.addEventListener('click', function(e) {
+      if (document.getElementById('divSearch').contains(e.target)) {
+        // Clicked in box
+        status = 1;
+      } else {
+        // Clicked outside the box
+        status = 0;
+      }
+    });
 
+    $(document).ready(function() {
+      $('.txtShowDiv').focusout(function() {
+        $('.searchDiv').fadeOut(1000);
+      })
+    });
+
+  </script>
+
+  @livewireScripts
 </body>
 
 </html>
