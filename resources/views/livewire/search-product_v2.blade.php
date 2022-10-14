@@ -2,7 +2,7 @@
 
 
 
-<form style="padding-bottom: 10px;">
+  <form style="padding-bottom: 10px;">
     <div class="row">
       <div class="col">
         <input type="search" class="form-control" placeholder="Material" wire:model="material">
@@ -20,7 +20,7 @@
         <input type="search" class="form-control" placeholder="Finish" wire:model="finish">
       </div>
       <div class="col-1">
-      <a href="/products"><button type="button" class="btn btn-outline-warning">Clear</button></a>
+        <button type="button" class="btn btn-outline-warning" style="position: relative;float: right; width: 100%;" wire:click="resetFilters()">Clear</button>
       </div>
     </div>
   </form>
@@ -43,14 +43,32 @@
         <div class="card-body">
           @if($products->isEmpty())
 
-          No results
+
+          @if($null == 1)
+          Enter search criteria
+          @else
+
+
+          <div class="d-flex justify-content-center" style="padding-top: 20px;">
+            <div>
+              <img src="https://res.cdn.office.net/scc-resources/resources/ww/msec/wicd-ine/static/5aec0b54c606cd1930bc9481dcf184d7186f61a3_hash/search-page-no-data.svg"
+               alt="No items found" style="padding-bottom: 30px;">
+
+            <h4>No items found</h4>
+            <p>Use the full category descriptions and try again</p>
+            </div>
+          </div>
+
+
+          @endif
+
           @else
 
           <table class="table table-striped">
             <thead>
               <tr>
                 <th scope="col">Item</th>
-                <th scope="col" class="d-none d-md-block">Description</th>
+                <th scope="col">Description</th>
                 <th scope="col">Series</th>
                 <th scope="col">Size</th>
                 <th scope="col">Color</th>
@@ -73,7 +91,7 @@
 
                   ?>
                 </td>
-                <td class="d-none d-md-block">
+                <td>
                   <div>{{ $product->description }}</div>
                 </td>
                 <td>
@@ -104,7 +122,7 @@
           </table>
           <?php
 
-          if ($count > 50) {
+          if ($count >= 50) {
             echo '<b><i>50+ items</b></i>';
           } else {
             echo '<b><i>Items found: ' . $count . '</b></i><br>';

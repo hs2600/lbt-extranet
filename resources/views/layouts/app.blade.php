@@ -21,9 +21,9 @@
   <!-- Vite -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-<!-- Bootstrap only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-  
+  <!-- Bootstrap only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
 
   <style>
     .bd-placeholder-img {
@@ -81,7 +81,7 @@
       text-decoration: underline !important;
       color: #0057af !important;
     }
-    
+
     .card-body a:hover {
       color: #52a8ff !important;
       text-decoration: none !important;
@@ -259,7 +259,6 @@
   {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 
   <script src="/assets/js/bootstrap.bundle.min.js"></script>
-  <script src="/assets/js/imgpreview.js"></script>
 
   <script>
     var status = 0;
@@ -298,9 +297,6 @@
   </script>
 
   @livewireScripts
-
-
-
 
 </body>
 

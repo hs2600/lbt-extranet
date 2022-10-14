@@ -287,4 +287,6 @@
     <div id="caption"></div>
   </div>
 
+  <script src="/assets/js/imgpreview.js"></script>
+
   @endsection
