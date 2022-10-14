@@ -109,23 +109,23 @@
 
       <div class="row" style="padding: 10px; margin: 0px; margin-bottom: 15px; background-color: #efefef;">
         <div class="col-sm-6">
-          <label class="">Material:</label>
+          <label class=""><B>Material:</B></label>
           <span>{{ $product->material }}</span>
         </div>
         <div class="col-sm-6">
-          <label class="">Series:</label>
+          <label class=""><B>Series:</B></label>
           <span>{{ str_replace('Ã©', 'é', $product->series) }}</span>
         </div>
         <div class="col-sm-6">
-          <label class="">Size:</label>
+          <label class=""><B>Size:</B></label>
           <span>{{ $product->size }}</span>
         </div>
         <div class="col-sm-6">
-          <label class="">Color:</label>
+          <label class=""><B>Color:</B></label>
           <span>{{ $product->color }}</span>
         </div>
         <div class="col-sm-6">
-          <label class="">Finish:</label>
+          <label class=""><B>Finish:</B></label>
           <span>{{ $product->finish }}</span>
         </div>
       </div>
