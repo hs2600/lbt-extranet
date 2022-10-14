@@ -7,7 +7,7 @@
 
     <div class="container">
       <div class="row center-block">
-        <h1>Collections</h1>
+        <h1>Materials</h1>
       </div>
     </div>
   </div>
@@ -19,7 +19,7 @@
     @if (count($collections) > 0)
     @foreach ($collections as $collection)
 
-    <div class="col-md-6 img-container" style="border: 1px solid #efefef; padding: 0px; min-height: 200px;">
+    <div class="col-md-4 img-container" style="border: 1px solid #efefef; padding: 0px; min-height: 200px;">
       <a href="/collections/{{ $collection->material }}">
       <?php
         $image = $collection->series;

@@ -22,19 +22,22 @@
 <div class="container">
   <div class="col-md">
 
-    <div class="panel-default">
-      <div class="panel-body">
-        <a href="/collections">Collections</a> / <a href="/collections/{{ $material }}">{{ $material }}</a> / {{ ucwords(str_replace('Ã©', 'é', $series)) }}
-      </div>
-    </div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/collections/">Collections</a></li>    
+            <li class="breadcrumb-item"><a href="/collections/material">Material</a></li>
+        <li class="breadcrumb-item"><a href="/collections/{{ $material }}">{{ $material }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ ucwords($series) }}</li>
+      </ol>
+    </nav>    
 
     @if (count($products) > 0)
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        {{ ucwords(str_replace('Ã©', 'é', $series)) }} Collections
-      </div>
 
-      <div class="panel-body">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">{{ ucwords(str_replace('Ã©', 'é', $series)) }} Items by Size</h2>
+      </div>
+      <div class="card-body">
         <table class="table table-striped task-table">
           <thead>
             <th>Size</th>

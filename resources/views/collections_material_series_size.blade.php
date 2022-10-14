@@ -4,19 +4,24 @@
 <div class="container">
   <div class="col-md">
 
-    <div class="panel-default">
-      <div class="panel-body" style="padding-top: 0px;">
-        <a href="/collections">Collections</a> / <a href="/collections/{{ $material }}">{{ $material }}</a> / <a href="/collections/{{ $material }}/{{ $series }}">{{ ucwords($series) }}</a> / {{ str_replace('_', '/', $size) }}
-      </div>
-    </div>
+    <nav aria-label="breadcrumb" style="padding-top: 10px;"
+      <ol class="breadcrumb">
+        
+      <li class="breadcrumb-item"><a href="/collections/">Collections</a></li>    
+            <li class="breadcrumb-item"><a href="/collections/material">Material</a></li>
+        <li class="breadcrumb-item"><a href="/collections/{{ $material }}">{{ $material }}</a></li>
+        <li class="breadcrumb-item"><a href="/collections/{{ $material }}/{{ $series }}">{{ ucwords($series) }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ str_replace('_', '/', $size) }}</li>
+      </ol>
+    </nav>
 
     @if (count($products) > 0)
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        Products by Size
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Products by Size</h2>
       </div>
 
-      <div class="panel-body">
+      <div class="card-body">
         <table class="table table-striped task-table">
           <thead>
             <th>SKU</th>

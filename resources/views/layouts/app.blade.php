@@ -68,10 +68,10 @@
 
     
     <!-- Custom styles for this template -->
-    <link href="/assets/css/navbar.css" rel="stylesheet">
-    <link href="/assets/css/main.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-  
+    <link href="/assets/css/imgpreview.css" rel="stylesheet">
+    <link href="/assets/css/main.css" rel="stylesheet">
+    
     @livewireStyles
 
   </head>
@@ -93,32 +93,32 @@
       <div class="collapse navbar-collapse" id="navbarsExample07">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/collections">Home</a>
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/collections">Collections</a>
           </li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="/collections" data-bs-toggle="dropdown" aria-expanded="false">Material</a>
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Material</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="/collections/ceramic">Ceramic</a></li>
               <li><a class="dropdown-item" href="/collections/concrete">Concrete</a></li>
               <li><a class="dropdown-item" href="/collections/glass">Glass</a></li>
-              <li><a class="dropdown-item" href="/collections/jonathan adler">Jonathan Adler</a></li>
-              <li><a class="dropdown-item" href="/collections/tommy bahama">Tommy Bahama</a></li>
+              <li><a class="dropdown-item" href="/collections/material">All</a></li>
             </ul>
           </li>
 
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="/collections/series" data-bs-toggle="dropdown" aria-expanded="false">Series</a>
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Series</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="/collections/ceramic/shelter island">Shelter Island</a></li>
               <li><a class="dropdown-item" href="/collections/ceramic/momentum">Momentum</a></li>
               <li><a class="dropdown-item" href="/collections/ceramic/linen">Linen</a></li>
               <li><a class="dropdown-item" href="/collections/glass/tommy bahama">Tommy Bahama</a></li>
               <li><a class="dropdown-item" href="/collections/glass/birdscape">Birdscape</a></li>
+              <li><a class="dropdown-item" href="/collections">All</a></li>
             </ul>
           </li>
 
@@ -143,25 +143,23 @@
   
           <div class="col-sm-3 col-md-3 col-lg-3">
             <div class="bs-component">
-              COLLECTIONS<br>
+              MATERIALS<br>
               <a href="/collections/ceramic">Ceramic</a><br>
               <a href="/collections/concrete">Concrete</a><br>
               <a href="/collections/glass">Glass</a><br>
-              <a href="/collections/ceramic/jonathan adler">Jonathan Adler</a><br>
-              <a href="/collections/glass/tommy bahama">Tommy Bahama</a><br>
-              <a href="/collections/">All</a><br>
+              <a href="/collections/material">All</a><br>
             </div>
           </div>
   
           <div class="col-sm-3 col-md-3 col-lg-3">
             <div class="bs-component">
-              FEATURED<br>
+              FEATURED COLLECTIONS<br>
               <a href="/collections/ceramic/shelter island">Shelter Island</a><br>
               <a href="/collections/ceramic/momentum">Momentum</a><br>
               <a href="/collections/ceramic/linen">Linen</a><br>
               <a href="/collections/glass/tommy bahama">Tommy Bahama</a><br>
               <a href="/collections/glass/birdscape">Birdscape</a><br>
-              <a href="/collections/series">All</a><br>
+              <a href="/collections/">All</a><br>
             </div>
           </div>
   
@@ -217,7 +215,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 
-  <script src="/assets/js/bootstrap.bundle.min.js"></script>    
+  <script src="/assets/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/js/imgpreview.js"></script>
 
   <script>
     var status = 0;
@@ -249,7 +248,7 @@
     });
 
     $(document).ready(function() {
-      $('.txtShowDivx').focusout(function() {
+      $('.txtShowDiv').focusout(function() {
         $('.searchDiv').fadeOut(1000);
       })
     });
@@ -258,6 +257,8 @@
 
   @livewireScripts    
   
+
+
   
   </body>
 </html>

@@ -8,7 +8,6 @@ h1 {
   background-attachment: fixed;
   background-size: cover;
   background-position: center -50%;
-  margin-top: -20px;
   margin-bottom: 10px;
 }
 
@@ -52,6 +51,12 @@ h1 {
 .image {
   border-radius: 5px;
   width: 100%;
+}
+
+.product-image {
+  width: 750px;
+  max-height: 500px;
+  object-fit: cover;
 }
 
 .img-container:hover .img-thumbnail {
@@ -99,7 +104,7 @@ h1 {
   
   background-color: white;
   color: black;
-  padding: 10px;
+  padding: 4px;
   text-align: center;
   border-radius: 2px;
   border-bottom: 4px solid gray;
@@ -209,7 +214,7 @@ body {
   background-color: #04403c;
   color: #FFFFFF;
   font-size: 15px;
-  margin-bottom: -20px;
+  margin-bottom: 0px;
 }
 
 .footer a {
@@ -250,11 +255,7 @@ input[type=text] {
   display: none !important;
 }
 
-@media (min-width:992px) {
-  .d-lg-block {
-    display: block !important;
-  }
-}
+
 
 .tab {
   border-bottom: #eaeaea;
@@ -343,7 +344,6 @@ ul {
   border: 1px solid #666;
   border-radius: 5px;
   padding: 10px 20px;
-  min-width: 600px;
   max-height: 500px;
   background-color: white;
   margin-right: 20px;

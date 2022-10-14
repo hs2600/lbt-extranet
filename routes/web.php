@@ -24,23 +24,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-/**
-    * Show collections by Material
-    */
-    Route::get('/collections', function () {
-        error_log("INFO: get /");
-        return view('collections', [
-            'collections' => Collection::orderBy('material', 'asc')->where('category', '=', 'Material')->get()
-        ]);
-    });
-
 
     /**
     * Show collections by Series (All)
     */
-    Route::get('/collections/series', function () {
+    Route::get('/collections/', function () {
         error_log("INFO: get /");
-        return view('collections_series_all', [
+        return view('collections_by_series', [
             'collections' => Collection::orderBy('status', 'desc')
                         ->orderBy('series', 'asc')
                         ->where('series', '!=', '-')
@@ -51,11 +41,25 @@ Route::get('/', function () {
 
 
 /**
+    * Show collections by Material
+    */
+    Route::get('/collections/material', function () {
+        error_log("INFO: get /");
+        return view('collections_material', [
+            'collections' => Collection::orderBy('material', 'asc')
+            ->where('category', '=', 'Material')
+            ->where('status', '!=', '1')
+            ->get()
+        ]);
+    });
+
+
+/**
     * Show collections by Material/Series
     */
     Route::get('/collections/{material}', function ($material) {
         error_log("INFO: get /");
-        return view('collections_series', [
+        return view('collections_by_material', [
             'collections' => Collection::orderBy('status', 'desc')
                         ->orderBy('series', 'asc')
                         ->where('material', '=', $material)
@@ -80,7 +84,7 @@ Route::get('/', function () {
     */
     Route::get('/collections/{material}/{series}', function ($material, $series) {
         error_log("INFO: get /");
-        return view('collections_size', [
+        return view('collections_material_series', [
             'products' => Product::orderBy('size', 'asc')
                       ->selectRaw('material, series, size')
                       ->where('material', '=', $material)
@@ -109,7 +113,7 @@ Route::get('/', function () {
     */
     Route::get('/collections/{material}/{series}/{size}', function ($material, $series, $size) {
         error_log("INFO: get /");
-        return view('products_size', [
+        return view('collections_material_series_size', [
           'products' => Product::orderBy('item', 'asc')
                         ->where('material', '=', $material)
                         ->where('series', '=', str_replace('é', 'Ã©', $series))

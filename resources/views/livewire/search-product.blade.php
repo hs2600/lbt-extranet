@@ -1,10 +1,10 @@
 <div>
-  <input id="txtSearch" type="search" class="form-control txtShowDiv" placeholder="Search" wire:model="search">
+  <input id="txtSearch" type="search" class="form-control txtShowDiv" placeholder="Search" wire:model="search" style="width: 300px;">
 
   <div id="divSearch" class="searchDiv" style=" z-index: 1;
   position: absolute;
   padding: 0px;
-  margin: -200px;
+  
   margin-top: 15px;
   ">
 
