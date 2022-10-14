@@ -30,19 +30,29 @@
   </div>
 </div>
 
+
+
+
 <div class="container">
   <div class="row">
-    <div class="panel-body" style="padding: 0px 15px;">
-      @foreach ($products as $product)
-      <a href="/collections">Collections</a>
-      / <a href="/collections/{{ strtolower($product->material) }}">{{ $product->material }}</a>
-      / <a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}">{{ str_replace('Ã©', 'é', $product->series) }}</a>
-      / <a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}/{{ strtolower(str_replace('/', '_', $product->size)) }}">{{ $product->size }}</a>
-      @endforeach
-    </div>
-    <hr>
 
-    <div class="col-md-6" style="padding-bottom: 15px; padding-left: 0px;">
+    <div class="container">
+      @foreach ($products as $product)
+      <nav aria-label="breadcrumb" style="margin-bottom: -5px;">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/collections/series">Collections</a></li>
+          <li class="breadcrumb-item"><a href="/collections/{{ strtolower($product->material) }}">{{ $product->material }}</a></li>
+          <li class="breadcrumb-item"><a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}">{{ ucwords(str_replace('Ã©', 'é', $product->series)) }}</a></li>
+          <li class="breadcrumb-item"><a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}/{{ strtolower(str_replace('/', '_', $product->size)) }}">{{ $product->size }}</a></li>
+          <!-- <li class="breadcrumb-item active" aria-current="page">{{ $product->item }}</li> -->
+        </ol>
+      </nav>
+      @endforeach
+
+      <hr style="padding: 10px;">
+    </div>
+
+    <div class="col-md-6" style="padding-bottom: 15px;">
       <div style="max-height: 495px; overflow: hidden; border: 1px solid #efefef; border-radius: 5px;">
 
         @foreach ($products as $product)
@@ -117,12 +127,13 @@
 
         ?>
 
-        <img src="{{ $image }}" alt="{{ $product->sku }} product image" class="image img-responsive">
+
+          <img id="myImg" src="{{ $image }}" alt="{{ $product->description }}" class="product-image img-responsive">
 
       </div>
     </div>
 
-    <div class="col-md-6" style="padding-right: 0px;">
+    <div class="col-md-6">
       <span class="product-title">{{ ucwords(strtolower($product->description)) }}</span>
       <hr style="margin-top: 10px; border: 0.5px solid #999;">
 
@@ -198,12 +209,13 @@
   <div class="col-md">
 
     @if (count($product_colors) > 0)
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        Color Variations
-      </div>
 
-      <div class="panel-body">
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Color Variations</h2>
+      </div>
+      <div class="card-body">
         <table class="table table-striped task-table">
           <thead>
             <th>SKU</th>
@@ -270,5 +282,16 @@
     @endif
   </div>
 </div>
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <!-- <a href="" id="img_href"> -->
+  <img class="modal-content" id="img01">
+  <!-- </a> -->
+  <div id="caption"></div>
+</div>
+
 @endsection
 
