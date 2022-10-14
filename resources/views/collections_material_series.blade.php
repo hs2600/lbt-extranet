@@ -35,7 +35,7 @@
 
     <div class="card">
       <div class="card-header">
-        <h2 class="card-title">{{ ucwords(str_replace('Ã©', 'é', $series)) }} Items by Size</h2>
+        <h6 class="card-title">{{ ucwords(str_replace('Ã©', 'é', $series)) }} Items by Size</h6>
       </div>
       <div class="card-body">
         <table class="table table-striped task-table">

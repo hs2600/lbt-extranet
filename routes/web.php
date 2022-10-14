@@ -25,6 +25,13 @@ Route::get('/', function () {
 });
 
 
+
+
+Route::get('/products', function () {
+    return view('products_search');
+});
+
+
     /**
     * Show collections by Series (All)
     */
@@ -130,10 +137,11 @@ Route::get('/', function () {
 /**
      * Show products
      */
-    Route::get('/products', function () {
+    Route::get('/products_all', function () {
       error_log("INFO: get /");
       return view('products', [
-        'products' => Product::orderBy('item', 'asc')->paginate(10)
+        'products' => Product::orderBy('item', 'asc')
+        ->simplePaginate(30)
       ]);
     });
 

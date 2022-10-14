@@ -2,45 +2,15 @@
 
 @section('content')
 
-<style>
-  .series-info {
-    color: #ffffff;
-    font-size: 20px;
-    font-family: "Times New Roman";
-  }
-
-  .series-info h2 {
-    text-transform: uppercase;
-    margin: 0px;
-    font-family: "Times New Roman";
-    font-size: 30px;
-  }
-</style>
-
-<div class="header-container" style="background-image: url(/assets/images/bg.png) !important;/* background-size: 91%; */background-position: top;background-repeat: repeat;">
-  <div style="background-color: rgba(206,162,157,0.85);padding: 10px 0px;margin-bottom: 20px;">
-    <div class="container series-info">
-      <div class="col-md-3" style="vertical-align: top;">
-        <h2>Series overview</h2>
-      </div>
-      <div class=" col-md-9">
-        <p>Geological patterns are the rock stars of today's design. As the name suggests, the Agate glass series is evocative of the semi-precious stone found in volcanic formations. Agate's colorful, handcrafted banding visually combines the solidarity of stone, t</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
 
 <div class="container">
-  <div class="row">
+  <div class="row" style="margin: 0px;">
 
     <div class="container">
       @foreach ($products as $product)
-      <nav aria-label="breadcrumb" style="margin-bottom: -5px;">
+      <nav aria-label="breadcrumb" style="padding-top: 10px; margin-bottom: -5px;">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/collections/series">Collections</a></li>
+          <li class="breadcrumb-item"><a href="/collections/">Collections</a></li>
           <li class="breadcrumb-item"><a href="/collections/{{ strtolower($product->material) }}">{{ $product->material }}</a></li>
           <li class="breadcrumb-item"><a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}">{{ ucwords(str_replace('Ã©', 'é', $product->series)) }}</a></li>
           <li class="breadcrumb-item"><a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}/{{ strtolower(str_replace('/', '_', $product->size)) }}">{{ $product->size }}</a></li>
@@ -49,7 +19,7 @@
       </nav>
       @endforeach
 
-      <hr style="padding: 10px;">
+      <hr>
     </div>
 
     <div class="col-md-6" style="padding-bottom: 15px;">
@@ -128,7 +98,7 @@
         ?>
 
 
-          <img id="myImg" src="{{ $image }}" alt="{{ $product->description }}" class="product-image img-responsive">
+        <img id="myImg" src="{{ $image }}" alt="{{ $product->description }}" class="product-image img-responsive">
 
       </div>
     </div>
@@ -184,114 +154,137 @@
       </div>
 
 
-      <div style="border: 0px solid #e9e9e9;  ">
 
-        <ul class="cate">
-          <li class="drop-menu">
-            <a style="cursor: pointer;" class="title collapsed" aria-expanded="false" data-toggle="collapse" data-target="#Cat">
-              <span class="navbar-toggler-icon">
-                <h5 style="color: black;">DOCUMENTATION</h5>
-              </span> </a>
-            <div class="collapsed collapse" id="Cat" aria-expanded="false" style="padding-left: 10px; line-height: 30px;">
-              Series Brochures &nbsp;<span class="fa fa-download"></span><BR>
+
+      <div class="accordion accordion-flush" id="accordionPanelsStayOpenExample" style="--bs-accordion-active-bg: #fefefe;
+       --bs-accordion-btn-focus-border-color: #efefef;
+       --bs-accordion-btn-padding-y: 0.5rem;
+       --bs-accordion-active-color: #000;
+       --bs-accordion-body-padding-y: 0.5rem;       
+       ">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+              DOCUMENTATION
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+            <div class="accordion-body">
+
+              Series Brochures &nbsp;
+              <!-- <i class="fa-solid fa-arrow-up-right-from-square"></i> -->
+              <i class="fa fa-download"></i><BR>
               Applications & Testing &nbsp;<span class="fa fa-download"></span><BR>
               Care & Maintenance &nbsp;<span class="fa fa-download"></span><BR>
+
             </div>
-          </li>
-        </ul>
+          </div>
+        </div>
+
       </div>
+
 
     </div>
   </div>
-</div>
 
-<div class="container">
-  <div class="col-md">
+  <?php
 
-    @if (count($product_colors) > 0)
+  if ($product->material_desc != "") {
+  ?>
 
-
-    <div class="card">
-      <div class="card-header">
-        <h2 class="card-title">Color Variations</h2>
+    <div class="container">
+      <div class="card" style="margin-bottom: 20px;">
+        <div class="card-body">
+          <h5 class="card-title">Series overview</h5>
+          <p class="card-text">{{ $product->material_desc }}</p>
+        </div>
       </div>
-      <div class="card-body">
-        <table class="table table-striped task-table">
-          <thead>
-            <th>SKU</th>
-            <th>Item</th>
-            <th>Description</th>
-            <th>Series</th>
-            <th>Size</th>
-            <th>Color</th>
-            <th>Finish</th>
-            <th>Site</th>
-            <th>Qty</th>
-            <th>UofM</th>
-          </thead>
-          <tbody>
-            @foreach ($product_colors as $product)
-            <tr>
-              <td class="table-text">
-                <?php
-
-                $series = str_replace('Ã©', 'é', $product->series);
-
-                if ($current_item == $product->sku) {
-                  echo '<div><b><span style="color: #999;"> ' . $product->sku . '</span></b></div>';
-                } else {
-                  echo '<div><a href="/products/' . $product->sku . '">' . $product->sku . '</a></div>';
-                }
-
-                ?>
-              </td>
-              <td class="table-text">
-                <div>{{ $product->item }}</div>
-              </td>
-              <td class="table-text">
-                <div>{{ $product->description }}</div>
-              </td>
-              <td class="table-text">
-                <div>{{ $series }}</div>
-              </td>
-              <td class="table-text">
-                <div>{{ $product->size }}</div>
-              </td>
-              <td class="table-text">
-                <div>{{ $product->color }}</div>
-              </td>
-              <td class="table-text">
-                <div>{{ $product->finish }}</div>
-              </td>
-              <td class="table-text">
-                <div>{{ $product->site }}</div>
-              </td>
-              <td class="table-text">
-                <div>{{ number_format($product->qty,0) }}</div>
-              </td>
-              <td class="table-text">
-                <div>{{ $product->uofm }}</div>
-              </td>
-            </tr>
-            @endforeach
-          </tbody>
-        </table>
-      </div>
-
     </div>
-    @endif
+
+
+  <?php
+  }
+
+  ?>
+
+
+  <div class="container">
+    <div class="col-md">
+
+      @if (count($product_colors) > 0)
+
+
+      <div class="card" style="margin-bottom: 20px;">
+        <div class="card-header">
+          <h6 class="card-title">Color Variations</h6>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Item</th>
+                <th scope="col" class="d-none d-md-block">Description</th>
+                <th scope="col">Color</th>
+                <th scope="col">Finish</th>
+                <th scope="col">Site</th>
+                <th scope="col">Qty</th>
+                <th scope="col">UofM</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($product_colors as $product)
+              <tr>
+                <td scope="row">
+                  <?php
+
+                  $series = str_replace('Ã©', 'é', $product->series);
+
+                  if ($current_item == $product->sku) {
+                    echo '<div><b><span style="color: #999;"> ' . $product->item . '</span></b></div>';
+                  } else {
+                    echo '<div><a href="/products/' . $product->sku . '">' . $product->item . '</a></div>';
+                  }
+
+                  ?>
+                </td>
+                <td class="d-none d-md-block">
+                  <div>{{ $product->description }}</div>
+                </td>
+                <td>
+                  <div>{{ $product->color }}</div>
+                </td>
+                <td>
+                  <div>{{ $product->finish }}</div>
+                </td>
+                <td>
+                  <div>{{ $product->site }}</div>
+                </td>
+                <td>
+                  <div>{{ number_format($product->qty,0) }}</div>
+                </td>
+                <td>
+                  <div>{{ $product->uofm }}</div>
+                </td>
+
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+      @endif
+    </div>
   </div>
-</div>
 
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
-  <span class="close">&times;</span>
-  <!-- <a href="" id="img_href"> -->
-  <img class="modal-content" id="img01">
-  <!-- </a> -->
-  <div id="caption"></div>
-</div>
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+    <span class="close">&times;</span>
+    <!-- <a href="" id="img_href"> -->
+    <img class="modal-content" id="img01">
+    <!-- </a> -->
+    <div id="caption"></div>
+  </div>
 
-@endsection
-
+  @endsection
