@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\InvitationController;
 use Illuminate\Support\Facades\Route;
+use App\Invitation;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,169 +17,67 @@ use Illuminate\Support\Facades\Route;
 */
 
 use App\Models\Task;
-use App\Models\Collection;
-use App\Models\Product;
 use Illuminate\Http\Request;
-
 
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
+
+/**
+ * Invitations group with auth middleware.
+ * Even though we only have one route currently, the route group is for future updates.
+ */
+Route::group([
+    'middleware' => ['auth', 'admin'],
+    'prefix' => 'invitations'
+], function() {
+    Route::get('/', [InvitationController::class, 'index'])
+        ->name('showInvitations');
+});
+
+// Route::post('invitations', [InvitationController::class, 'store'])->middleware('guest')->name('storeInvitation');
+// Route::post('invitations', [InvitationController::class, 'store'])
+//     ->name('storeInvitation');
+
+
+Route::post('/invitations', function (Request $request) {
+    $invitation = new Invitation($request->all());
+    $invitation->generateInvitationToken();
+    $invitation->save();
+
+    return view('invitations')
+        ->with('success', 'Invitation token successfully created.');
+});
+
+require __DIR__.'/auth.php';
 
 
 Route::get('/products', function () {
     return view('products_search');
 });
 
+//Private routes (Login required)
+Route::group(['middleware' => ['auth:sanctum']], function(){
+    // Route::get('/collections',[ProductController::class, 'collections']);
+});
 
-    /**
-    * Show collections by Series (All)
-    */
-    Route::get('/collections/', function () {
-        error_log("INFO: get /");
-        return view('collections_by_series', [
-            'collections' => Collection::orderBy('status', 'desc')
-                        ->orderBy('series', 'asc')
-                        ->where('series', '!=', '-')
-                        ->where('status', '!=', '1')                        
-                        ->paginate(15)
-        ]);
-    });
-
-
-/**
-    * Show collections by Material
-    */
-    Route::get('/collections/material', function () {
-        error_log("INFO: get /");
-        return view('collections_material', [
-            'collections' => Collection::orderBy('material', 'asc')
-            ->where('category', '=', 'Material')
-            ->where('status', '!=', '1')
-            ->get()
-        ]);
-    });
-
-
-/**
-    * Show collections by Material/Series
-    */
-    Route::get('/collections/{material}', function ($material) {
-        error_log("INFO: get /");
-        return view('collections_by_material', [
-            'collections' => Collection::orderBy('status', 'desc')
-                        ->orderBy('series', 'asc')
-                        ->where('material', '=', $material)
-                        ->where('series', '!=', '-')
-                        ->where('status', '!=', '1')                        
-                        ->paginate(15)
-        ]
-        , [
-            'collection' => Collection::orderBy('material', 'asc')
-            ->selectRaw('description')
-            ->where('category', '=', 'Material')
-            ->where('material', '=', $material)
-            ->limit(1)
-            ->get()
-        ])        
-        ->with('material', ucfirst($material));
-    });
-
-
-/**
-    * Show collections by Material/Series/Size
-    */
-    Route::get('/collections/{material}/{series}', function ($material, $series) {
-        error_log("INFO: get /");
-        return view('collections_material_series', [
-            'products' => Product::orderBy('size', 'asc')
-                      ->selectRaw('material, series, size')
-                      ->where('material', '=', $material)
-                      ->where('series', '=', str_replace('é', 'Ã©', $series))
-                      ->where('status', '!=', '1')
-                      ->groupBy('material', 'series', 'size')
-                      ->get()
-        ]
-        , [
-            'collection' => Collection::orderBy('material', 'asc')
-            ->selectRaw('description')
-            ->where('material', '=', $material)
-            ->where('series', '=', $series)            
-            ->limit(1)
-            ->get()
-        ])        
-        ->with('material', ucfirst($material))
-        ->with('series', ucfirst($series))
-        ;
-    });
+Route::get('/collections',[ProductController::class, 'collections']);
+Route::get('/collections/material',[ProductController::class, 'collectionsMaterial']);
+Route::get('/collections/{material}',[ProductController::class, 'collectionsByMaterial']);    
+Route::get('/collections/{material}/{series}',[ProductController::class, 'collectionsByMaterialSeries']);
+Route::get('/collections/{material}/{series}/{size}',[ProductController::class, 'collectionsByMaterialSeriesSize']);
+Route::get('//products_all',[ProductController::class, 'productsAll']);
+Route::get('/products/{id}',[ProductController::class, 'productsID']);
 
 
 
-/**
-    * Show size
-    */
-    Route::get('/collections/{material}/{series}/{size}', function ($material, $series, $size) {
-        error_log("INFO: get /");
-        return view('collections_material_series_size', [
-          'products' => Product::orderBy('item', 'asc')
-                        ->where('material', '=', $material)
-                        ->where('series', '=', str_replace('é', 'Ã©', $series))
-                        ->where('size', '=', str_replace('_', '/', $size))
-                        ->paginate(10)
-        ])
-        ->with('material', ucfirst($material))
-        ->with('series', ucfirst($series))
-        ->with('size', ucfirst($size))
-        ;
-    });
-
-
-/**
-     * Show products
-     */
-    Route::get('/products_all', function () {
-      error_log("INFO: get /");
-      return view('products', [
-        'products' => Product::orderBy('item', 'asc')
-        ->simplePaginate(30)
-      ]);
-    });
-
-
-/**
-     * Show products
-     */
-    Route::get('/products/{id}', function ($id) {
-      error_log("INFO: get /");
-      return view('product', [
-        'products' => Product::orderBy('item', 'asc')
-        ->leftjoin('collections', function ($join) {
-        $join->on('products.material', '=', 'collections.material')
-          ->On('products.series', '=', 'collections.series');
-        })
-        ->select('products.*', 'collections.description as material_desc', 'collections.series_desc', 'collections.img_url as series_img_url')
-        ->where('sku', '=', $id)
-        ->limit(1)
-        ->get()
-      ], [
-        'product_colors' => Product::orderBy('item', 'asc')
-        ->leftjoin('products as product_colors', function ($join) {
-        $join->on('products.material', '=', 'product_colors.material')
-             ->On('products.series', '=', 'product_colors.series')
-             ->On('products.size', '=', 'product_colors.size');
-        })
-        ->select('product_colors.*')
-        ->where('products.sku', '=', $id)
-        ->get()
-      ])
-      ;
-    });
-
-
-
+/**  TESTING */
 /**
     * Show Task Dashboard
     */
