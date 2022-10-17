@@ -13,7 +13,7 @@
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
   <!-- Custom styles -->
   <link href="/assets/css/imgpreview.css" rel="stylesheet">
-
+  <link href="/assets/css/tailwindv318.css" rel="stylesheet">
 
   <!-- Livewire -->
   @livewireStyles
@@ -97,6 +97,7 @@
       text-decoration: none !important;
     }
   </style>
+
 
 
 </head>
