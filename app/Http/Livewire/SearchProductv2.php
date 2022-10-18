@@ -59,4 +59,14 @@ class SearchProductv2 extends Component
                 ->with('null', $null);
         }
     }
+
+    public function resetFilters()
+    {
+        $this->material = '';
+        $this->series = '';
+        $this->size = '';
+        $this->color = '';
+        $this->finish = '';
+    
+    }
 }
