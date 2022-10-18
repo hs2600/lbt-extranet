@@ -96,6 +96,17 @@
       color: #52a8ff !important;
       text-decoration: none !important;
     }
+    
+    .active-link {
+      border-bottom: 1px solid #134a46;
+    }
+
+    .navbar a:hover {
+      color: #06403c;
+      font-weight:500;
+    }
+
+
   </style>
 
 
@@ -105,7 +116,7 @@
 
   <main>
 
-    <nav class="navbar navbar-expand-lg bg-light sticky-top" aria-label="Eighth navbar example" style="border-bottom: 2px solid #999;">
+    <nav class="navbar navbar-expand-lg bg-light" aria-label="Eighth navbar example" style="border-bottom: 2px solid #999; padding: 0px;">
       <div class="container">
 
         <a class="navbar-brand" href="/collections" style="padding: 10px;">
@@ -119,15 +130,31 @@
         <div class="collapse navbar-collapse" id="navbarsExample07">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Home</a>
+              <a class="nav-link" aria-current="page" href="/">Home</a>
+            </li>
+
+            @php
+            
+              $link1 = '';
+              $link2 = '';
+
+              if(Route::currentRouteName() == 'products')
+              {
+                $link1 = 'active-link';
+              }
+
+              if(Route::currentRouteName() == 'collections')
+              {
+                $link2 = 'active-link';
+              }
+
+            @endphp  
+            <li class="nav-item">
+            <a class="nav-link {{ $link1 }}" href="/products">Products</a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="/products">Products</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="/collections">Collections</a>
+              <a class="nav-link {{ $link2 }}" href="/collections">Collections</a>
             </li>
 
             <li class="nav-item dropdown">
@@ -154,7 +181,54 @@
             </li>
 
           </ul>
+          <div style="padding-right: 10px;">
           @livewire('search-product')
+          </div>
+
+          @if (Route::has('login'))
+          <div style="padding: 10px 0px;">
+            @guest
+            <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+            @endguest
+          </div>
+
+          @auth
+          <!-- Settings Dropdown -->
+          <div class="sm:flex sm:items-center sm:ml-6" style="padding: 20px;">
+            <x-dropdown>
+              <x-slot name="trigger">
+                <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                  <div>{{ Auth::user()->name }}</div>
+
+                  <div class="ml-1">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                </button>
+              </x-slot>
+
+              <x-slot name="content">
+                <!-- Authentication -->
+                <form method="POST" action="{{ route('logout') }}">
+                  @csrf
+
+                  <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                    {{ __('Log Out') }}
+                  </x-dropdown-link>
+                </form>
+
+                <x-dropdown-link :href="route('showInvitations')">
+                    Invitations
+                  </x-dropdown-link>                                  
+              </x-slot>
+            </x-dropdown>
+          </div>
+          @endauth
+          @endif
+
+
         </div>
       </div>
     </nav>
