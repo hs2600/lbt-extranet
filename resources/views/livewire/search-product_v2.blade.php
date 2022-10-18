@@ -11,7 +11,7 @@
         <input type="search" class="form-control" placeholder="Series" wire:model="series">
       </div>
       <div class="col">
-        <input type="search" class="form-control" placeholder="Size" wire:model="size">
+        <input type="search" class="form-control" placeholder="Size/Pattern" wire:model="size">
       </div>
       <div class="col">
         <input type="search" class="form-control" placeholder="Color" wire:model="color">

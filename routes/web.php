@@ -39,40 +39,29 @@ Route::group([
 ], function() {
     Route::get('/', [InvitationController::class, 'index'])
         ->name('showInvitations');
+
+    Route::post('/', [InvitationController::class, 'store']);        
 });
 
 // Route::post('invitations', [InvitationController::class, 'store'])->middleware('guest')->name('storeInvitation');
 // Route::post('invitations', [InvitationController::class, 'store'])
 //     ->name('storeInvitation');
 
-
-Route::post('/invitations', function (Request $request) {
-    $invitation = new Invitation($request->all());
-    $invitation->generateInvitationToken();
-    $invitation->save();
-
-    return view('invitations')
-        ->with('success', 'Invitation token successfully created.');
-});
-
-require __DIR__.'/auth.php';
-
-
 Route::get('/products', function () {
     return view('products_search');
-});
+})->name('products');
 
 //Private routes (Login required)
 Route::group(['middleware' => ['auth:sanctum']], function(){
     // Route::get('/collections',[ProductController::class, 'collections']);
 });
 
-Route::get('/collections',[ProductController::class, 'collections']);
+Route::get('/collections',[ProductController::class, 'collections'])->name('collections');
 Route::get('/collections/material',[ProductController::class, 'collectionsMaterial']);
 Route::get('/collections/{material}',[ProductController::class, 'collectionsByMaterial']);    
 Route::get('/collections/{material}/{series}',[ProductController::class, 'collectionsByMaterialSeries']);
 Route::get('/collections/{material}/{series}/{size}',[ProductController::class, 'collectionsByMaterialSeriesSize']);
-Route::get('//products_all',[ProductController::class, 'productsAll']);
+Route::get('/products_all',[ProductController::class, 'productsAll']);
 Route::get('/products/{id}',[ProductController::class, 'productsID']);
 
 
@@ -120,3 +109,6 @@ Route::delete('/task/{id}', function ($id) {
 
     return redirect('/tasks');
 });
+
+
+require __DIR__.'/auth.php';
