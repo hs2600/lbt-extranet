@@ -103,7 +103,7 @@
 
     .navbar a:hover {
       color: #06403c;
-      font-weight:500;
+      text-decoration: underline;
     }
 
 
