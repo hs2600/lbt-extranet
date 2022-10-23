@@ -114,7 +114,7 @@ class ProductController extends Controller
                     ->orderBy('series', 'asc')
                     ->where('series', '!=', '-')
                     ->where('status', '!=', '1')                        
-                    ->paginate(15)
+                    ->paginate(16)
     ]);
     }
 
@@ -144,7 +144,7 @@ class ProductController extends Controller
                         ->where('material', '=', $material)
                         ->where('series', '!=', '-')
                         ->where('status', '!=', '1')                        
-                        ->paginate(15)
+                        ->paginate(16)
         ]
         , [
             'collection' => Collection::orderBy('material', 'asc')
@@ -170,7 +170,7 @@ class ProductController extends Controller
                       ->where('series', '=', str_replace('é', 'Ã©', $series))
                       ->where('status', '!=', '1')
                       ->groupBy('material', 'series', 'size')
-                      ->get()
+                      ->paginate(18)
         ]
         , [
             'collection' => Collection::orderBy('material', 'asc')
@@ -197,7 +197,7 @@ class ProductController extends Controller
                         ->where('material', '=', $material)
                         ->where('series', '=', str_replace('é', 'Ã©', $series))
                         ->where('size', '=', str_replace('_', '/', $size))
-                        ->paginate(10)
+                        ->paginate(50)
         ])
         ->with('material', ucfirst($material))
         ->with('series', ucfirst($series))

@@ -1,29 +1,32 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('content')
 
 
-<div class="container">
-  <div class="row" style="margin: 0px;">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center 
+ pt-3 pb-2 mb-2 border-bottom">
 
-    <div class="container">
-      @foreach ($products as $product)
-      <nav aria-label="breadcrumb" style="padding-top: 10px; margin-bottom: -5px;">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/collections/">Collections</a></li>
-          <li class="breadcrumb-item"><a href="/collections/{{ strtolower($product->material) }}">{{ $product->material }}</a></li>
-          <li class="breadcrumb-item"><a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}">{{ ucwords(str_replace('Ã©', 'é', $product->series)) }}</a></li>
-          <li class="breadcrumb-item"><a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}/{{ strtolower(str_replace('/', '_', $product->size)) }}">{{ $product->size }}</a></li>
-          <!-- <li class="breadcrumb-item active" aria-current="page">{{ $product->item }}</li> -->
-        </ol>
-      </nav>
-      @endforeach
+  @foreach ($products as $product)
+  <nav aria-label="breadcrumb" style="padding-top: 10px; margin-bottom: -5px;">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/collections/">Collections</a></li>
+      <li class="breadcrumb-item"><a href="/collections/{{ strtolower($product->material) }}">{{ $product->material }}</a></li>
+      <li class="breadcrumb-item"><a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}">{{ ucwords(str_replace('Ã©', 'é', $product->series)) }}</a></li>
+      <li class="breadcrumb-item"><a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}/{{ strtolower(str_replace('/', '_', $product->size)) }}">{{ $product->size }}</a></li>
+      <!-- <li class="breadcrumb-item active" aria-current="page">{{ $product->item }}</li> -->
+    </ol>
+  </nav>
+  @endforeach
 
-      <hr>
-    </div>
+</div>
+
+
+<div class="container" style="background-color: white; 
+padding: 10px; border: 1px solid #eee; border-radius: 5px; margin-top: 20px;">
+  <div class="row">
 
     <div class="col-md-6" style="padding-bottom: 15px;">
-      <div style="max-height: 495px; overflow: hidden; border: 1px solid #efefef; border-radius: 5px;">
+      <div style="max-height: 495px; overflow: hidden; border: 1px solid #ccc; border-radius: 5px;">
 
         @foreach ($products as $product)
 
@@ -192,12 +195,11 @@
   if ($product->material_desc != "") {
   ?>
 
-    <div class="container">
-      <div class="card" style="margin-bottom: 20px;">
-        <div class="card-body">
-          <h5 class="card-title">Series overview</h5>
-          <p class="card-text">{{ $product->material_desc }}</p>
-        </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Series overview</h5>
+        <p class="card-text">{{ $product->material_desc }}</p>
       </div>
     </div>
 
@@ -208,75 +210,70 @@
   ?>
 
 
-  <div class="container">
-    <div class="col-md">
 
-      @if (count($product_colors) > 0)
+  @if (count($product_colors) > 0)
 
 
-      <div class="card" style="margin-bottom: 20px;">
-        <div class="card-header">
-          <h6 class="card-title">Color Variations</h6>
-        </div>
-        <div class="card-body">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">Item</th>
-                <th scope="col" class="d-none d-md-block">Description</th>
-                <th scope="col">Color</th>
-                <th scope="col">Finish</th>
-                <th scope="col">Site</th>
-                <th scope="col">Qty</th>
-                <th scope="col">UofM</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach ($product_colors as $product)
-              <tr>
-                <td scope="row">
-                  <?php
-
-                  $series = str_replace('Ã©', 'é', $product->series);
-
-                  if ($current_item == $product->sku) {
-                    echo '<div><b><span style="color: #999;"> ' . $product->item . '</span></b></div>';
-                  } else {
-                    echo '<div><a href="/products/' . $product->sku . '">' . $product->item . '</a></div>';
-                  }
-
-                  ?>
-                </td>
-                <td class="d-none d-md-block">
-                  <div>{{ $product->description }}</div>
-                </td>
-                <td>
-                  <div>{{ $product->color }}</div>
-                </td>
-                <td>
-                  <div>{{ $product->finish }}</div>
-                </td>
-                <td>
-                  <div>{{ $product->site }}</div>
-                </td>
-                <td>
-                  <div>{{ number_format($product->qty,0) }}</div>
-                </td>
-                <td>
-                  <div>{{ $product->uofm }}</div>
-                </td>
-
-              </tr>
-              @endforeach
-            </tbody>
-          </table>
-        </div>
-
-      </div>
-      @endif
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">Color Variations</h5>
     </div>
-  </div>
+    <div class="card-body">
+      <table class="table table-striped table-borderless datatable">
+        <thead>
+          <tr>
+            <th scope="col">Item</th>
+            <th scope="col">Description</th>
+            <th scope="col">Color</th>
+            <th scope="col">Finish</th>
+            <th scope="col">Site</th>
+            <th scope="col">Qty</th>
+            <th scope="col">UofM</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($product_colors as $product)
+          <tr>
+            <td scope="row">
+              <?php
 
+              $series = str_replace('Ã©', 'é', $product->series);
+
+              if ($current_item == $product->sku) {
+                echo '<div><b><span style="color: #999;"> ' . $product->item . '</span></b></div>';
+              } else {
+                echo '<div><a href="/products/' . $product->sku . '">' . $product->item . '</a></div>';
+              }
+
+              ?>
+            </td>
+            <td>
+              <div>{{ $product->description }}</div>
+            </td>
+            <td>
+              <div>{{ $product->color }}</div>
+            </td>
+            <td>
+              <div>{{ $product->finish }}</div>
+            </td>
+            <td>
+              <div>{{ $product->site }}</div>
+            </td>
+            <td>
+              <div>{{ number_format($product->qty,0) }}</div>
+            </td>
+            <td>
+              <div>{{ $product->uofm }}</div>
+            </td>
+
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  @endif
 
   <!-- The Modal -->
   <div id="myModal" class="modal">
@@ -287,6 +284,8 @@
     <div id="caption"></div>
   </div>
 
-  <script src="/assets/js/imgpreview.js"></script>
+</div>
 
-  @endsection
+<script src="/assets/js/imgpreview.js"></script>
+
+@endsection

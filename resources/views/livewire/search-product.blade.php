@@ -1,13 +1,20 @@
 <div>
-  <input id="txtSearch" type="search" class="form-control txtShowDiv" placeholder="Search" wire:model="search" style="width: 300px;">
+  <!-- <input id="txtSearch" type="search" 
+  class="form-control txtShowDiv" 
+  placeholder="Search" wire:model="search" style="width: 300px;"> -->
 
-  <div id="divSearch" class="searchDiv" style=" z-index: 1;
+  <div class="search-bar">
+    <form class="search-form d-flex align-items-center">
+      <input id="txtSearch" type="search" placeholder="Search" title="Enter search keyword" wire:model="search"
+      class="txtShowDiv" style="padding: 7px 10px;">
+    </form>
+  </div>
+
+  <div id="divSearch" class="searchDiv" style="z-index: 1;
   position: absolute;
-  padding: 0px;
-  
+  padding: 0px;  
   margin-top: 15px;
   ">
-
 
     <div class="search" wire:loading>
 

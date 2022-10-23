@@ -13,7 +13,6 @@
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
   <!-- Custom styles -->
   <link href="/assets/css/imgpreview.css" rel="stylesheet">
-  <link href="/assets/css/tailwindv318.css" rel="stylesheet">
 
   <!-- Livewire -->
   @livewireStyles
@@ -96,7 +95,7 @@
       color: #52a8ff !important;
       text-decoration: none !important;
     }
-    
+
     .active-link {
       border-bottom: 1px solid #134a46;
     }
@@ -105,8 +104,6 @@
       color: #06403c;
       text-decoration: underline;
     }
-
-
   </style>
 
 
@@ -135,23 +132,23 @@
             </li>
 
             @php
-            
-              $link1 = '';
-              $link2 = '';
 
-              if(Route::currentRouteName() == 'products')
-              {
-                $link1 = 'active-link';
-              }
+            $link1 = '';
+            $link2 = '';
 
-              if(Route::currentRouteName() == 'collections')
-              {
-                $link2 = 'active-link';
-              }
+            if(Route::currentRouteName() == 'products')
+            {
+            $link1 = 'active-link';
+            }
 
-            @endphp  
+            if(Route::currentRouteName() == 'collections')
+            {
+            $link2 = 'active-link';
+            }
+
+            @endphp
             <li class="nav-item">
-            <a class="nav-link {{ $link1 }}" href="/products">Products</a>
+              <a class="nav-link {{ $link1 }}" href="/products">Products</a>
             </li>
 
             <li class="nav-item">
@@ -183,7 +180,7 @@
 
           </ul>
           <div style="padding-right: 10px;">
-          @livewire('search-product')
+            @livewire('search-product')
           </div>
 
           @if (Route::has('login'))
@@ -221,8 +218,8 @@
                 </form>
 
                 <x-dropdown-link :href="route('showInvitations')">
-                    Invitations
-                  </x-dropdown-link>                                  
+                  Invitations
+                </x-dropdown-link>
               </x-slot>
             </x-dropdown>
           </div>
