@@ -165,12 +165,16 @@ class ProductController extends Controller
         error_log("INFO: get /");
         return view('collections_material_series', [
             'products' => Product::orderBy('size', 'asc')
-                      ->selectRaw('material, series, size')
-                      ->where('material', '=', $material)
-                      ->where('series', '=', str_replace('é', 'Ã©', $series))
-                      ->where('status', '!=', '1')
-                      ->groupBy('material', 'series', 'size')
-                      ->paginate(18)
+            ->leftjoin('collections', function ($join) {
+                $join->on('products.material', '=', 'collections.material')
+                    ->On('products.series', '=', 'collections.series');
+                })
+                ->select('products.material', 'products.series', 'products.size', 'collections.img_url as series_img_url')
+                ->where('products.material', '=', $material)
+                ->where('products.series', '=', str_replace('é', 'Ã©', $series))
+                ->where('products.status', '!=', '1')
+                ->groupBy('products.material', 'products.series', 'products.size', 'collections.img_url')
+                ->paginate(18)
         ]
         , [
             'collection' => Collection::orderBy('material', 'asc')
