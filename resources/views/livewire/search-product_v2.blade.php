@@ -5,22 +5,22 @@
 
       <form style="padding-bottom: 10px;">
         <div class="row">
-          <div class="col">
+          <div class="col-sm">
             <input type="search" class="form-control" placeholder="Material" wire:model="material">
           </div>
-          <div class="col">
+          <div class="col-sm">
             <input type="search" class="form-control" placeholder="Series" wire:model="series">
           </div>
-          <div class="col">
+          <div class="col-sm">
             <input type="search" class="form-control" placeholder="Size/Pattern" wire:model="size">
           </div>
-          <div class="col">
+          <div class="col-sm">
             <input type="search" class="form-control" placeholder="Color" wire:model="color">
           </div>
-          <div class="col">
+          <div class="col-sm">
             <input type="search" class="form-control" placeholder="Finish" wire:model="finish">
           </div>
-          <div class="col-1">
+          <div class="col-sm-1">
             <button type="button" class="btn btn-outline-warning" style="position: relative;float: right; width: 100%;" wire:click="resetFilters()">Clear</button>
           </div>
         </div>
