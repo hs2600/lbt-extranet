@@ -4,12 +4,13 @@
 
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center 
- pt-3 pb-2 mb-2 border-bottom">
+ pt-3 mb-2 border-bottom">
 
   @foreach ($products as $product)
-  <nav aria-label="breadcrumb" style="padding-top: 10px; margin-bottom: -5px;">
+  <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="/collections/">Collections</a></li>
+      <li class="breadcrumb-item"><a href="/collections/material">Material</a></li>
       <li class="breadcrumb-item"><a href="/collections/{{ strtolower($product->material) }}">{{ $product->material }}</a></li>
       <li class="breadcrumb-item"><a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}">{{ ucwords(str_replace('Ã©', 'é', $product->series)) }}</a></li>
       <li class="breadcrumb-item"><a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}/{{ strtolower(str_replace('/', '_', $product->size)) }}">{{ $product->size }}</a></li>
@@ -21,12 +22,17 @@
 </div>
 
 
-<div class="container" style="background-color: white; 
-padding: 10px; border: 1px solid #eee; border-radius: 5px; margin-top: 20px;">
-  <div class="row">
+<div class="container" style="padding: 0px; margin-top: 20px;">
+  <div class="row" style="margin: 0px;
+    padding-top: 10px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 2px #888;">
 
     <div class="col-md-6" style="padding-bottom: 15px;">
-      <div style="max-height: 495px; overflow: hidden; border: 1px solid #ccc; border-radius: 5px;">
+      <div style="max-height: 495px; overflow: hidden;
+       border-radius: 5px;
+       box-shadow: 1px 1px #ccc;
+       ">
 
         @foreach ($products as $product)
 
@@ -101,7 +107,8 @@ padding: 10px; border: 1px solid #eee; border-radius: 5px; margin-top: 20px;">
         ?>
 
 
-        <img id="myImg" src="{{ $image }}" alt="{{ $product->description }}" class="product-image img-responsive">
+        <img id="myImg" src="{{ $image }}" alt="{{ $product->description }}"
+         class="product-image img-responsive">
 
       </div>
     </div>
@@ -157,17 +164,17 @@ padding: 10px; border: 1px solid #eee; border-radius: 5px; margin-top: 20px;">
       </div>
 
 
-
-
-      <div class="accordion accordion-flush" id="accordionPanelsStayOpenExample" style="--bs-accordion-active-bg: #fefefe;
+      <div class="accordion accordion-flush" id="accordionPanelsStayOpenExample"
+       style="--bs-accordion-active-bg: #fefefe;
        --bs-accordion-btn-focus-border-color: #efefef;
        --bs-accordion-btn-padding-y: 0.5rem;
        --bs-accordion-active-color: #000;
-       --bs-accordion-body-padding-y: 0.5rem;       
+       --bs-accordion-body-padding-y: 0.5rem;
        ">
         <div class="accordion-item">
-          <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+          <h2 class="accordion-header" id="panelsStayOpen-headingOne" style="border-bottom: 0.5px solid #e2e2e2;">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
               DOCUMENTATION
             </button>
           </h2>
@@ -211,7 +218,7 @@ padding: 10px; border: 1px solid #eee; border-radius: 5px; margin-top: 20px;">
 
 
 
-  @if (count($product_colors) > 0)
+  @if (count($product_colors) > 1)
 
 
   <div class="card">
