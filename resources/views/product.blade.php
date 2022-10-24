@@ -143,7 +143,7 @@
       <div style="background-color: #fafafa; padding: 5px; margin-bottom: 20px;
         border-bottom: 1px solid #ddd;">
         <div class="">
-          <span class="product-price"><b><i>{{ $qty }} {{ $uofm }} </b> in stock in Harbor City</i></span>
+          <span class="product-price"><b><i>{{ $qty }} {{ $uofm }} </b> stocked in Harbor City</i></span>
         </div>
       </div>
 
