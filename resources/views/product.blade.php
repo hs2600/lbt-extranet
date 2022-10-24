@@ -107,7 +107,7 @@
         ?>
 
 
-        <img id="myImg" src="{{ $image }}" alt="{{ $product->description }}" class="product-image img-responsive">
+        <img id="myImg" src="{{ $image }}" alt="{{ ucwords(strtolower($product->description)) }}" class="product-image img-responsive">
 
       </div>
     </div>
