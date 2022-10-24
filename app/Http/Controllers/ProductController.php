@@ -223,6 +223,14 @@ class ProductController extends Controller
 
 
     /**
+     * Show products - Search
+     */
+    public function productsSearch(){
+        error_log("INFO: get /");
+        return view('products_search');
+      }
+
+    /**
      * Show products
      */
     public function productsID($id){
