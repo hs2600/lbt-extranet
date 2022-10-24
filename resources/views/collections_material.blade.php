@@ -16,21 +16,31 @@
         </div>
         <div class="card-body" style="padding: 10px;">
 
-        <div class="row" style="--bs-gutter-x: 0rem;">
+          <div class="row" style="--bs-gutter-x: 0rem;">
 
             @if (count($collections) > 0)
             @foreach ($collections as $collection)
 
-            <div class="col-md-4 img-container" style="border: 1px solid #efefef; padding: 0px; min-height: 200px;">
+            <div class="col-md-4 img-container" style="
+             min-height: 200px;
+             max-height: 700px;
+             padding: 5px;
+             overflow: hidden;
+             ">
               <a href="/collections/{{ $collection->material }}">
                 <?php
                 $image = $collection->series;
                 if ($image == "-") {
                   $image = $collection->material;
                 }
-                $image = strtolower(str_replace(" ", "_", $image)) . "_h.png";
+                $image = strtolower(str_replace(" ", "_", $image)) . ".png";
                 ?>
-                <img src="/assets/images/products/{{ $image }}" class="img-preview" style="width: 100%;">
+                <img src="/assets/images/products/{{ $image }}" class="img-preview"
+                style="
+                height: 100%;
+                object-fit: cover;
+                border-radius: 5px;
+                ">
                 <span class="middle-vis">
                   {{ $collection->material }} <span class="fa fa-arrow-circle-right"></span>
                 </span>

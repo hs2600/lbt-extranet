@@ -10,7 +10,7 @@
       <div class="card">
         <div class="card-header">
 
-          <h2 class="card-title">Collections</h2>
+          <h4 class="card-title">Collections</h4>
 
         </div>
         <div class="card-body" style="padding: 10px;">
@@ -54,11 +54,24 @@
             }
             ?>
 
-            <div class="col-lg-3 img-container" style="border: 1px solid #efefef; padding: 0px; min-height: 200px;">
+            <div class="col-lg-3 img-container"
+             style="
+              padding: 5px;
+              min-height: 300px;
+              overflow: hidden;
+              ">
+
               <span class="{{ $featured }}">{{ ucwords($featured) }}</span>
 
               <a href="/collections/{{ $path }}">
-                <img src="{{ $image }}" class="img-preview" style="width: 100%;">
+                <img src="{{ $image }}" class="img-preview"
+                style="
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border: 1px solid #efefef;
+                border-radius: 5px;
+                ">
                 <span class="middle-vis">
                   {{ $category }} <span class="fa fa-arrow-circle-right"></span>
                 </span>

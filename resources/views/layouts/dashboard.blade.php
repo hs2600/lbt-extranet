@@ -34,7 +34,8 @@
 
 <body>
   <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center bg-light" style="border-bottom: 1px solid #cddffe; box-shadow: 0px 0px 0px #ffffff;">
+  <header id="header" class="header fixed-top d-flex align-items-center"
+   style="border-bottom: 1px solid #dadce0; box-shadow: 0px 0px 0px #ffffff;">
     <div class="d-flex align-items-center justify-content-between">
       <a href="/" class="logo d-flex">
         <img src="/assets/images/logo.png" style="padding-left: 20px; max-height: 35px; filter: invert(100%)" />
@@ -58,7 +59,7 @@
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-        <li class="nav-item d-block d-lg-none">
+        <li class="nav-item d-block d-lg-none" style="padding-right: 30px;">
           <a class="nav-link nav-icon search-bar-toggle" href="#">
             <i class="bi bi-search"></i>
           </a>
@@ -67,13 +68,13 @@
 
         @if (Route::has('login'))
         @guest
-        <li class="nav-item dropdown pe-3">
+        <li class="nav-item dropdown pe-4">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
         </li>
         @endguest
 
         @auth
-        <li class="nav-item dropdown pe-3">
+        <li class="nav-item dropdown pe-4">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <span class="d-md-block dropdown-toggle ps-2" style="font-weight: 600;">
@@ -126,12 +127,19 @@
   <!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar" style="background-color: #f8f9fa; box-shadow: inset -1px 0 0 rgb(0 0 0 / 10%);">
+  <aside id="sidebar" class="sidebar" style="box-shadow: inset -1px 0 0 rgb(255 255 255 / 10%);">
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
         <a class="nav-link" href="/collections">
           <i class="bi bi-grid"></i>
           <span>Collections</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/collections/material">
+          <i class="bi bi-grid"></i>
+          <span>Materials</span>
         </a>
       </li>
 
@@ -223,13 +231,6 @@
   </main>
   <!-- End #main -->
 
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>Lunada Bay Tile</span></strong>. All Rights Reserved
-    </div>
-  </footer>
-  <!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
