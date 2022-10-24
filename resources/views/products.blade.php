@@ -1,9 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('content')
-
-
-
 
 
 <div class="container" style="padding-top: 10px;">
