@@ -213,6 +213,7 @@
 
   ?>
 
+  <!-- Size and color variation tabs -->
   <ul class="nav nav-tabs" style="border: 0px;" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
       <button class="nav-link active" id="size-tab" data-bs-toggle="tab" data-bs-target="#size-tab-pane" type="button" role="tab" aria-controls="size-tab-pane" aria-selected="true">Size Variations</button>
@@ -221,6 +222,7 @@
       <button class="nav-link" id="color-tab" data-bs-toggle="tab" data-bs-target="#color-tab-pane" type="button" role="tab" aria-controls="color-tab-pane" aria-selected="false">Color Variations</button>
     </li>
   </ul>
+  <!-- Size and color variation content -->
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="size-tab-pane" role="tabpanel" aria-labelledby="size-tab" tabindex="0">
 
@@ -228,145 +230,322 @@
       @if (count($product_sizes) > 1)
 
       <div class="card" style="margin: 0px;">
-        <div class="card-body">
-          <table class="table table-striped table-borderless datatable">
-            <thead>
-              <tr>
-                <th scope="col">Item</th>
-                <th scope="col">Description</th>
-                <th scope="col">Color</th>
-                <th scope="col">Finish</th>
-                <th scope="col">Site</th>
-                <th scope="col">Qty</th>
-                <th scope="col">UofM</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach ($product_sizes as $product)
-              <tr>
-                <td scope="row">
-                  <?php
-
-                  $series = str_replace('Ã©', 'é', $product->series);
-
-                  if ($current_item == $product->sku) {
-                    echo '<div><b><span style="color: #999;"> ' . $product->item . '</span></b></div>';
-                  } else {
-                    echo '<div><a href="/products/' . $product->sku . '">' . $product->item . '</a></div>';
-                  }
-
-                  ?>
-                </td>
-                <td>
-                  <div>{{ $product->description }}</div>
-                </td>
-                <td>
-                  <div>{{ $product->color }}</div>
-                </td>
-                <td>
-                  <div>{{ $product->finish }}</div>
-                </td>
-                <td>
-                  <div>{{ $product->site }}</div>
-                </td>
-                <td>
-                  <div>{{ number_format($product->qty,0) }}</div>
-                </td>
-                <td>
-                  <div>{{ $product->uofm }}</div>
-                </td>
-
-              </tr>
-              @endforeach
-            </tbody>
-          </table>
+        <div class="card-header">
+          <!-- Size variation sub tabs -->
+          <ul class="nav nav-pills" style="" id="mySizeTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" style="padding: 5px 10px;" id="size-table-tab" data-bs-toggle="tab" data-bs-target="#size-table-tab-pane" type="button" role="tab" aria-controls="size-table-tab-pane" aria-selected="true">Table</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" style="padding: 5px 10px;" id="size-grid-tab" data-bs-toggle="tab" data-bs-target="#size-grid-tab-pane" type="button" role="tab" aria-controls="size-grid-tab-pane" aria-selected="false">Grid</button>
+            </li>
+          </ul>
         </div>
 
+        <div class="tab-content" id="mySizeTabContent">
+
+          <div class="tab-pane fade show active" id="size-table-tab-pane" role="tabpanel" aria-labelledby="table-tab" tabindex="0">
+
+            <div class="card-body">
+              <table class="table table-striped table-borderless datatable">
+                <thead>
+                  <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Finish</th>
+                    <th scope="col">Site</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">UofM</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach ($product_sizes as $product)
+                  <tr>
+                    <td scope="row">
+                      <?php
+
+                      $series = str_replace('Ã©', 'é', $product->series);
+
+                      if ($current_item == $product->sku) {
+                        echo '<div><b><span style="color: #999;"> ' . $product->item . '</span></b></div>';
+                      } else {
+                        echo '<div><a href="/products/' . $product->sku . '">' . $product->item . '</a></div>';
+                      }
+
+                      ?>
+                    </td>
+                    <td>
+                      <div>{{ $product->description }}</div>
+                    </td>
+                    <td>
+                      <div>{{ $product->size }}</div>
+                    </td>
+                    <td>
+                      <div>{{ $product->finish }}</div>
+                    </td>
+                    <td>
+                      <div>{{ $product->site }}</div>
+                    </td>
+                    <td>
+                      <div>{{ number_format($product->qty,0) }}</div>
+                    </td>
+                    <td>
+                      <div>{{ $product->uofm }}</div>
+                    </td>
+
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+          <div class="tab-pane fade" id="size-grid-tab-pane" role="tabpanel" aria-labelledby="size-grid-tab" tabindex="0">
+
+            <div class="card-body" style="padding: 10px;">
+
+              <div class="row" style="--bs-gutter-x: 0rem;">
+                @foreach ($product_sizes as $product)
+                <?php
+                //generate image path
+
+                $image = $product->img_url;
+                $series = str_replace('Ã©', 'é', $product->series);
+
+                //if item image url is blank, use local image if exists, otherwise use series image
+                if ($product->img_url == '') {
+                  $image = $product->material . '/' . $series;
+                  $image = '/assets/images/products/' . $image;
+                  $finish = $product->finish;
+
+                  if ($finish == '') {
+                    $finish = '-';
+                  }
+
+                  $filename = $image . '/' . $series . '_' . $product->size . '_' . $product->color . '_' . $finish . '.jpg';
+                  $filename = strtolower(str_replace(' ', '_', $filename));
+                  $filename = str_replace('_-', '', $filename);
+                  $filename = str_replace('hexagon', 'hex', $filename);
+                  $filename = str_replace('japonaise', 'japon', $filename);
+                  $full_filename = $_SERVER["DOCUMENT_ROOT"] . $filename;
+
+                  $exists = false;
+                  if (file_exists($full_filename)) {
+                    $image = $filename;
+                    $exists = true;
+                    //echo 'file exists!';
+                  } else {
+                    $image = $image . '.png';
+                    //echo 'not exists!';
+                  }
+                  $image = strtolower(str_replace(' ', '_', $image));
+                }
+
+                //if item has image url and is not located on http path, use local path
+                if ($product->img_url != '' and strpos($product->img_url, 'http') === false) {
+                  $image = $product->material . '/' . $series . '/' . $product->img_url;
+                  $image = strtolower(str_replace(' ', '_', $image));
+                  $image = '/assets/images/products/' . $image;
+                }
+
+                //if item has image url and is located on http path, use image url
+                if ($product->img_url != '' and strpos($product->img_url, 'http') != 0) {
+                  $image = $product->img_url;
+                }
+
+                //if item image url is blank and series image url exists, use series url path
+                if ($product->img_url == '' and $exists == false and $product->series_img_url != '') {
+                  $image = $product->series_img_url;
+                }
+
+                $image = str_replace('é', 'e', $image);
+
+                ?>
+                <div class="col-lg-2 img-container" Style="padding: 5px;
+                  ">
+                  <a href="/products/{{ $product->sku }}">
+                    <img class="img-thumbnail" src="{{$image}}" style="
+                    border-radius: 5px;">
+                  </a>
+                  {{$product->size . ' ' . str_replace('-', '', $product->finish)}}
+                </div>
+                @endforeach
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       @endif
-
     </div>
+
     <div class="tab-pane fade" id="color-tab-pane" role="tabpanel" aria-labelledby="color-tab" tabindex="0">
 
       <!-- Color variations -->
       @if (count($product_colors) > 1)
 
       <div class="card" style="margin: 0px;">
-        <!-- <div class="card-header">
-          <h5 class="card-title">Color Variations</h5>
-        </div> -->
-        <div class="card-body">
-          <table class="table table-striped table-borderless datatable">
-            <thead>
-              <tr>
-                <th scope="col">Item</th>
-                <th scope="col">Description</th>
-                <th scope="col">Color</th>
-                <th scope="col">Finish</th>
-                <th scope="col">Site</th>
-                <th scope="col">Qty</th>
-                <th scope="col">UofM</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach ($product_colors as $product)
-              <tr>
-                <td scope="row">
-                  <?php
-
-                  $series = str_replace('Ã©', 'é', $product->series);
-
-                  if ($current_item == $product->sku) {
-                    echo '<div><b><span style="color: #999;"> ' . $product->item . '</span></b></div>';
-                  } else {
-                    echo '<div><a href="/products/' . $product->sku . '">' . $product->item . '</a></div>';
-                  }
-
-                  ?>
-                </td>
-                <td>
-                  <div>{{ $product->description }}</div>
-                </td>
-                <td>
-                  <div>{{ $product->color }}</div>
-                </td>
-                <td>
-                  <div>{{ $product->finish }}</div>
-                </td>
-                <td>
-                  <div>{{ $product->site }}</div>
-                </td>
-                <td>
-                  <div>{{ number_format($product->qty,0) }}</div>
-                </td>
-                <td>
-                  <div>{{ $product->uofm }}</div>
-                </td>
-
-              </tr>
-              @endforeach
-            </tbody>
-          </table>
+        <div class="card-header">
+          <!-- Color variation sub tabs -->
+          <ul class="nav nav-pills" style="" id="myColorTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" style="padding: 5px 10px;" id="color-table-tab" data-bs-toggle="tab" data-bs-target="#color-table-tab-pane" type="button" role="tab" aria-controls="color-table-tab-pane" aria-selected="true">Table</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" style="padding: 5px 10px;" id="color-grid-tab" data-bs-toggle="tab" data-bs-target="#color-grid-tab-pane" type="button" role="tab" aria-controls="color-grid-tab-pane" aria-selected="false">Grid</button>
+            </li>
+          </ul>
         </div>
 
+        <div class="tab-content" id="myColorTabContent">
+
+          <div class="tab-pane fade show active" id="color-table-tab-pane" role="tabpanel" aria-labelledby="table-tab" tabindex="0">
+
+            <div class="card-body">
+              <table class="table table-striped table-borderless datatable">
+                <thead>
+                  <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Color</th>
+                    <th scope="col">Finish</th>
+                    <th scope="col">Site</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">UofM</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach ($product_colors as $product)
+                  <tr>
+                    <td scope="row">
+                      <?php
+
+                      $series = str_replace('Ã©', 'é', $product->series);
+
+                      if ($current_item == $product->sku) {
+                        echo '<div><b><span style="color: #999;"> ' . $product->item . '</span></b></div>';
+                      } else {
+                        echo '<div><a href="/products/' . $product->sku . '">' . $product->item . '</a></div>';
+                      }
+
+                      ?>
+                    </td>
+                    <td>
+                      <div>{{ $product->description }}</div>
+                    </td>
+                    <td>
+                      <div>{{ $product->color }}</div>
+                    </td>
+                    <td>
+                      <div>{{ $product->finish }}</div>
+                    </td>
+                    <td>
+                      <div>{{ $product->site }}</div>
+                    </td>
+                    <td>
+                      <div>{{ number_format($product->qty,0) }}</div>
+                    </td>
+                    <td>
+                      <div>{{ $product->uofm }}</div>
+                    </td>
+
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+          <div class="tab-pane fade" id="color-grid-tab-pane" role="tabpanel" aria-labelledby="color-grid-tab" tabindex="0">
+
+            <div class="card-body" style="padding: 10px;">
+
+              <div class="row" style="--bs-gutter-x: 0rem;">
+                @foreach ($product_colors as $product)
+                <?php
+                //generate image path
+
+                $image = $product->img_url;
+                $series = str_replace('Ã©', 'é', $product->series);
+
+                //if item image url is blank, use local image if exists, otherwise use series image
+                if ($product->img_url == '') {
+                  $image = $product->material . '/' . $series;
+                  $image = '/assets/images/products/' . $image;
+                  $finish = $product->finish;
+
+                  if ($finish == '') {
+                    $finish = '-';
+                  }
+
+                  $filename = $image . '/' . $series . '_' . $product->size . '_' . $product->color . '_' . $finish . '.jpg';
+                  $filename = strtolower(str_replace(' ', '_', $filename));
+                  $filename = str_replace('_-', '', $filename);
+                  $filename = str_replace('hexagon', 'hex', $filename);
+                  $filename = str_replace('japonaise', 'japon', $filename);
+                  $full_filename = $_SERVER["DOCUMENT_ROOT"] . $filename;
+
+                  $exists = false;
+                  if (file_exists($full_filename)) {
+                    $image = $filename;
+                    $exists = true;
+                    //echo 'file exists!';
+                  } else {
+                    $image = $image . '.png';
+                    //echo 'not exists!';
+                  }
+                  $image = strtolower(str_replace(' ', '_', $image));
+                }
+
+                //if item has image url and is not located on http path, use local path
+                if ($product->img_url != '' and strpos($product->img_url, 'http') === false) {
+                  $image = $product->material . '/' . $series . '/' . $product->img_url;
+                  $image = strtolower(str_replace(' ', '_', $image));
+                  $image = '/assets/images/products/' . $image;
+                }
+
+                //if item has image url and is located on http path, use image url
+                if ($product->img_url != '' and strpos($product->img_url, 'http') != 0) {
+                  $image = $product->img_url;
+                }
+
+                //if item image url is blank and series image url exists, use series url path
+                if ($product->img_url == '' and $exists == false and $product->series_img_url != '') {
+                  $image = $product->series_img_url;
+                }
+
+                $image = str_replace('é', 'e', $image);
+
+                ?>
+                <div class="col-lg-2 img-container" Style="padding: 5px;
+                  ">
+                  <a href="/products/{{ $product->sku }}">
+                    <img class="img-thumbnail" src="{{$image}}" style="
+                    border-radius: 5px;">
+                  </a>
+                  {{$product->color . ' ' . str_replace('-', '', $product->finish)}}
+                </div>
+                @endforeach
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       @endif
 
+      <!-- The Modal -->
+      <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <!-- <a href="" id="img_href"> -->
+        <img class="modal-content" id="img01">
+        <!-- </a> -->
+        <div id="caption"></div>
+      </div>
+
     </div>
-  </div>
 
+    <script src="/assets/js/imgpreview.js"></script>
 
-  <!-- The Modal -->
-  <div id="myModal" class="modal">
-    <span class="close">&times;</span>
-    <!-- <a href="" id="img_href"> -->
-    <img class="modal-content" id="img01">
-    <!-- </a> -->
-    <div id="caption"></div>
-  </div>
-
-</div>
-
-<script src="/assets/js/imgpreview.js"></script>
-
-@endsection
+    @endsection
