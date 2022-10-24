@@ -107,8 +107,7 @@
         ?>
 
 
-        <img id="myImg" src="{{ $image }}" alt="{{ $product->description }}"
-         class="product-image img-responsive">
+        <img id="myImg" src="{{ $image }}" alt="{{ $product->description }}" class="product-image img-responsive">
 
       </div>
     </div>
@@ -164,8 +163,7 @@
       </div>
 
 
-      <div class="accordion accordion-flush" id="accordionPanelsStayOpenExample"
-       style="--bs-accordion-active-bg: #fefefe;
+      <div class="accordion accordion-flush" id="accordionPanelsStayOpenExample" style="--bs-accordion-active-bg: #fefefe;
        --bs-accordion-btn-focus-border-color: #efefef;
        --bs-accordion-btn-padding-y: 0.5rem;
        --bs-accordion-active-color: #000;
@@ -173,8 +171,7 @@
        ">
         <div class="accordion-item">
           <h2 class="accordion-header" id="panelsStayOpen-headingOne" style="border-bottom: 0.5px solid #e2e2e2;">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
-            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
               DOCUMENTATION
             </button>
           </h2>
@@ -216,134 +213,147 @@
 
   ?>
 
+  <ul class="nav nav-tabs" style="border: 0px;" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="size-tab" data-bs-toggle="tab" data-bs-target="#size-tab-pane" type="button" role="tab" aria-controls="size-tab-pane" aria-selected="true">Size Variations</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="color-tab" data-bs-toggle="tab" data-bs-target="#color-tab-pane" type="button" role="tab" aria-controls="color-tab-pane" aria-selected="false">Color Variations</button>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="size-tab-pane" role="tabpanel" aria-labelledby="size-tab" tabindex="0">
 
-  <!-- Size variations -->
-  @if (count($product_sizes) > 1)
+      <!-- Size variations -->
+      @if (count($product_sizes) > 1)
 
-  <div class="card">
-    <div class="card-header">
-      <h5 class="card-title">Size Variations</h5>
+      <div class="card" style="margin: 0px;">
+        <div class="card-body">
+          <table class="table table-striped table-borderless datatable">
+            <thead>
+              <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Description</th>
+                <th scope="col">Color</th>
+                <th scope="col">Finish</th>
+                <th scope="col">Site</th>
+                <th scope="col">Qty</th>
+                <th scope="col">UofM</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($product_sizes as $product)
+              <tr>
+                <td scope="row">
+                  <?php
+
+                  $series = str_replace('Ã©', 'é', $product->series);
+
+                  if ($current_item == $product->sku) {
+                    echo '<div><b><span style="color: #999;"> ' . $product->item . '</span></b></div>';
+                  } else {
+                    echo '<div><a href="/products/' . $product->sku . '">' . $product->item . '</a></div>';
+                  }
+
+                  ?>
+                </td>
+                <td>
+                  <div>{{ $product->description }}</div>
+                </td>
+                <td>
+                  <div>{{ $product->color }}</div>
+                </td>
+                <td>
+                  <div>{{ $product->finish }}</div>
+                </td>
+                <td>
+                  <div>{{ $product->site }}</div>
+                </td>
+                <td>
+                  <div>{{ number_format($product->qty,0) }}</div>
+                </td>
+                <td>
+                  <div>{{ $product->uofm }}</div>
+                </td>
+
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+      @endif
+
     </div>
-    <div class="card-body">
-      <table class="table table-striped table-borderless datatable">
-        <thead>
-          <tr>
-            <th scope="col">Item</th>
-            <th scope="col">Description</th>
-            <th scope="col">Color</th>
-            <th scope="col">Finish</th>
-            <th scope="col">Site</th>
-            <th scope="col">Qty</th>
-            <th scope="col">UofM</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach ($product_sizes as $product)
-          <tr>
-            <td scope="row">
-              <?php
+    <div class="tab-pane fade" id="color-tab-pane" role="tabpanel" aria-labelledby="color-tab" tabindex="0">
 
-              $series = str_replace('Ã©', 'é', $product->series);
+      <!-- Color variations -->
+      @if (count($product_colors) > 1)
 
-              if ($current_item == $product->sku) {
-                echo '<div><b><span style="color: #999;"> ' . $product->item . '</span></b></div>';
-              } else {
-                echo '<div><a href="/products/' . $product->sku . '">' . $product->item . '</a></div>';
-              }
+      <div class="card" style="margin: 0px;">
+        <!-- <div class="card-header">
+          <h5 class="card-title">Color Variations</h5>
+        </div> -->
+        <div class="card-body">
+          <table class="table table-striped table-borderless datatable">
+            <thead>
+              <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Description</th>
+                <th scope="col">Color</th>
+                <th scope="col">Finish</th>
+                <th scope="col">Site</th>
+                <th scope="col">Qty</th>
+                <th scope="col">UofM</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($product_colors as $product)
+              <tr>
+                <td scope="row">
+                  <?php
 
-              ?>
-            </td>
-            <td>
-              <div>{{ $product->description }}</div>
-            </td>
-            <td>
-              <div>{{ $product->color }}</div>
-            </td>
-            <td>
-              <div>{{ $product->finish }}</div>
-            </td>
-            <td>
-              <div>{{ $product->site }}</div>
-            </td>
-            <td>
-              <div>{{ number_format($product->qty,0) }}</div>
-            </td>
-            <td>
-              <div>{{ $product->uofm }}</div>
-            </td>
+                  $series = str_replace('Ã©', 'é', $product->series);
 
-          </tr>
-          @endforeach
-        </tbody>
-      </table>
+                  if ($current_item == $product->sku) {
+                    echo '<div><b><span style="color: #999;"> ' . $product->item . '</span></b></div>';
+                  } else {
+                    echo '<div><a href="/products/' . $product->sku . '">' . $product->item . '</a></div>';
+                  }
+
+                  ?>
+                </td>
+                <td>
+                  <div>{{ $product->description }}</div>
+                </td>
+                <td>
+                  <div>{{ $product->color }}</div>
+                </td>
+                <td>
+                  <div>{{ $product->finish }}</div>
+                </td>
+                <td>
+                  <div>{{ $product->site }}</div>
+                </td>
+                <td>
+                  <div>{{ number_format($product->qty,0) }}</div>
+                </td>
+                <td>
+                  <div>{{ $product->uofm }}</div>
+                </td>
+
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+      @endif
+
     </div>
-
   </div>
-  @endif
-
-  <!-- Color variations -->
-  @if (count($product_colors) > 1)
-
-  <div class="card">
-    <div class="card-header">
-      <h5 class="card-title">Color Variations</h5>
-    </div>
-    <div class="card-body">
-      <table class="table table-striped table-borderless datatable">
-        <thead>
-          <tr>
-            <th scope="col">Item</th>
-            <th scope="col">Description</th>
-            <th scope="col">Color</th>
-            <th scope="col">Finish</th>
-            <th scope="col">Site</th>
-            <th scope="col">Qty</th>
-            <th scope="col">UofM</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach ($product_colors as $product)
-          <tr>
-            <td scope="row">
-              <?php
-
-              $series = str_replace('Ã©', 'é', $product->series);
-
-              if ($current_item == $product->sku) {
-                echo '<div><b><span style="color: #999;"> ' . $product->item . '</span></b></div>';
-              } else {
-                echo '<div><a href="/products/' . $product->sku . '">' . $product->item . '</a></div>';
-              }
-
-              ?>
-            </td>
-            <td>
-              <div>{{ $product->description }}</div>
-            </td>
-            <td>
-              <div>{{ $product->color }}</div>
-            </td>
-            <td>
-              <div>{{ $product->finish }}</div>
-            </td>
-            <td>
-              <div>{{ $product->site }}</div>
-            </td>
-            <td>
-              <div>{{ number_format($product->qty,0) }}</div>
-            </td>
-            <td>
-              <div>{{ $product->uofm }}</div>
-            </td>
-
-          </tr>
-          @endforeach
-        </tbody>
-      </table>
-    </div>
-
-  </div>
-  @endif
 
 
   <!-- The Modal -->
