@@ -535,15 +535,15 @@
       </div>
       @endif
 
-      <!-- The Modal -->
-      <div id="myModal" class="modal">
-        <span class="close">&times;</span>
-        <!-- <a href="" id="img_href"> -->
-        <img class="modal-content" id="img01">
-        <!-- </a> -->
-        <div id="caption"></div>
-      </div>
+    </div>
 
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+      <span class="close">&times;</span>
+      <!-- <a href="" id="img_href"> -->
+      <img class="modal-content" id="img01">
+      <!-- </a> -->
+      <div id="caption"></div>
     </div>
 
     <script src="/assets/js/imgpreview.js"></script>
