@@ -201,7 +201,7 @@
           </li>
 
           <li>
-          <a href="/collections/glass/shelter island">
+          <a href="/collections/ceramic/shelter island">
               <i class="bi bi-circle"></i><span>Johnathan Adler</span>
             </a>
           </li>
