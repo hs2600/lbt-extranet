@@ -440,7 +440,7 @@
                         <div class="ml-4">
                             <div style="max-height: 130px; overflow: hidden;
                             border-radius: 5px;">
-                                <a href="/collections/glass/shelter island" class="underline text-gray-900 dark:text-white">
+                                <a href="/collections/ceramic/shelter island" class="underline text-gray-900 dark:text-white">
                                     <img src="/assets/images/products/jonathan_adler_h.png" alt="Shelter Island" style="width: 100%;
                                 height: 150px;
                                 object-fit: cover;">
@@ -486,7 +486,7 @@
                         <div class="ml-4">
                             <div style="max-height: 130px; overflow: hidden;
                             border-radius: 5px;">
-                                <a href="/collections/glass/linen" class="underline text-gray-900 dark:text-white">
+                                <a href="/collections/ceramic/linen" class="underline text-gray-900 dark:text-white">
                                     <img src="/assets/images/products/ceramic/linen.png" alt="Shelter Island" style="width: 100%;
                                 height: 150px;
                                 object-fit: cover;">
@@ -509,7 +509,7 @@
                         <div class="ml-4">
                             <div style="max-height: 130px; overflow: hidden;
                             border-radius: 5px;">
-                                <a href="/collections/glass/contourz" class="underline text-gray-900 dark:text-white">
+                                <a href="/collections/concrete/contourz" class="underline text-gray-900 dark:text-white">
                                     <img src="/assets/images/products/concrete/contourz.png" alt="Shelter Island" style="width: 100%;
                                 height: 150px;
                                 object-fit: cover;">
