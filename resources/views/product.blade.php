@@ -217,9 +217,72 @@
   ?>
 
 
+  <!-- Size variations -->
+  @if (count($product_sizes) > 1)
 
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">Size Variations</h5>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped table-borderless datatable">
+        <thead>
+          <tr>
+            <th scope="col">Item</th>
+            <th scope="col">Description</th>
+            <th scope="col">Color</th>
+            <th scope="col">Finish</th>
+            <th scope="col">Site</th>
+            <th scope="col">Qty</th>
+            <th scope="col">UofM</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($product_sizes as $product)
+          <tr>
+            <td scope="row">
+              <?php
+
+              $series = str_replace('Ã©', 'é', $product->series);
+
+              if ($current_item == $product->sku) {
+                echo '<div><b><span style="color: #999;"> ' . $product->item . '</span></b></div>';
+              } else {
+                echo '<div><a href="/products/' . $product->sku . '">' . $product->item . '</a></div>';
+              }
+
+              ?>
+            </td>
+            <td>
+              <div>{{ $product->description }}</div>
+            </td>
+            <td>
+              <div>{{ $product->color }}</div>
+            </td>
+            <td>
+              <div>{{ $product->finish }}</div>
+            </td>
+            <td>
+              <div>{{ $product->site }}</div>
+            </td>
+            <td>
+              <div>{{ number_format($product->qty,0) }}</div>
+            </td>
+            <td>
+              <div>{{ $product->uofm }}</div>
+            </td>
+
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  @endif
+
+  <!-- Color variations -->
   @if (count($product_colors) > 1)
-
 
   <div class="card">
     <div class="card-header">
@@ -281,6 +344,7 @@
 
   </div>
   @endif
+
 
   <!-- The Modal -->
   <div id="myModal" class="modal">

@@ -235,6 +235,17 @@ class ProductController extends Controller
      */
     public function productsID($id){
       error_log("INFO: get /");
+
+        $product_sizes = Product::orderBy('item', 'asc')
+        ->leftjoin('products as product_sizes', function ($join) {
+        $join->on('products.material', '=', 'product_sizes.material')
+             ->On('products.series', '=', 'product_sizes.series')
+             ->On('products.color', '=', 'product_sizes.color');
+        })
+        ->select('product_sizes.*')
+        ->where('products.sku', '=', $id)
+        ->get();
+
       return view('product', [
         'products' => Product::orderBy('item', 'asc')
         ->leftjoin('collections', function ($join) {
@@ -256,6 +267,7 @@ class ProductController extends Controller
         ->where('products.sku', '=', $id)
         ->get()
       ])
+      ->with('product_sizes', $product_sizes)
       ;
     }
 
