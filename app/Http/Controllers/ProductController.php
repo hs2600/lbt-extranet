@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Collection;
 use App\Models\Product;
+use App\Models\Quantity;
 use Illuminate\Http\Request;
-
 
 class ProductController extends Controller
 {
@@ -246,6 +246,13 @@ class ProductController extends Controller
         ->where('products.sku', '=', $id)
         ->get();
 
+        $product_lots = Quantity::orderBy('item', 'asc')
+        ->orderBy('bin', 'asc')
+        ->orderBy('lot', 'asc')
+        ->orderBy('qty', 'desc')
+        ->where('sku', '=', $id)
+        ->get();
+
       return view('product', [
         'products' => Product::orderBy('item', 'asc')
         ->leftjoin('collections', function ($join) {
@@ -268,6 +275,7 @@ class ProductController extends Controller
         ->get()
       ])
       ->with('product_sizes', $product_sizes)
+      ->with('product_lots', $product_lots)
       ;
     }
 

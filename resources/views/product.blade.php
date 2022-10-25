@@ -4,12 +4,11 @@
 
 
 <style>
-  
   .nav-pills .nav-link {
     padding: 5px 10px 2px 10px;
     margin-right: 10px;
   }
-  
+
   .nav-pills .nav-link.active,
   .nav-pills .show>.nav-link {
     padding: 5px 10px 2px 10px;
@@ -156,12 +155,72 @@
       </div>
       <p class="product-description">{{ $product->series_desc }}</p>
 
+
+      @if (count($product_lots) > 0)
+
+      <div class="accordion accordion-flush" id="accordionPanelsStayOpenExample" style="padding-bottom: 20px;">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingOne" style="border-bottom: 0.5px solid #e2e2e2;">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne" style="
+             
+             padding: 10px;">
+              <span class="product-price"><b><i>{{ $qty }} {{ $uofm }} </b> stocked in Harbor City</i></span>
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+            <div class="accordion-body" style="padding: 0px 20px;
+                border: 1px solid #efefef;
+                padding-top: 5px;
+                border-top: 0px;
+                border-radius: 5px;">
+
+              <table class="table" style="font-size: 14px;">
+                <thead>
+                  <tr>
+                    <th style="padding: 5px;" scope="col">Bin</th>
+                    <th style="padding: 5px;" scope="col">Lot</th>
+                    <th style="padding: 5px;" scope="col">Qty</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach ($product_lots as $lot)
+
+                  <?php
+                  $qty = number_format($lot->qty, 2);
+                  $uofm = strtolower(str_replace('each', 'piece', strtolower($product->uofm)));
+
+                  if (str_replace('each', 'piece', strtolower($product->uofm)) == 'piece') {
+                    $qty = number_format($lot->qty, 0);
+                    $uofm = $uofm . 's';
+                  }
+
+                  ?>
+
+
+                  <tr>
+                    <td style="padding: 5px;">{{ $lot->bin }}</td>
+                    <td style="padding: 5px;">{{ $lot->lot }}</td>
+                    <td style="padding: 5px;">{{ $qty }}</td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      @else
       <div style="background-color: #fafafa; padding: 5px; margin-bottom: 20px;
         border-bottom: 1px solid #ddd;">
         <div class="">
           <span class="product-price"><b><i>{{ $qty }} {{ $uofm }} </b> stocked in Harbor City</i></span>
         </div>
       </div>
+
+      @endif
 
       @endforeach
 
@@ -216,7 +275,7 @@
   ?>
 
 
-    <div class="card">
+    <div class="card" style="margin-top: 20px;">
       <div class="card-body">
         <h5 class="card-title">Series overview</h5>
         <p class="card-text">{{ $product->material_desc }}</p>
@@ -230,10 +289,9 @@
   ?>
 
   <!-- Size and color variation tabs -->
-  <ul class="nav nav-tabs" style="border: 0px;" id="myTab" role="tablist">
+  <ul class="nav nav-tabs" style="margin-top:20px; border: 0px;" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="size-tab" data-bs-toggle="tab" data-bs-target="#size-tab-pane" type="button" role="tab" 
-      aria-controls="size-tab-pane" aria-selected="true">
+      <button class="nav-link active" id="size-tab" data-bs-toggle="tab" data-bs-target="#size-tab-pane" type="button" role="tab" aria-controls="size-tab-pane" aria-selected="true">
         Size Variations
       </button>
     </li>
@@ -253,8 +311,7 @@
           <!-- Size variation sub tabs -->
           <ul class="nav nav-pills" style="float: right;" id="mySizeTab" role="tablist">
             <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="size-table-tab" data-bs-toggle="tab" data-bs-target="#size-table-tab-pane" 
-              type="button" role="tab" aria-controls="size-table-tab-pane" aria-selected="true">
+              <button class="nav-link active" id="size-table-tab" data-bs-toggle="tab" data-bs-target="#size-table-tab-pane" type="button" role="tab" aria-controls="size-table-tab-pane" aria-selected="true">
                 <i class="fa-solid fa-list" style="font-size: 20px; color: #000;"></i></button>
             </li>
             <li class="nav-item" role="presentation">
@@ -267,7 +324,7 @@
 
           <div class="tab-pane fade show active" id="size-table-tab-pane" role="tabpanel" aria-labelledby="table-tab" tabindex="0">
 
-          <div class="card-body" style="padding-top: 10px;">
+            <div class="card-body" style="padding-top: 10px;">
               <table class="table table-striped table-borderless datatable">
                 <thead>
                   <tr>
@@ -424,7 +481,7 @@
 
           <div class="tab-pane fade show active" id="color-table-tab-pane" role="tabpanel" aria-labelledby="table-tab" tabindex="0">
 
-          <div class="card-body" style="padding-top: 10px;">
+            <div class="card-body" style="padding-top: 10px;">
               <table class="table table-striped table-borderless datatable">
                 <thead>
                   <tr>
