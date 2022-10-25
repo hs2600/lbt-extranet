@@ -158,16 +158,17 @@
 
       @if (count($product_lots) > 0)
 
-      <div class="accordion accordion-flush" id="accordionPanelsStayOpenExample" style="padding-bottom: 20px;">
+      <div class="accordion accordion-flush" id="accordionPanelsStayOpenQty" style="padding-bottom: 20px;">
         <div class="accordion-item">
           <h2 class="accordion-header" id="panelsStayOpen-headingOne" style="border-bottom: 0.5px solid #e2e2e2;">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne" style="
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#panelsStayOpen-Qty" aria-expanded="false" aria-controls="panelsStayOpen-Qty" style="
              
              padding: 10px;">
               <span class="product-price"><b><i>{{ $qty }} {{ $uofm }} </b> stocked in Harbor City</i></span>
             </button>
           </h2>
-          <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+          <div id="panelsStayOpen-Qty" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
             <div class="accordion-body" style="padding: 0px 20px;
                 border: 1px solid #efefef;
                 padding-top: 5px;
@@ -238,7 +239,7 @@
       </div>
 
 
-      <div class="accordion accordion-flush" id="accordionPanelsStayOpenExample" style="--bs-accordion-active-bg: #fefefe;
+      <div class="accordion accordion-flush" id="accordionPanelsStayOpenDocs" style="--bs-accordion-active-bg: #fefefe;
        --bs-accordion-btn-focus-border-color: #efefef;
        --bs-accordion-btn-padding-y: 0.5rem;
        --bs-accordion-active-color: #000;
@@ -246,11 +247,12 @@
        ">
         <div class="accordion-item">
           <h2 class="accordion-header" id="panelsStayOpen-headingOne" style="border-bottom: 0.5px solid #e2e2e2;">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+             data-bs-target="#panelsStayOpen-Docs" aria-expanded="false" aria-controls="panelsStayOpen-Docs">
               DOCUMENTATION
             </button>
           </h2>
-          <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+          <div id="panelsStayOpen-Docs" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
             <div class="accordion-body">
 
               Series Brochures &nbsp;
@@ -276,7 +278,7 @@
 
 
     <div class="card" style="margin-top: 20px;">
-      <div class="card-body">
+      <div class="card-body" style="padding-bottom: 10px;">
         <h5 class="card-title">Series overview</h5>
         <p class="card-text">{{ $product->material_desc }}</p>
       </div>
