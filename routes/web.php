@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InvitationController;
 use Illuminate\Support\Facades\Route;
-use App\Invitation;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +19,10 @@ use App\Invitation;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
-
 Route::get('/', function () {
-    return view('welcome');
-});
+    return redirect('/collections');
+})->middleware(['auth', 'verified'])->name('collections');
+
 
 Route::get('/dashboard', function () {
     return view('layouts.dashboard');
@@ -51,15 +51,16 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/products',[ProductController::class, 'productsSearch'])->name('products');
     Route::get('/products/{id}',[ProductController::class, 'productsID']);
     Route::get('/products_all',[ProductController::class, 'productsAll']);
+    Route::get('/collections',[ProductController::class, 'collections'])->name('collections');
+    Route::get('/collections/material',[ProductController::class, 'collectionsMaterial']);
+    Route::get('/collections/{material}',[ProductController::class, 'collectionsByMaterial']);    
+    Route::get('/collections/{material}/{series}',[ProductController::class, 'collectionsByMaterialSeries']);
+    Route::get('/collections/{material}/{series}/{size}',[ProductController::class, 'collectionsByMaterialSeriesSize']);
 });
 
 
 //Public routes
-Route::get('/collections',[ProductController::class, 'collections'])->name('collections');
-Route::get('/collections/material',[ProductController::class, 'collectionsMaterial']);
-Route::get('/collections/{material}',[ProductController::class, 'collectionsByMaterial']);    
-Route::get('/collections/{material}/{series}',[ProductController::class, 'collectionsByMaterialSeries']);
-Route::get('/collections/{material}/{series}/{size}',[ProductController::class, 'collectionsByMaterialSeriesSize']);
+
 
 /**  TESTING */
 /**
