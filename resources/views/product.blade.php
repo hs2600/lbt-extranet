@@ -58,6 +58,9 @@
         $image = $product->img_url;
         $material_desc = $product->material_desc;
         $series = str_replace('Ã©', 'é', $product->series);
+        $series = str_replace('1/2', '0.5', $series);
+        $series = str_replace('1/4', '0.25', $series);
+
         //$series = $product->series;
         //print_r($_SERVER);
 
@@ -77,6 +80,8 @@
           $filename = str_replace('hexagon', 'hex', $filename);
           $filename = str_replace('japonaise', 'japon', $filename);
           $full_filename = $_SERVER["DOCUMENT_ROOT"] . $filename;
+
+          // echo $full_filename;
 
           $exists = false;
           if (file_exists($full_filename)) {
@@ -393,6 +398,8 @@
 
                 $image = $product->img_url;
                 $series = str_replace('Ã©', 'é', $product->series);
+                $series = str_replace('1/2', '0.5', $series);
+                $series = str_replace('1/4', '0.25', $series);
 
                 //if item image url is blank, use local image if exists, otherwise use series image
                 if ($product->img_url == '') {
@@ -447,7 +454,7 @@
                   ">
                   <a href="/products/{{ $product->sku }}">
                     <img class="img-thumbnail" src="{{$image}}" style="
-                    border-radius: 5px;">
+                    border-radius: 5px;" alt="{{ ucwords(strtolower($product->description)) }}">
                   </a>
                   {{$product->size . ' ' . str_replace('-', '', $product->finish)}}
                 </div>
@@ -550,6 +557,8 @@
 
                 $image = $product->img_url;
                 $series = str_replace('Ã©', 'é', $product->series);
+                $series = str_replace('1/2', '0.5', $series);
+                $series = str_replace('1/4', '0.25', $series);
 
                 //if item image url is blank, use local image if exists, otherwise use series image
                 if ($product->img_url == '') {
@@ -604,7 +613,7 @@
                   ">
                   <a href="/products/{{ $product->sku }}">
                     <img class="img-thumbnail" src="{{$image}}" style="
-                    border-radius: 5px;">
+                    border-radius: 5px;" alt="{{ ucwords(strtolower($product->description)) }}">
                   </a>
                   {{$product->color . ' ' . str_replace('-', '', $product->finish)}}
                 </div>
