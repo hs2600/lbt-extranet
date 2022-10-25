@@ -230,7 +230,7 @@
 
       @endforeach
 
-      <div class="row justify-content-md-center">
+      <!-- <div class="row justify-content-md-center">
         <div class="col-md-8 col-sm-7" style="padding-bottom: 5px;">
           <button type="button" class="btn btn-info disabled" style="width: 100%; border-bottom: 5px solid rgb(136, 41, 41);">
             ADD TO CART
@@ -241,19 +241,15 @@
         <div class="col-md-4 col-sm-5" style="padding-bottom: 5px;">
           <button type="button" class="btn btn-default disabled" style="width: 100%;  border-bottom: 5px solid rgb(136, 41, 41);">CART <i class="fa fa-shopping-cart"></i></button>
         </div>
-      </div>
+      </div> -->
 
 
-      <div class="accordion accordion-flush" id="accordionPanelsStayOpenDocs" style="--bs-accordion-active-bg: #fefefe;
-       --bs-accordion-btn-focus-border-color: #efefef;
-       --bs-accordion-btn-padding-y: 0.5rem;
-       --bs-accordion-active-color: #000;
-       --bs-accordion-body-padding-y: 0.5rem;
-       ">
+      <div class="accordion accordion-flush" id="accordionPanelsStayOpenQty" style="padding-bottom: 20px;">
         <div class="accordion-item">
           <h2 class="accordion-header" id="panelsStayOpen-headingOne" style="border-bottom: 0.5px solid #e2e2e2;">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-             data-bs-target="#panelsStayOpen-Docs" aria-expanded="false" aria-controls="panelsStayOpen-Docs">
+             data-bs-target="#panelsStayOpen-Docs" aria-expanded="false" aria-controls="panelsStayOpen-Docs" style="
+             padding: 10px;">
               DOCUMENTATION
             </button>
           </h2>
