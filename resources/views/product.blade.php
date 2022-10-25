@@ -3,6 +3,22 @@
 @section('content')
 
 
+<style>
+  
+  .nav-pills .nav-link {
+    padding: 5px 10px 2px 10px;
+    margin-right: 10px;
+  }
+  
+  .nav-pills .nav-link.active,
+  .nav-pills .show>.nav-link {
+    padding: 5px 10px 2px 10px;
+    border: 1px solid #a9a9a9;
+    color: #666;
+    background-color: #fcfcfc;
+  }
+</style>
+
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center 
  pt-3 mb-2 border-bottom">
 
@@ -216,7 +232,8 @@
   <!-- Size and color variation tabs -->
   <ul class="nav nav-tabs" style="border: 0px;" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="size-tab" data-bs-toggle="tab" data-bs-target="#size-tab-pane" type="button" role="tab" aria-controls="size-tab-pane" aria-selected="true">
+      <button class="nav-link active" id="size-tab" data-bs-toggle="tab" data-bs-target="#size-tab-pane" type="button" role="tab" 
+      aria-controls="size-tab-pane" aria-selected="true">
         Size Variations
       </button>
     </li>
@@ -234,13 +251,14 @@
       <div class="card" style="margin: 0px;">
         <div class="card-header">
           <!-- Size variation sub tabs -->
-          <ul class="nav" style="" id="mySizeTab" role="tablist">
+          <ul class="nav nav-pills" style="" id="mySizeTab" role="tablist">
             <li class="nav-item" role="presentation">
-              <button class="nav-link active" style="padding: 5px 10px;" id="size-table-tab" data-bs-toggle="tab" data-bs-target="#size-table-tab-pane" type="button" role="tab" aria-controls="size-table-tab-pane" aria-selected="true">
+              <button class="nav-link active" id="size-table-tab" data-bs-toggle="tab" data-bs-target="#size-table-tab-pane" 
+              type="button" role="tab" aria-controls="size-table-tab-pane" aria-selected="true">
                 <i class="fa-solid fa-list" style="font-size: 20px; color: #000;"></i></button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" style="padding: 5px 10px;" id="size-grid-tab" data-bs-toggle="tab" data-bs-target="#size-grid-tab-pane" type="button" role="tab" aria-controls="size-grid-tab-pane" aria-selected="false"><i class="fa-solid fa-border-all" style="font-size: 20px; color: #000;"></i></button>
+              <button class="nav-link" id="size-grid-tab" data-bs-toggle="tab" data-bs-target="#size-grid-tab-pane" type="button" role="tab" aria-controls="size-grid-tab-pane" aria-selected="false"><i class="fa-solid fa-border-all" style="font-size: 20px; color: #000;"></i></button>
             </li>
           </ul>
         </div>
@@ -249,7 +267,7 @@
 
           <div class="tab-pane fade show active" id="size-table-tab-pane" role="tabpanel" aria-labelledby="table-tab" tabindex="0">
 
-            <div class="card-body">
+          <div class="card-body" style="padding-top: 10px;">
               <table class="table table-striped table-borderless datatable">
                 <thead>
                   <tr>
@@ -391,13 +409,13 @@
       <div class="card" style="margin: 0px;">
         <div class="card-header">
           <!-- Color variation sub tabs -->
-          <ul class="nav" style="" id="myColorTab" role="tablist">
+          <ul class="nav nav-pills" style="" id="myColorTab" role="tablist">
 
             <li class="nav-item" role="presentation">
-              <button class="nav-link active" style="padding: 5px 10px;" id="color-table-tab" data-bs-toggle="tab" data-bs-target="#color-table-tab-pane" type="button" role="tab" aria-controls="color-table-tab-pane" aria-selected="true"><i class="fa-solid fa-list" style="font-size: 20px; color: #000;"></i></button>
+              <button class="nav-link active" id="color-table-tab" data-bs-toggle="tab" data-bs-target="#color-table-tab-pane" type="button" role="tab" aria-controls="color-table-tab-pane" aria-selected="true"><i class="fa-solid fa-list" style="font-size: 20px; color: #000;"></i></button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" style="padding: 5px 10px;" id="color-grid-tab" data-bs-toggle="tab" data-bs-target="#color-grid-tab-pane" type="button" role="tab" aria-controls="color-grid-tab-pane" aria-selected="false"><i class="fa-solid fa-border-all" style="font-size: 20px; color: #000;"></i></button>
+              <button class="nav-link" id="color-grid-tab" data-bs-toggle="tab" data-bs-target="#color-grid-tab-pane" type="button" role="tab" aria-controls="color-grid-tab-pane" aria-selected="false"><i class="fa-solid fa-border-all" style="font-size: 20px; color: #000;"></i></button>
             </li>
           </ul>
         </div>
@@ -406,7 +424,7 @@
 
           <div class="tab-pane fade show active" id="color-table-tab-pane" role="tabpanel" aria-labelledby="table-tab" tabindex="0">
 
-            <div class="card-body">
+          <div class="card-body" style="padding-top: 10px;">
               <table class="table table-striped table-borderless datatable">
                 <thead>
                   <tr>
