@@ -251,7 +251,7 @@
       <div class="card" style="margin: 0px;">
         <div class="card-header">
           <!-- Size variation sub tabs -->
-          <ul class="nav nav-pills" style="" id="mySizeTab" role="tablist">
+          <ul class="nav nav-pills" style="float: right;" id="mySizeTab" role="tablist">
             <li class="nav-item" role="presentation">
               <button class="nav-link active" id="size-table-tab" data-bs-toggle="tab" data-bs-target="#size-table-tab-pane" 
               type="button" role="tab" aria-controls="size-table-tab-pane" aria-selected="true">
@@ -409,7 +409,7 @@
       <div class="card" style="margin: 0px;">
         <div class="card-header">
           <!-- Color variation sub tabs -->
-          <ul class="nav nav-pills" style="" id="myColorTab" role="tablist">
+          <ul class="nav nav-pills" style="float: right;" id="myColorTab" role="tablist">
 
             <li class="nav-item" role="presentation">
               <button class="nav-link active" id="color-table-tab" data-bs-toggle="tab" data-bs-target="#color-table-tab-pane" type="button" role="tab" aria-controls="color-table-tab-pane" aria-selected="true"><i class="fa-solid fa-list" style="font-size: 20px; color: #000;"></i></button>
