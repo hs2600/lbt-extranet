@@ -256,9 +256,9 @@ class ProductController extends Controller
         ->get();
 
         $product_lots = Quantity::orderBy('item', 'asc')
-        ->orderBy('bin', 'asc')
-        ->orderBy('lot', 'asc')
+        ->select('lot', 'qty')
         ->orderBy('qty', 'desc')
+        ->orderBy('lot', 'asc')
         ->where('sku', '=', $id)
         ->get();
 
