@@ -231,6 +231,15 @@ class ProductController extends Controller
       }
 
     /**
+     * Show products - Search v3
+     */
+    public function productsSearchv3(){
+        error_log("INFO: get /");
+
+        return view('products_searchv3');
+      }
+
+    /**
      * Show products
      */
     public function productsID($id){

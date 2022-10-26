@@ -143,14 +143,6 @@
         </a>
       </li>
 
-      <li class="nav-item">
-        <a class="nav-link" href="/products">
-          <i class="bi bi-grid"></i>
-          <span>Products</span>
-        </a>
-      </li>
-      <!-- End Dashboard Nav -->
-
       <!-- Material -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#material-nav" data-bs-toggle="collapse" href="#">
@@ -209,6 +201,12 @@
       </li>
       <!-- End Series Nav -->
 
+      <li class="nav-item">
+        <a class="nav-link" href="/products">
+          <i class="bi bi-grid"></i>
+          <span>Products Search</span>
+        </a>
+      </li>
 
       <li class="nav-heading">Pages</li>
 
