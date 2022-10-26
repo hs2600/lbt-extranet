@@ -166,8 +166,7 @@
       <div class="accordion accordion-flush" id="accordionPanelsStayOpenQty" style="padding-bottom: 20px;">
         <div class="accordion-item">
           <h2 class="accordion-header" id="panelsStayOpen-headingOne" style="border-bottom: 0.5px solid #e2e2e2;">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
-            data-bs-target="#panelsStayOpen-Qty" aria-expanded="false" aria-controls="panelsStayOpen-Qty" style="
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-Qty" aria-expanded="false" aria-controls="panelsStayOpen-Qty" style="
              
              padding: 10px;">
               <span class="product-price"><b><i>{{ $qty }} {{ $uofm }} </b> stocked in Harbor City</i></span>
@@ -183,15 +182,20 @@
               <table class="table" style="font-size: 14px;">
                 <thead>
                   <tr>
-                    <th style="padding: 5px;" scope="col">Bin</th>
                     <th style="padding: 5px;" scope="col">Lot</th>
                     <th style="padding: 5px;" scope="col">Qty</th>
                   </tr>
                 </thead>
                 <tbody>
+
+                  <?php
+                  $lotm = 0;
+                  ?>
+
                   @foreach ($product_lots as $lot)
 
                   <?php
+
                   $qty = number_format($lot->qty, 2);
                   $uofm = strtolower(str_replace('each', 'piece', strtolower($product->uofm)));
 
@@ -200,17 +204,25 @@
                     $uofm = $uofm . 's';
                   }
 
+                  if (strpos($lot->lot, 'M') == true) {
+                    $lotm = 1;
+                  }
+
                   ?>
 
-
                   <tr>
-                    <td style="padding: 5px;">{{ $lot->bin }}</td>
-                    <td style="padding: 5px;">{{ $lot->lot }}</td>
+                    <td style="padding: 5px;">{{ str_replace('M','*', $lot->lot) }}</td>
                     <td style="padding: 5px;">{{ $qty }}</td>
                   </tr>
                   @endforeach
                 </tbody>
               </table>
+
+              <?php
+              if ($lotm == 1) {
+                echo '<p>Distinct lots must be installed in separate areas due to color variation across batches. <br> * Lot must be sampled prior to sale. Color is <i>extra</i> unique.</p>';
+              }
+              ?>
 
             </div>
           </div>
@@ -247,8 +259,7 @@
       <div class="accordion accordion-flush" id="accordionPanelsStayOpenQty" style="padding-bottom: 20px;">
         <div class="accordion-item">
           <h2 class="accordion-header" id="panelsStayOpen-headingOne" style="border-bottom: 0.5px solid #e2e2e2;">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-             data-bs-target="#panelsStayOpen-Docs" aria-expanded="false" aria-controls="panelsStayOpen-Docs" style="
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-Docs" aria-expanded="false" aria-controls="panelsStayOpen-Docs" style="
              padding: 10px;">
               DOCUMENTATION
             </button>
@@ -307,7 +318,7 @@
     <div class="tab-pane fade show active" id="size-tab-pane" role="tabpanel" aria-labelledby="size-tab" tabindex="0">
 
       <!-- Size variations -->
-      @if (count($product_sizes) > 1)
+      @if (count($product_sizes) > 0)
 
       <div class="card" style="margin: 0px;">
         <div class="card-header">
@@ -466,7 +477,7 @@
     <div class="tab-pane fade" id="color-tab-pane" role="tabpanel" aria-labelledby="color-tab" tabindex="0">
 
       <!-- Color variations -->
-      @if (count($product_colors) > 1)
+      @if (count($product_colors) > 0)
 
       <div class="card" style="margin: 0px;">
         <div class="card-header">
