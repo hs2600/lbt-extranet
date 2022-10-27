@@ -35,12 +35,30 @@
           <div class="d-none d-md-block">
 
             @foreach ($collection as $collection)
+            <?php
+            $default_color = $collection->default_color;
+            ?>
+
+            <div style="max-height: 200px; max-width: 450px;
+              overflow: hidden;
+              border-radius: 5px;
+              box-shadow: 1px 1px #ccc;
+              float: left;
+              margin-right: 20px;">
+              <img src="{{ $collection->img_url }}" alt="{{ $collection->series }}" class="product-image">
+            </div>
+
             {{ $collection->description }}
             @endforeach
           </div>
 
         </div>
         <div class="card-body" style="padding: 10px;">
+
+          <div class="row" style="--bs-gutter-x: 0rem;">
+
+            <div class="col" style="padding: 3px 10px;"><span style="float: right;">Color shown: {{ $default_color }} </span></div>
+          </div>
 
           <div class="row" style="--bs-gutter-x: 0rem;">
             @foreach ($products as $product)
@@ -60,11 +78,14 @@
                 $finish = '-';
               }
 
-              $filename = $image . '/' . $series . '_' . $product->size . '_' . $product->color . '_' . $finish . '.jpg';
+              $filename = $image . '/' . $series . '_' . $product->size . '_' . $default_color . '_' . $finish . '.jpg';
               $filename = strtolower(str_replace(' ', '_', $filename));
               $filename = str_replace('_-', '', $filename);
               $filename = str_replace('hexagon', 'hex', $filename);
               $filename = str_replace('japonaise', 'japon', $filename);
+
+              // echo $filename;
+
               $full_filename = $_SERVER["DOCUMENT_ROOT"] . $filename;
 
               $exists = false;
@@ -92,9 +113,9 @@
             }
 
             //if item image url is blank and series image url exists, use series url path
-            if ($product->img_url == '' and $exists == false and $product->series_img_url != '') {
-              $image = $product->series_img_url;
-            }
+            // if ($product->img_url == '' and $exists == false and $product->series_img_url != '') {
+            //   $image = $product->series_img_url;
+            // }
 
             $image = str_replace('é', 'e', $image);
 
@@ -109,7 +130,7 @@
 
           <div class="row" style="--bs-gutter-x: 0rem; padding: 6px 6px;">
 
-              {{ $products->links() }}
+            {{ $products->links() }}
           </div>
 
         </div>

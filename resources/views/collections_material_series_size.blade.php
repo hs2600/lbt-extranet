@@ -147,7 +147,7 @@
                     $finish = '-';
                   }
 
-                  $filename = $image . '/' . $product->size . '_' . $product->color . '_' . $finish . '.jpg';
+                  $filename = $image . '/' . $series . '_' . $product->size . '_' . $product->color . '_' . $finish . '.jpg';
                   $filename = strtolower(str_replace(' ', '_', $filename));
                   $filename = str_replace('_-', '', $filename);
                   $filename = str_replace('hexagon', 'hex', $filename);
