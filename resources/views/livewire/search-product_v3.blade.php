@@ -1,19 +1,23 @@
 <div>
 
-  <style>
-    .nav-pills .nav-link {
-      padding: 5px 10px 2px 10px;
-      margin-right: 10px;
-    }
+<style>
+  .nav-pills .nav-link {
+    padding: 0px 10px 5px 10px;
+    margin-right: 10px;
+  }
 
-    .nav-pills .nav-link.active,
-    .nav-pills .show>.nav-link {
-      padding: 5px 10px 2px 10px;
-      border: 1px solid #a9a9a9;
-      color: #666;
-      background-color: #fcfcfc;
-    }
-  </style>
+  .nav-pills .nav-link.active,
+  .nav-pills .show>.nav-link {
+    padding: 0px 10px 5px 10px;
+    border: 1px solid #a9a9a9;
+    color: #666;
+    background-color: #fcfcfc;
+  }
+
+  .nav {
+    --bs-nav-link-hover-color: #198754;
+  }
+</style>
 
   <section class="section dashboard">
     <div class="row">
@@ -127,10 +131,11 @@
                 <ul class="nav nav-pills" style="padding-bottom: 10px;" id="myTab" role="tablist">
                   <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="table-tab" data-bs-toggle="tab" data-bs-target="#table-tab-pane" type="button" role="tab" aria-controls="table-tab-pane" aria-selected="true">
-                      <i class="fa-solid fa-list" style="font-size: 20px; color: #000;"></i></button>
+                      <i class="bi bi-table" style="font-size: 20px;"></i></button>
                   </li>
                   <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="grid-tab" data-bs-toggle="tab" data-bs-target="#grid-tab-pane" type="button" role="tab" aria-controls="grid-tab-pane" aria-selected="false"><i class="fa-solid fa-border-all" style="font-size: 20px; color: #000;"></i></button>
+                    <button class="nav-link" id="grid-tab" data-bs-toggle="tab" data-bs-target="#grid-tab-pane" type="button" role="tab" aria-controls="grid-tab-pane" aria-selected="false">
+                      <i class="bi bi-grid-fill" style="font-size: 20px;"></i></button>
                   </li>
                 </ul>
               </div>
@@ -278,14 +283,34 @@
 
                     ?>
 
-                    <div class="col-lg-2 img-container" Style="padding: 5px;
-                        ">
-                      <a href="/products/{{ $product->sku }}">
-                        <img class="img-thumbnail" src="{{$image}}" style="
-                          border-radius: 5px;" alt="{{ ucwords(strtolower($product->description)) }}">
-                      </a>
-                      {{ $product->description }}
+                    <div class="col-lg-2 img-container" Style="padding: 3px;
+                      margin: 0px; border-radius: 4px;
+                      ">
+                      <div>
+                        <div class="img-thumbnail">
+                          <a href="/products/{{ $product->sku }}">
+                            <img src="{{$image}}" style="
+                         border: 0px; padding: 0px;" alt="{{ ucwords(strtolower($product->description)) }}">
+                          </a>
+
+                          <div class="w-100 ph1 pv2 tc f2">
+                            <span class="db gray5 hover-blue7" style=" width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;" title="{{ $product->description }}">
+                              {{ ucwords(strtolower($product->description)) }}
+                            </span>
+                          </div>
+                        </div>
+
+                        <a href="#" class="absolute top-075 right-075 gray4 hover-gray7" data-bs-toggle="modal" data-bs-target="#exModal" onclick="fileMenu('{{ $product }}','{{ $product->sku }}')"> <span data-balloon="More" data-balloon-pos="left" class="relative badge hover-bg-gray4 gray5 hover-gray7">
+                            <i class="fas fa-ellipsis-h" style="font-size: 12px;"></i>
+                          </span> </a>
+
+                        <!-- <span class="favorite-button absolute bottom-1 right-025 gray2 hover-yellow3" style="background-color: transparent; border: 0; cursor: pointer;">
+                      <i class="fas fa-star" style="font-size: 12px;"></i>
+                    </span> -->
+
+                      </div>
                     </div>
+
                     @endforeach
                   </div>
 

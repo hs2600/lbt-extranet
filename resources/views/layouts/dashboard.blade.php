@@ -11,6 +11,7 @@
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
   <!-- Custom styles -->
   <link href="/assets/css/imgpreview.css" rel="stylesheet">
+  <link href="/assets/css/dashboard.css" rel="stylesheet">
 
   <!-- Livewire -->
   @livewireStyles
@@ -18,10 +19,11 @@
   <!-- Vite -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-  <!-- Bootstrap only -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
+<script src="https://unpkg.com/@popperjs/core@2"></script>
 
   <!-- Vendor CSS Files -->
   <link href="/assets/dashboard/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
@@ -34,8 +36,7 @@
 
 <body>
   <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center"
-   style="border-bottom: 1px solid #dadce0; box-shadow: 0px 0px 0px #ffffff;">
+  <header id="header" class="header fixed-top d-flex align-items-center" style="border-bottom: 1px solid #dadce0; box-shadow: 0px 0px 0px #ffffff;">
     <div class="d-flex align-items-center justify-content-between">
       <a href="/" class="logo d-flex">
         <img src="/assets/images/logo.png" style="padding-left: 20px; max-height: 35px; filter: invert(100%)" />
@@ -74,17 +75,33 @@
         @endguest
 
         @auth
-        <li class="nav-item dropdown pe-4">
 
+        <?php
+        $name = auth()->user()->name;
+        $name_arr = explode(" ", $name);
+        $initials = substr($name_arr[0], 0, 1) . substr($name_arr[1], 0, 1);
+        $shortname = substr($name_arr[0], 0, 1) . '.' . $name_arr[1];
+        ?>
+
+        <li class="nav-item dropdown pe-4">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+
+            <div class="no-flex" style="background-color: rgb(204, 208, 236); color: rgb(0, 0, 0);
+              padding: 4px 6px;
+              border-radius: 100%;
+              " onmouseover="this.style.backgroundColor='#AAB1DF'" onmouseout="this.style.backgroundColor='#CCD0EC'">
+              {{ $initials }}
+            </div>
+
             <span class="d-md-block dropdown-toggle ps-2" style="font-weight: 600;">
-            {{ Auth::user()->name }}</span> </a>
-            <!-- End Profile Iamge Icon -->
+            </span>
+          </a>
+          <!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
+            <li class="dropdown-header" style="text-align: left;">
               <h6>{{ Auth::user()->name }}</h6>
-              <!-- <span>Title</span> -->
+              <span><i>{{ Auth::user()->email }}</i></span>
             </li>
             <li>
               <hr class="dropdown-divider" />
@@ -155,13 +172,13 @@
             </a>
           </li>
           <li>
-          <a href="/collections/concrete">
+            <a href="/collections/concrete">
               <i class="bi bi-circle"></i><span>Concrete</span>
             </a>
           </li>
 
           <li>
-          <a href="/collections/glass">
+            <a href="/collections/glass">
               <i class="bi bi-circle"></i><span>Glass</span>
             </a>
           </li>
@@ -176,24 +193,24 @@
         </a>
         <ul id="series-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
-          <a href="/collections/glass/agate">
+            <a href="/collections/glass/agate">
               <i class="bi bi-circle"></i><span>Agate</span>
             </a>
           </li>
           <li>
-          <a href="/collections/glass/birdscape">
+            <a href="/collections/glass/birdscape">
               <i class="bi bi-circle"></i><span>Birdscape</span>
             </a>
           </li>
 
           <li>
-          <a href="/collections/glass/tommy bahama glass blends">
+            <a href="/collections/glass/tommy bahama glass blends">
               <i class="bi bi-circle"></i><span>Tommy Bahamma</span>
             </a>
           </li>
 
           <li>
-          <a href="/collections/ceramic/shelter island">
+            <a href="/collections/ceramic/shelter island">
               <i class="bi bi-circle"></i><span>Johnathan Adler</span>
             </a>
           </li>
@@ -239,6 +256,84 @@
 
   @livewireScripts
 
+
+<!-- Product Info Modal -->
+<div class="modal fade p-5" id="exModal" tabindex="-1" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="product-title" id="title" style="text-transform: capitalize; font-size: 27px;">title</span>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-size: 35%;"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-md">
+
+            <div class="row" style="padding: 10px; margin: 0px; margin-bottom: 15px; background-color: #efefef;">
+              <div class="col-sm-6">
+                <label><b>Material:</b></label>
+                <span id="material"></span>
+              </div>
+              <div class="col-sm-6">
+                <label><b>Series:</b></label>
+                <span id="series"></span>
+              </div>
+              <div class="col-sm-6">
+                <label><b>Size:</b></label>
+                <span id="size"></span>
+              </div>
+              <div class="col-sm-6">
+                <label><b>Color:</b></label>
+                <span id="color"></span>
+              </div>
+              <div class="col-sm-6">
+                <label><b>Finish:</b></label>
+                <span id="finish"></span>
+              </div>
+            </div>
+
+            <div style="background-color: #fafafa; padding: 5px; margin-bottom: 20px;
+                border-bottom: 1px solid #ddd;">
+              <div class="">
+                <span id="qty" class="product-price"></span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  function titleCase(str) {
+    return str.toLowerCase().replace(/\b\w/g, s => s.toUpperCase());
+  }
+
+  function fileMenu(data, ID) {
+
+    const json = data;
+    const obj = JSON.parse(json);
+
+    document.getElementById("title").innerHTML = titleCase(obj.description);
+
+    document.getElementById("material").innerHTML = obj.material;
+    document.getElementById("series").innerHTML = obj.series;
+    document.getElementById("size").innerHTML = obj.size;
+    document.getElementById("color").innerHTML = obj.color;
+    document.getElementById("finish").innerHTML = obj.finish;
+
+    document.getElementById("qty").innerHTML = '<b><i>' + obj.max_lot_qty + ' ' + obj.uofm + '</i></b><i> stocked in Harbor City</i>';
+
+  }
+</script>
+
+
   <!-- Template Main JS File -->
   <script src="/assets/dashboard/js/main.js"></script>
 
@@ -279,6 +374,10 @@
       })
     });
   </script>
+
+
+
+
 
 </body>
 

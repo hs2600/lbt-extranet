@@ -2,22 +2,24 @@
 
 @section('content')
 
-
 <style>
   .nav-pills .nav-link {
-    padding: 5px 10px 2px 10px;
+    padding: 0px 10px 5px 10px;
     margin-right: 10px;
   }
 
   .nav-pills .nav-link.active,
   .nav-pills .show>.nav-link {
-    padding: 5px 10px 2px 10px;
+    padding: 0px 10px 5px 10px;
     border: 1px solid #a9a9a9;
     color: #666;
     background-color: #fcfcfc;
   }
-</style>
 
+  .nav {
+    --bs-nav-link-hover-color: #198754;
+  }
+</style>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center 
  pt-3 mb-2 border-bottom">
@@ -56,10 +58,11 @@
           <ul class="nav nav-pills" style="float: right;" id="mySizeTab" role="tablist">
             <li class="nav-item" role="presentation">
               <button class="nav-link active" id="size-table-tab" data-bs-toggle="tab" data-bs-target="#size-table-tab-pane" type="button" role="tab" aria-controls="size-table-tab-pane" aria-selected="true">
-                <i class="fa-solid fa-list" style="font-size: 20px; color: #000;"></i></button>
+                <i class="bi bi-table" style="font-size: 20px;"></i></button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" id="size-grid-tab" data-bs-toggle="tab" data-bs-target="#size-grid-tab-pane" type="button" role="tab" aria-controls="size-grid-tab-pane" aria-selected="false"><i class="fa-solid fa-border-all" style="font-size: 20px; color: #000;"></i></button>
+              <button class="nav-link" id="size-grid-tab" data-bs-toggle="tab" data-bs-target="#size-grid-tab-pane" type="button" role="tab" aria-controls="size-grid-tab-pane" aria-selected="false">
+                <i class="bi bi-grid-fill" style="font-size: 20px;"></i></button>
             </li>
           </ul></div>
 
@@ -144,7 +147,7 @@
                     $finish = '-';
                   }
 
-                  $filename = $image . '/' . $series . '_' . $product->size . '_' . $product->color . '_' . $finish . '.jpg';
+                  $filename = $image . '/' . $product->size . '_' . $product->color . '_' . $finish . '.jpg';
                   $filename = strtolower(str_replace(' ', '_', $filename));
                   $filename = str_replace('_-', '', $filename);
                   $filename = str_replace('hexagon', 'hex', $filename);
@@ -183,14 +186,34 @@
                 $image = str_replace('é', 'e', $image);
 
                 ?>
-                <div class="col-lg-2 img-container" Style="padding: 5px;
+                <div class="col-lg-2 img-container" Style="padding: 3px;
+                  margin: 0px; border-radius: 4px;
                   ">
-                  <a href="/products/{{ $product->sku }}">
-                    <img class="img-thumbnail" src="{{$image}}" style="
-                    border-radius: 5px;">
-                  </a>
-                  {{$product->size . ' ' . $product->color . ' ' . str_replace('-', '', $product->finish)}}
+                  <div>
+                    <div class="img-thumbnail">
+                      <a href="/products/{{ $product->sku }}">
+                        <img src="{{$image}}" style="
+                         border: 0px; padding: 0px;" alt="{{ ucwords(strtolower($product->description)) }}">
+                      </a>
+
+                      <div class="w-100 ph1 pv2 tc f2">
+                        <span class="db gray5 hover-blue7" style=" width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;" title="{{ $product->description }}">
+                        {{$product->size . ' ' . $product->color . ' ' . str_replace('-', '', $product->finish) }} &nbsp;
+                        </span>
+                      </div>
+                    </div>
+
+                    <a href="#" class="absolute top-075 right-075 gray4 hover-gray7" data-bs-toggle="modal" data-bs-target="#exModal" onclick="fileMenu('{{ $product }}','{{ $product->sku }}')"> <span data-balloon="More" data-balloon-pos="left" class="relative badge hover-bg-gray4 gray5 hover-gray7">
+                        <i class="fas fa-ellipsis-h" style="font-size: 12px;"></i>
+                      </span> </a>
+
+                    <!-- <span class="favorite-button absolute bottom-1 right-025 gray2 hover-yellow3" style="background-color: transparent; border: 0; cursor: pointer;">
+                      <i class="fas fa-star" style="font-size: 12px;"></i>
+                    </span> -->
+
+                  </div>
                 </div>
+
                 @endforeach
               </div>
             </div>

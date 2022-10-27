@@ -96,6 +96,7 @@ class SearchProductv3 extends Component
         $finish = DB::table('products')
         ->selectRaw('count(*) as count, finish as name')
         ->Where('finish', '!=', '-')
+        ->Where('material', 'like', $this->material.'%')        
         ->Where('series', 'like', '%'.$this->series.'%')
         ->Where('size', 'like', '%'.$this->size.'%')        
         ->Where('color', 'like', '%'.$this->color.'%')

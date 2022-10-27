@@ -5,16 +5,20 @@
 
 <style>
   .nav-pills .nav-link {
-    padding: 5px 10px 2px 10px;
+    padding: 0px 10px 5px 10px;
     margin-right: 10px;
   }
 
   .nav-pills .nav-link.active,
   .nav-pills .show>.nav-link {
-    padding: 5px 10px 2px 10px;
+    padding: 0px 10px 5px 10px;
     border: 1px solid #a9a9a9;
     color: #666;
     background-color: #fcfcfc;
+  }
+
+  .nav {
+    --bs-nav-link-hover-color: #198754;
   }
 </style>
 
@@ -138,23 +142,23 @@
 
       <div class="row" style="padding: 10px; margin: 0px; margin-bottom: 15px; background-color: #efefef;">
         <div class="col-sm-6">
-          <label class=""><B>Material:</B></label>
+          <label><B>Material:</B></label>
           <span>{{ $product->material }}</span>
         </div>
         <div class="col-sm-6">
-          <label class=""><B>Series:</B></label>
+          <label><B>Series:</B></label>
           <span>{{ str_replace('Ã©', 'é', $product->series) }}</span>
         </div>
         <div class="col-sm-6">
-          <label class=""><B>Size:</B></label>
+          <label><B>Size:</B></label>
           <span>{{ $product->size }}</span>
         </div>
         <div class="col-sm-6">
-          <label class=""><B>Color:</B></label>
+          <label><B>Color:</B></label>
           <span>{{ $product->color }}</span>
         </div>
         <div class="col-sm-6">
-          <label class=""><B>Finish:</B></label>
+          <label><B>Finish:</B></label>
           <span>{{ $product->finish }}</span>
         </div>
       </div>
@@ -306,11 +310,13 @@
   <ul class="nav nav-tabs" style="margin-top:20px; border: 0px;" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
       <button class="nav-link active" id="size-tab" data-bs-toggle="tab" data-bs-target="#size-tab-pane" type="button" role="tab" aria-controls="size-tab-pane" aria-selected="true">
-        Size Variations
+        Size
       </button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link" id="color-tab" data-bs-toggle="tab" data-bs-target="#color-tab-pane" type="button" role="tab" aria-controls="color-tab-pane" aria-selected="false">Color Variations</button>
+      <button class="nav-link" id="color-tab" data-bs-toggle="tab" data-bs-target="#color-tab-pane" type="button" role="tab" aria-controls="color-tab-pane" aria-selected="false">
+        Color
+      </button>
     </li>
   </ul>
   <!-- Size and color variation content -->
@@ -322,14 +328,16 @@
 
       <div class="card" style="margin: 0px;">
         <div class="card-header">
+          Variations
           <!-- Size variation sub tabs -->
           <ul class="nav nav-pills" style="float: right;" id="mySizeTab" role="tablist">
             <li class="nav-item" role="presentation">
               <button class="nav-link active" id="size-table-tab" data-bs-toggle="tab" data-bs-target="#size-table-tab-pane" type="button" role="tab" aria-controls="size-table-tab-pane" aria-selected="true">
-                <i class="fa-solid fa-list" style="font-size: 20px; color: #000;"></i></button>
+                <i class="bi bi-table" style="font-size: 20px;"></i></button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" id="size-grid-tab" data-bs-toggle="tab" data-bs-target="#size-grid-tab-pane" type="button" role="tab" aria-controls="size-grid-tab-pane" aria-selected="false"><i class="fa-solid fa-border-all" style="font-size: 20px; color: #000;"></i></button>
+              <button class="nav-link" id="size-grid-tab" data-bs-toggle="tab" data-bs-target="#size-grid-tab-pane" type="button" role="tab" aria-controls="size-grid-tab-pane" aria-selected="false">
+                <i class="bi bi-grid-fill" style="font-size: 20px;"></i></button>
             </li>
           </ul>
         </div>
@@ -457,16 +465,36 @@
                 $image = str_replace('é', 'e', $image);
 
                 ?>
-                <div class="col-lg-2 img-container" Style="padding: 5px;
+                <div class="col-lg-2 img-container" Style="padding: 3px;
+                  margin: 0px; border-radius: 4px;
                   ">
-                  <a href="/products/{{ $product->sku }}">
-                    <img class="img-thumbnail" src="{{$image}}" style="
-                    border-radius: 5px;" alt="{{ ucwords(strtolower($product->description)) }}">
-                  </a>
-                  {{$product->size . ' ' . str_replace('-', '', $product->finish)}}
+                  <div>
+                    <div class="img-thumbnail">
+                      <a href="/products/{{ $product->sku }}">
+                        <img src="{{$image}}" style="
+                         border: 0px; padding: 0px;" alt="{{ ucwords(strtolower($product->description)) }}">
+                      </a>
+
+                      <div class="w-100 ph1 pv2 tc f2">
+                        <span class="db gray5 hover-blue7" style=" width: 135px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;" title="{{ $product->description }}">
+                          {{$product->size . ' ' . str_replace('-', '', $product->finish)}}
+                        </span>
+                      </div>
+                    </div>
+
+                    <a href="#" class="absolute top-075 right-075 gray4 hover-gray7" data-bs-toggle="modal" data-bs-target="#exModal" onclick="fileMenu('{{ $product }}','{{ $product->sku }}')"> <span data-balloon="More" data-balloon-pos="left" class="relative badge hover-bg-gray4 gray5 hover-gray7">
+                        <i class="fas fa-ellipsis-h" style="font-size: 12px;"></i>
+                      </span> </a>
+
+                    <!-- <span class="favorite-button absolute bottom-1 right-025 gray2 hover-yellow3" style="background-color: transparent; border: 0; cursor: pointer;">
+                      <i class="fas fa-star" style="font-size: 12px;"></i>
+                    </span> -->
+
+                  </div>
                 </div>
                 @endforeach
               </div>
+
             </div>
           </div>
         </div>
@@ -481,14 +509,17 @@
 
       <div class="card" style="margin: 0px;">
         <div class="card-header">
+          Variations
           <!-- Color variation sub tabs -->
           <ul class="nav nav-pills" style="float: right;" id="myColorTab" role="tablist">
 
             <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="color-table-tab" data-bs-toggle="tab" data-bs-target="#color-table-tab-pane" type="button" role="tab" aria-controls="color-table-tab-pane" aria-selected="true"><i class="fa-solid fa-list" style="font-size: 20px; color: #000;"></i></button>
+              <button class="nav-link active" id="color-table-tab" data-bs-toggle="tab" data-bs-target="#color-table-tab-pane" type="button" role="tab" aria-controls="color-table-tab-pane" aria-selected="true">
+                <i class="bi bi-table" style="font-size: 20px;"></i></button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" id="color-grid-tab" data-bs-toggle="tab" data-bs-target="#color-grid-tab-pane" type="button" role="tab" aria-controls="color-grid-tab-pane" aria-selected="false"><i class="fa-solid fa-border-all" style="font-size: 20px; color: #000;"></i></button>
+              <button class="nav-link" id="color-grid-tab" data-bs-toggle="tab" data-bs-target="#color-grid-tab-pane" type="button" role="tab" aria-controls="color-grid-tab-pane" aria-selected="false">
+                <i class="bi bi-grid-fill" style="font-size: 20px;"></i></button>
             </li>
           </ul>
         </div>
@@ -616,13 +647,32 @@
                 $image = str_replace('é', 'e', $image);
 
                 ?>
-                <div class="col-lg-2 img-container" Style="padding: 5px;
+                <div class="col-lg-2 img-container" Style="padding: 3px;
+                  margin: 0px; border-radius: 4px;
                   ">
-                  <a href="/products/{{ $product->sku }}">
-                    <img class="img-thumbnail" src="{{$image}}" style="
-                    border-radius: 5px;" alt="{{ ucwords(strtolower($product->description)) }}">
-                  </a>
-                  {{$product->color . ' ' . str_replace('-', '', $product->finish)}}
+                  <div>
+                    <div class="img-thumbnail">
+                      <a href="/products/{{ $product->sku }}">
+                        <img src="{{$image}}" style="
+                         border: 0px; padding: 0px;" alt="{{ ucwords(strtolower($product->description)) }}">
+                      </a>
+
+                      <div class="w-100 ph1 pv2 tc f2">
+                        <span class="db gray5 hover-blue7" style=" width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;" title="{{ $product->description }}">
+                          {{ $product->color . ' ' . str_replace('-', '', $product->finish) }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <a href="#" class="absolute top-075 right-075 gray4 hover-gray7" data-bs-toggle="modal" data-bs-target="#exModal" onclick="fileMenu('{{ $product }}','{{ $product->sku }}')"> <span data-balloon="More" data-balloon-pos="left" class="relative badge hover-bg-gray4 gray5 hover-gray7">
+                        <i class="fas fa-ellipsis-h" style="font-size: 12px;"></i>
+                      </span> </a>
+
+                    <!-- <span class="favorite-button absolute bottom-1 right-025 gray2 hover-yellow3" style="background-color: transparent; border: 0; cursor: pointer;">
+                      <i class="fas fa-star" style="font-size: 12px;"></i>
+                    </span> -->
+
+                  </div>
                 </div>
                 @endforeach
               </div>
@@ -633,16 +683,18 @@
       @endif
 
     </div>
+  </div>
+</div>
 
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
-      <span class="close">&times;</span>
-      <!-- <a href="" id="img_href"> -->
-      <img class="modal-content" id="img01">
-      <!-- </a> -->
-      <div id="caption"></div>
-    </div>
+<!-- Image Modal -->
+<div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <!-- <a href="" id="img_href"> -->
+  <img class="modal-content" id="img01">
+  <!-- </a> -->
+  <div id="caption"></div>
+</div>
 
-    <script src="/assets/js/imgpreview.js"></script>
+<script src="/assets/js/imgpreview.js"></script>
 
-    @endsection
+@endsection

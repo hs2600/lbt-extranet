@@ -1,5 +1,4 @@
-/*
- * Sidebar
+ * Side
  */
 
 .sidebar {
@@ -7,7 +6,7 @@
     top: 0;
     bottom: 0;
     left: 0;
-    z-index: 100; /* Behind the navbar */
+    z-index: 100; Behind the navbar
     padding: 0px;
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
 }
@@ -18,7 +17,7 @@
     height: calc(100vh);
     padding-top: 0px;
     overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    overflow-y: auto; Scrollable contents if viewport is shorter than content.
 }
 
 .sidebar .nav-link {
@@ -45,8 +44,7 @@
     text-transform: uppercase;
 }
 
-/*
- * Navbar
+ * Nav
  */
 
 .navbar-brand {
@@ -77,4 +75,79 @@
 .form-control-dark:focus {
     border-color: transparent;
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+}
+
+.gray5 {
+    color: #adb5bd !important;
+}
+
+.f2 {
+    font-size: 0.8rem;
+}
+.tc {
+    text-align: center;
+}
+.ph1 {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+.pv2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.right-075 {
+    right: 0.75rem;
+}
+
+.top-075 {
+    top: 0.75rem;
+}
+.right-025 {
+    right: 0.75rem;
+}
+
+.top-025 {
+    top: 0.75rem;
+}
+.gray4 {
+    color: #ced4da;
+}
+.absolute {
+    position: absolute;
+}
+
+.bottom-075 {
+    bottom: 0.75rem;
+}
+
+.bottom-1 {
+    bottom: 1rem;
+}
+
+.gray2 {
+    color: #e9ecef;
+}
+.absolute {
+    position: absolute;
+}
+
+.hover-bg-gray4:focus,
+.hover-bg-gray4:hover {
+    background-color: #bdbdbd;
+}
+
+.hover-gray7:focus,
+.hover-gray7:hover {
+    color: #495057;
+}
+
+.hover-white:focus,
+.hover-white:hover {
+    color: #495057;
+}
+
+.hover-yellow3:focus,
+.hover-yellow3:hover {
+    color: #ffe066;
 }
