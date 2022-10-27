@@ -6,9 +6,7 @@
 
   <div class="search-bar">
     <form class="search-form d-flex align-items-center">
-      <input id="txtSearch" type="search" placeholder="Search"
-       title="Enter search keyword" wire:model="search" 
-       class="txtShowDiv" style="padding: 7px 10px;">
+      <input id="txtSearch" type="search" placeholder="Search" title="Enter search keyword" wire:model="search" class="txtShowDiv" style="padding: 7px 10px;">
     </form>
 
 
@@ -39,14 +37,29 @@
         </div>
         @else
 
-        @if($items->isEmpty())
-
-        @if($products->isEmpty())
-        <div class="search text-gray-500 text-sm">
-          No matching result found for '{{ $search }}'
-        </div>
-        @else
         <div id="search-inner" class="search">
+
+          @if (count($series) > 0)
+          <i>Collections:</i>
+          <ul style="padding: 0px;">
+            @foreach($series as $series)
+            <li><a href="/collections/{{ $series->material }}/{{ $series->series }}">{{ $series->series }}</a>
+            </li>
+            @endforeach
+          </ul>
+
+          <hr>
+          @endif
+
+          @if($items->isEmpty())
+
+          @if($products->isEmpty())
+          <div class="search text-gray-500 text-sm">
+            No matching result found for '{{ $search }}'
+          </div>
+          @else
+          <!-- <div id="search-inner" class="search"> -->
+          <i>Products:</i>
           <ul style="padding: 0px;">
             @foreach($products as $product)
 
@@ -67,7 +80,7 @@
           </ul>
           <?php
           if ($count > 50) {
-            echo '<b><i>Showing 50 of ' . $count . ' results.</b></i>';
+            echo '<b><i>50+ results </b></i>';
           } else {
             echo '<b><i>Items found: ' . $count . '</b></i>';
           }
@@ -126,14 +139,11 @@
             </div>
           </div>
 
-
           @endforeach
           </ul>
         </div>
 
-
         @endif
-
 
         @endif
 

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Product;
+use App\Models\Collection;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
@@ -16,9 +17,15 @@ class SearchProduct extends Component
         $products = Product::where('description','like', '%'.$this->search.'%')
                 ->orWhere('item', 'like', '%'.$this->search.'%')
                 ->paginate(50);
+
+        $series = Collection::where('series','like', '%'.$this->search.'%')
+        ->limit(5)
+        ->get();
+
         $productsAll = Product::where('description','like', '%'.$this->search.'%')
                 ->orWhere('item', 'like', '%'.$this->search.'%')
                 ->get();
+
         $items = Product::where('item','=', $this->search)->get();
 
         if($this->search == ''){
@@ -28,6 +35,7 @@ class SearchProduct extends Component
             ->with(['products' => $products])
             ->with(['items' => $items])
             ->with('search', $this->search)
+            ->with(['series' => $series])
             ->with('count', $productsAll->count())
             ;
     }}
