@@ -54,8 +54,8 @@
           @if($items->isEmpty())
 
           @if($products->isEmpty())
-          <div class="search text-gray-500 text-sm">
-            No matching result found for '{{ $search }}'
+          <div style="padding: 20px;">
+            No matching results found for '{{ $search }}'
           </div>
           @else
           <!-- <div id="search-inner" class="search"> -->
