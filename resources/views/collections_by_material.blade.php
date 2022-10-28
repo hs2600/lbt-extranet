@@ -57,6 +57,11 @@
 
                             $path = strtolower($path);
                             $image = strtolower($image);
+
+                            if (file_exists($_SERVER["DOCUMENT_ROOT"] . $image) == false) {
+                              $image = "/assets/images/products/blank.png";
+                            }
+
                         } else {
                             $category = $collection->material;
                             $image = '/assets/images/products/' . str_replace(' ', '_', $category) . '_h.png';
@@ -64,9 +69,13 @@
                             $image = strtolower($image);
                         }
 
-                        if ($collection->img_url != '') {
-                            $image = $collection->img_url;
-                        }
+
+
+
+
+                        // if ($collection->img_url != '') {
+                        //     $image = $collection->img_url;
+                        // }
 
                         ?>
 

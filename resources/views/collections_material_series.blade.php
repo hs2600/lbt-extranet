@@ -37,6 +37,12 @@
             @foreach ($collection as $collection)
             <?php
             $default_color = $collection->default_color;
+            $default_color_str = '';
+            
+            if($default_color != ''){
+              $default_color_str = 'Color shown: ' . $default_color;
+            }
+           
             ?>
 
             <div style="max-height: 200px; max-width: 450px;
@@ -57,7 +63,7 @@
 
           <div class="row" style="--bs-gutter-x: 0rem;">
 
-            <div class="col" style="padding: 3px 10px;"><span style="float: right;">Color shown: {{ $default_color }} </span></div>
+            <div class="col" style="padding: 3px 10px;"><span style="float: right;">{{ $default_color_str }} </span></div>
           </div>
 
           <div class="row" style="--bs-gutter-x: 0rem;">
