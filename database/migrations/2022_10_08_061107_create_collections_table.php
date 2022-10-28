@@ -15,10 +15,15 @@ class CreateCollectionsTable extends Migration
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description');
-            $table->string('default_color');
-            $table->string('img_url');
+            $table->string('category',50);
+            $table->string('material',50);
+            $table->string('series',50);
+            $table->string('size',50);
+            $table->text('description');
+            $table->string('default_Color',50);
+            $table->date('launch_Date');
+            $table->string('img_url',200);
+            $table->tinyInteger('status');            
             $table->timestamps();
         });
     }
@@ -33,3 +38,4 @@ class CreateCollectionsTable extends Migration
         Schema::dropIfExists('collections');
     }
 }
+
