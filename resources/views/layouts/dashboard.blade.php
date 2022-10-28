@@ -77,7 +77,7 @@
         @auth
 
         <?php
-        $name = auth()->user()->name;
+        $name = "Oscar Morita";
         $name_arr = explode(" ", $name);
         $initials = substr($name_arr[0], 0, 1) . substr($name_arr[1], 0, 1);
         $shortname = substr($name_arr[0], 0, 1) . '.' . $name_arr[1];
