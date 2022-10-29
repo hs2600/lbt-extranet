@@ -116,11 +116,11 @@
           $image = $product->series_img_url;
         }
 
-        $qty = number_format($product->qty, 2);
+        $qty = $product->qty_p;
         $uofm = strtolower(str_replace('each', 'piece', strtolower($product->uofm)));
 
         if (str_replace('each', 'piece', strtolower($product->uofm)) == 'piece') {
-          $qty = number_format($product->qty, 0);
+          $qty = $product->qty_p;
           $uofm = $uofm . 's';
         }
 
@@ -200,11 +200,11 @@
 
                   <?php
 
-                  $qty = number_format($lot->qty, 2);
+                  $qty = $lot->qty;
                   $uofm = strtolower(str_replace('each', 'piece', strtolower($product->uofm)));
 
                   if (str_replace('each', 'piece', strtolower($product->uofm)) == 'piece') {
-                    $qty = number_format($lot->qty, 0);
+                    $qty = $lot->qty;
                     $uofm = $uofm . 's';
                   }
 
@@ -388,7 +388,7 @@
                       <div>{{ $product->site }}</div>
                     </td>
                     <td>
-                      <div>{{ number_format($product->qty,0) }}</div>
+                      <div>{{ $product->qty_p }}</div>
                     </td>
                     <td>
                       <div>{{ $product->uofm }}</div>
@@ -570,7 +570,7 @@
                       <div>{{ $product->site }}</div>
                     </td>
                     <td>
-                      <div>{{ number_format($product->qty,0) }}</div>
+                      <div>{{ number_format($product->qty_p,0) }}</div>
                     </td>
                     <td>
                       <div>{{ $product->uofm }}</div>
