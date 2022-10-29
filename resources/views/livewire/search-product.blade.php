@@ -64,11 +64,11 @@
             @foreach($products as $product)
 
             <?php
-            $qty = number_format($product->qty, 2);
+            $qty = $product->qty_p;
             $uofm = strtolower(str_replace('each', 'piece', strtolower($product->uofm)));
 
             if (str_replace('each', 'piece', strtolower($product->uofm)) == 'piece') {
-              $qty = number_format($product->qty, 0);
+              $qty = $product->qty_p;
               $uofm = $uofm . 's';
             }
             ?>
@@ -94,11 +94,11 @@
           @foreach($items as $item)
 
           <?php
-          $qty = number_format($item->qty, 2);
+          $qty = $item->qty_p;
           $uofm = strtolower(str_replace('each', 'piece', strtolower($item->uofm)));
 
           if (str_replace('each', 'piece', strtolower($item->uofm)) == 'piece') {
-            $qty = number_format($item->qty, 0);
+            $qty = $item->qty_p;
             $uofm = $uofm . 's';
           }
           ?>
