@@ -286,7 +286,7 @@ class ProductController extends Controller
           ->On('products.series', '=', 'collections.series');
         })
         ->selectRaw('products.sku, products.item, products.description, products.material
-        , products.series, products.size, products.color, products.finish, products.max_lot_qty_p as qty
+        , products.series, products.size, products.color, products.finish, products.qty_p as qty
         , products.uofm, products.img_url, collections.description as material_desc, collections.series_desc, collections.img_url as series_img_url')
         ->where('sku', '=', $id)
         ->limit(1)
