@@ -189,7 +189,7 @@
                           <div>{{ $product->site }}</div>
                         </td>
                         <td>
-                          <div>{{ number_format($product->qty,0) }}</div>
+                          <div>{{ $product->qty_p }}</div>
                         </td>
                         <td>
                           <div>{{ $product->uofm }}</div>
@@ -270,11 +270,11 @@
                       $image = $product->series_img_url;
                     }
 
-                    $qty = number_format($product->qty, 2);
+                    $qty = $product->qty_p;
                     $uofm = strtolower(str_replace('each', 'piece', strtolower($product->uofm)));
 
                     if (str_replace('each', 'piece', strtolower($product->uofm)) == 'piece') {
-                      $qty = number_format($product->qty, 0);
+                      $qty = $product->qty_p;
                       $uofm = $uofm . 's';
                     }
 
