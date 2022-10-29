@@ -77,7 +77,7 @@
         @auth
 
         <?php
-        $name = "Oscar Morita";
+        $name = Auth::user()->name;
         $name_arr = explode(" ", $name);
         $initials = substr($name_arr[0], 0, 1) . substr($name_arr[1], 0, 1);
         $shortname = substr($name_arr[0], 0, 1) . '.' . $name_arr[1];
@@ -328,7 +328,14 @@
     document.getElementById("color").innerHTML = obj.color;
     document.getElementById("finish").innerHTML = obj.finish;
 
-    document.getElementById("qty").innerHTML = '<b><i>' + obj.max_lot_qty + ' ' + obj.uofm + '</i></b><i> stocked in Harbor City</i>';
+    if (obj.qty > 0){
+      document.getElementById("qty").innerHTML = '<b><i>' + obj.qty + ' ' + obj.uofm + '</i></b><i> stocked in Harbor City</i>';
+    } else {
+      document.getElementById("qty").innerHTML = '<b><i style="color: #d35d5d;">Item is currently out of stock.</i></b>';
+    }
+
+
+
 
   }
 </script>

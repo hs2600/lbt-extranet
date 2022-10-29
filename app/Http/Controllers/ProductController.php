@@ -246,20 +246,37 @@ class ProductController extends Controller
       error_log("INFO: get /");
 
         $product_sizes = Product::orderBy('item', 'asc')
-        ->leftjoin('products as product_sizes', function ($join) {
-        $join->on('products.material', '=', 'product_sizes.material')
-             ->On('products.series', '=', 'product_sizes.series')
-             ->On('products.color', '=', 'product_sizes.color');
+        ->leftjoin('products as sizes', function ($join) {
+        $join->on('products.material', '=', 'sizes.material')
+             ->On('products.series', '=', 'sizes.series')
+             ->On('products.color', '=', 'sizes.color');
         })
-        ->select('product_sizes.*')
+        ->selectRaw('sizes.sku, sizes.item, sizes.description, sizes.material
+        , sizes.series, sizes.size, sizes.color, sizes.finish, sizes.max_lot_qty_p as qty
+        , sizes.uofm, sizes.img_url, sizes.site')
+        ->where('products.sku', '=', $id)
+        ->get();
+
+        $product_colors = Product::orderBy('item', 'asc')
+        ->leftjoin('products as colors', function ($join) {
+        $join->on('products.material', '=', 'colors.material')
+                ->On('products.series', '=', 'colors.series')
+                ->On('products.size', '=', 'colors.size');
+        })
+        ->selectRaw('colors.sku, colors.item, colors.description, colors.material
+        , colors.series, colors.size, colors.color, colors.finish, colors.max_lot_qty_p as qty
+        , colors.uofm, colors.img_url, colors.site')
         ->where('products.sku', '=', $id)
         ->get();
 
         $product_lots = Quantity::orderBy('item', 'asc')
-        ->select('lot', 'qty_p as qty')
-        ->orderBy('qty_p', 'desc')
-        ->orderBy('lot', 'asc')
+        ->selectRaw('item, lot, sum(qty_p) as qty')
         ->where('sku', '=', $id)
+        ->groupBy('item')
+        ->groupBy('lot')
+        ->having('qty', '>' , 0)
+        ->orderBy('qty', 'desc')
+        ->orderBy('lot', 'asc')
         ->get();
 
       return view('product', [
@@ -268,22 +285,15 @@ class ProductController extends Controller
         $join->on('products.material', '=', 'collections.material')
           ->On('products.series', '=', 'collections.series');
         })
-        ->select('products.*', 'collections.description as material_desc', 'collections.series_desc', 'collections.img_url as series_img_url')
+        ->selectRaw('products.sku, products.item, products.description, products.material
+        , products.series, products.size, products.color, products.finish, products.max_lot_qty_p as qty
+        , products.uofm, products.img_url, collections.description as material_desc, collections.series_desc, collections.img_url as series_img_url')
         ->where('sku', '=', $id)
         ->limit(1)
         ->get()
-      ], [
-        'product_colors' => Product::orderBy('item', 'asc')
-        ->leftjoin('products as product_colors', function ($join) {
-        $join->on('products.material', '=', 'product_colors.material')
-             ->On('products.series', '=', 'product_colors.series')
-             ->On('products.size', '=', 'product_colors.size');
-        })
-        ->select('product_colors.*')
-        ->where('products.sku', '=', $id)
-        ->get()
       ])
       ->with('product_sizes', $product_sizes)
+      ->with('product_colors', $product_colors)
       ->with('product_lots', $product_lots)
       ;
     }

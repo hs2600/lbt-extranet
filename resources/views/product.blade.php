@@ -116,11 +116,10 @@
           $image = $product->series_img_url;
         }
 
-        $qty = $product->qty_p;
+        $qty = $product->qty;
         $uofm = strtolower(str_replace('each', 'piece', strtolower($product->uofm)));
 
         if (str_replace('each', 'piece', strtolower($product->uofm)) == 'piece') {
-          $qty = $product->qty_p;
           $uofm = $uofm . 's';
         }
 
@@ -165,7 +164,7 @@
       <p class="product-description">{{ $product->series_desc }}</p>
 
 
-      @if (count($product_lots) > 0)
+      @if (count($product_lots) > 0 && $qty > 0)
 
       <div class="accordion accordion-flush" id="accordionPanelsStayOpenQty" style="padding-bottom: 20px;">
         <div class="accordion-item">
@@ -238,7 +237,11 @@
       <div style="background-color: #fafafa; padding: 5px; margin-bottom: 20px;
         border-bottom: 1px solid #ddd;">
         <div class="">
+          @if ($qty > 0)
           <span class="product-price"><b><i>{{ $qty }} {{ $uofm }} </b> stocked in Harbor City</i></span>
+          @else
+          <span class="product-price" style="color: #d35d5d;"><b><i>Item is currently out of stock.</b></i></span>
+          @endif
         </div>
       </div>
 
@@ -388,7 +391,7 @@
                       <div>{{ $product->site }}</div>
                     </td>
                     <td>
-                      <div>{{ $product->qty_p }}</div>
+                      <div>{{ $product->qty }}</div>
                     </td>
                     <td>
                       <div>{{ $product->uofm }}</div>
@@ -570,7 +573,7 @@
                       <div>{{ $product->site }}</div>
                     </td>
                     <td>
-                      <div>{{ number_format($product->qty_p,0) }}</div>
+                      <div>{{ $product->qty }}</div>
                     </td>
                     <td>
                       <div>{{ $product->uofm }}</div>
