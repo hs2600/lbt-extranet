@@ -36,11 +36,12 @@ jobs:
         with:
           node-version: 16.18
 
-      - name: npm install, build
+      - name: npm install, build - livewire install
         run: |
           # Build the project
           npm install
           npm run build --if-present
+          composer require livewire/livewire          
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
