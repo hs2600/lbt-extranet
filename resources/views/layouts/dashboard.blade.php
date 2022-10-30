@@ -1,3 +1,17 @@
+<?php
+
+use Illuminate\Support\Facades\DB;
+
+$series = DB::table('collections')
+  ->where('category', '=', 'series')
+  ->where('status', '!=', 1)
+  ->orderBy('status', 'desc')
+  ->orderBy('series')
+  ->limit(10)
+  ->get();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -137,14 +151,14 @@
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
         <a class="nav-link" href="/collections">
-          <i class="bi bi-grid"></i>
+        <i class="fa-solid fa-layer-group"></i>
           <span>Collections</span>
         </a>
       </li>
 
       <li class="nav-item">
         <a class="nav-link" href="/collections/material">
-          <i class="bi bi-grid"></i>
+        <i class="fa-solid fa-layer-group"></i>
           <span>Materials</span>
         </a>
       </li>
@@ -152,7 +166,8 @@
       <!-- Material -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#material-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Material</span><i class="bi bi-chevron-down ms-auto"></i>
+        <i class="fa-solid fa-layer-group"></i>
+          <span>Material</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="material-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
@@ -178,38 +193,41 @@
       <!-- Series -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#series-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Series</span><i class="bi bi-chevron-down ms-auto"></i>
+        <i class="fa-solid fa-layer-group"></i>
+          <span>Series</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="series-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="/collections/glass/agate">
-              <i class="bi bi-circle"></i><span>Agate</span>
-            </a>
-          </li>
-          <li>
-            <a href="/collections/glass/birdscape">
-              <i class="bi bi-circle"></i><span>Birdscape</span>
-            </a>
-          </li>
 
-          <li>
-            <a href="/collections/glass/tommy bahama glass blends">
-              <i class="bi bi-circle"></i><span>Tommy Bahamma</span>
-            </a>
-          </li>
+          @foreach ($series as $series)
 
+          <?php
+            $icon = 'bi bi-circle';
+            $icon_size = '6px';
+
+            if($series->status == 2){
+                $icon = 'fa-regular fa-star';
+                $icon_size = '15px';
+            } elseif($series->status == 3){
+              $icon = 'fa-solid fa-bullhorn';
+              $icon_size = '15px';
+            }
+
+          ?>
           <li>
-            <a href="/collections/ceramic/shelter island">
-              <i class="bi bi-circle"></i><span>Johnathan Adler</span>
+            <a href="/collections/{{ $series->material . '/' . $series->series }}">
+              <i class="{{ $icon }}" style="font-size: {{ $icon_size }};"></i>
+              <span>{{ $series->series }}</span>
             </a>
           </li>
+          @endforeach
+
         </ul>
       </li>
       <!-- End Series Nav -->
 
       <li class="nav-item">
         <a class="nav-link" href="/products">
-          <i class="bi bi-grid"></i>
+        <i class="fa-solid fa-binoculars"></i>
           <span>Products Search</span>
         </a>
       </li>
@@ -218,7 +236,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="/contact">
-          <i class="bi bi-envelope"></i>
+          <i class="fa-regular fa-envelope"></i>
           <span>Contact</span>
         </a>
       </li>
