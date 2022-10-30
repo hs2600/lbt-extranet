@@ -112,7 +112,7 @@ class ProductController extends Controller
     return view('collections_by_series', [
         'collections' => Collection::orderBy('status', 'desc')
                     ->orderBy('series', 'asc')
-                    ->where('series', '!=', '-')
+                    ->where('category', '=', 'series')
                     ->where('status', '!=', '1')                        
                     ->paginate(16)
     ]);
@@ -141,8 +141,8 @@ class ProductController extends Controller
         return view('collections_by_material', [
             'collections' => Collection::orderBy('status', 'desc')
                         ->orderBy('series', 'asc')
+                        ->where('category', '=', 'series')
                         ->where('material', '=', $material)
-                        ->where('series', '!=', '-')
                         ->where('status', '!=', '1')                        
                         ->paginate(16)
         ]
@@ -167,7 +167,8 @@ class ProductController extends Controller
             'products' => Product::orderBy('size', 'asc')
             ->leftjoin('collections', function ($join) {
                 $join->on('products.material', '=', 'collections.material')
-                    ->On('products.series', '=', 'collections.series');
+                    ->On('products.series', '=', 'collections.series')
+                    ->where('collections.category', '=', 'series');
                 })
                 ->select('products.material', 'products.series', 'products.size', 'collections.img_url as series_img_url')
                 ->where('products.material', '=', $material)
@@ -179,6 +180,7 @@ class ProductController extends Controller
         , [
             'collection' => Collection::orderBy('material', 'asc')
             ->selectRaw('description, default_color, img_url')
+            ->where('category', '=', 'series')
             ->where('material', '=', $material)
             ->where('series', '=', $series)            
             ->limit(1)
@@ -281,13 +283,22 @@ class ProductController extends Controller
 
       return view('product', [
         'products' => Product::orderBy('item', 'asc')
-        ->leftjoin('collections', function ($join) {
-        $join->on('products.material', '=', 'collections.material')
-          ->On('products.series', '=', 'collections.series');
+        ->leftjoin('collections as series', function ($join) {
+        $join->on('products.material', '=', 'series.material')
+          ->On('products.series', '=', 'series.series')
+          ->where('series.category', '=', 'series');
         })
-        ->selectRaw('products.sku, products.item, products.description, products.material
-        , products.series, products.size, products.color, products.finish, products.qty_p as qty
-        , products.uofm, products.img_url, collections.description as material_desc, collections.series_desc, collections.img_url as series_img_url')
+        ->leftjoin('collections as size', function ($join) {
+            $join->on('products.material', '=', 'size.material')
+              ->On('products.series', '=', 'size.series')
+              ->On('products.size', '=', 'size.size')
+              ->where('size.category', '=', 'size');
+            })        
+        ->selectRaw('products.sku, products.item, products.description
+        , products.material, products.series, products.size, products.color
+        , products.finish, products.qty_p as qty, products.uofm, products.img_url
+        , series.description as series_desc, series.size_desc
+        , series.img_url as series_img_url, size.technical_name as size_technical_name')
         ->where('sku', '=', $id)
         ->limit(1)
         ->get()
@@ -297,6 +308,5 @@ class ProductController extends Controller
       ->with('product_lots', $product_lots)
       ;
     }
-
 
 }

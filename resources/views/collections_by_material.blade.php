@@ -31,7 +31,6 @@
                 <div class="card-body" style="padding: 10px;">
 
                     <div class="row" style="--bs-gutter-x: 0rem;">
-                    
 
                         @if (count($collections) > 0)
                         @foreach ($collections as $collection)
@@ -47,7 +46,7 @@
                             $featured = 'featured';
                         }
 
-                        if ($collection->material != '-') {
+                        if ($collection->category = 'series') {
                             //if category is series
                             $category = $collection->series;
                             $path = $collection->material . '/' . str_replace('/', '_', $category);
@@ -59,9 +58,9 @@
                             $image = strtolower($image);
 
                             if (file_exists($_SERVER["DOCUMENT_ROOT"] . $image) == false) {
-                              $image = "/assets/images/products/blank.png";
+                                $image = "/assets/images/products/blank.png";
                             }
-
+                            
                         } else {
                             $category = $collection->material;
                             $image = '/assets/images/products/' . str_replace(' ', '_', $category) . '_h.png';
@@ -69,18 +68,13 @@
                             $image = strtolower($image);
                         }
 
-
-
-
-
                         // if ($collection->img_url != '') {
                         //     $image = $collection->img_url;
                         // }
 
                         ?>
 
-                        <div class="col-md-3 img-container" 
-                        style="
+                        <div class="col-md-3 img-container" style="
                          padding: 5px;
                          min-height: 300px;
                          overflow: hidden;
@@ -88,8 +82,7 @@
                             <span class="{{ $featured }}">{{ ucwords($featured) }}</span>
 
                             <a href="/collections/{{ $path }}">
-                                <img src="{{ $image }}" class="img-preview" 
-                                style="
+                                <img src="{{ $image }}" class="img-preview" style="
                                 width: 100%;
                                 height: 100%;
                                 object-fit: cover;

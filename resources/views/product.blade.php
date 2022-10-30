@@ -22,7 +22,7 @@
   }
 </style>
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center 
+<div class="breadcrumb-sticky d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center 
  pt-3 mb-2 border-bottom">
 
   @foreach ($products as $product)
@@ -62,8 +62,10 @@
         $image = $product->img_url;
         $material_desc = $product->material_desc;
         $series = str_replace('Ã©', 'é', $product->series);
-        $series = str_replace('1/2', '0.5', $series);
-        $series = str_replace('1/4', '0.25', $series);
+        $size = $product->size_technical_name;
+        if($size ==""){
+          $size = $product->size;
+        }
 
         //$series = $product->series;
         //print_r($_SERVER);
@@ -78,7 +80,7 @@
             $finish = '-';
           }
 
-          $filename = $image . '/' . $series . '_' . $product->size . '_' . $product->color . '_' . $finish . '.jpg';
+          $filename = $image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg';
           $filename = strtolower(str_replace(' ', '_', $filename));
           $filename = str_replace('_-', '', $filename);
           $filename = str_replace('hexagon', 'hex', $filename);
@@ -95,6 +97,9 @@
           } else {
             $image = $image . '.png';
             //echo 'not exists!';
+            if (file_exists($_SERVER["DOCUMENT_ROOT"] . $image) == false) {
+              $image = "/assets/images/products/blank.png";
+            }            
           }
           $image = strtolower(str_replace(' ', '_', $image));
         }
@@ -161,7 +166,7 @@
           <span>{{ $product->finish }}</span>
         </div>
       </div>
-      <p class="product-description">{{ $product->series_desc }}</p>
+      <p class="product-description">{{ $product->size_desc }}</p>
 
 
       @if (count($product_lots) > 0 && $qty > 0)
@@ -292,14 +297,14 @@
 
   <?php
 
-  if ($product->material_desc != "") {
+  if ($product->series_desc != "") {
   ?>
 
 
     <div class="card" style="margin-top: 20px;">
       <div class="card-body" style="padding-bottom: 10px;">
         <h5 class="card-title">Series overview</h5>
-        <p class="card-text">{{ $product->material_desc }}</p>
+        <p class="card-text">{{ $product->series_desc }}</p>
       </div>
     </div>
 
@@ -415,9 +420,12 @@
                 //generate image path
 
                 $image = $product->img_url;
+                $material_desc = $product->material_desc;
                 $series = str_replace('Ã©', 'é', $product->series);
-                $series = str_replace('1/2', '0.5', $series);
-                $series = str_replace('1/4', '0.25', $series);
+                $size = $product->size_technical_name;
+                if($size ==""){
+                  $size = $product->size;
+                }
 
                 //if item image url is blank, use local image if exists, otherwise use series image
                 if ($product->img_url == '') {
@@ -429,7 +437,7 @@
                     $finish = '-';
                   }
 
-                  $filename = $image . '/' . $series . '_' . $product->size . '_' . $product->color . '_' . $finish . '.jpg';
+                  $filename = $image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg';
                   $filename = strtolower(str_replace(' ', '_', $filename));
                   $filename = str_replace('_-', '', $filename);
                   $filename = str_replace('hexagon', 'hex', $filename);
@@ -443,7 +451,11 @@
                     //echo 'file exists!';
                   } else {
                     $image = $image . '.png';
-                    //echo 'not exists!';
+                    // echo 'not exists!';
+                    if (file_exists($_SERVER["DOCUMENT_ROOT"] . $image) == false) {
+                      $image = "/assets/images/products/blank.png";
+                    }                    
+                    
                   }
                   $image = strtolower(str_replace(' ', '_', $image));
                 }
@@ -597,9 +609,12 @@
                 //generate image path
 
                 $image = $product->img_url;
+                $material_desc = $product->material_desc;
                 $series = str_replace('Ã©', 'é', $product->series);
-                $series = str_replace('1/2', '0.5', $series);
-                $series = str_replace('1/4', '0.25', $series);
+                $size = $product->size_technical_name;
+                if($size ==""){
+                  $size = $product->size;
+                }
 
                 //if item image url is blank, use local image if exists, otherwise use series image
                 if ($product->img_url == '') {
@@ -611,7 +626,7 @@
                     $finish = '-';
                   }
 
-                  $filename = $image . '/' . $series . '_' . $product->size . '_' . $product->color . '_' . $finish . '.jpg';
+                  $filename = $image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg';
                   $filename = strtolower(str_replace(' ', '_', $filename));
                   $filename = str_replace('_-', '', $filename);
                   $filename = str_replace('hexagon', 'hex', $filename);
@@ -622,10 +637,13 @@
                   if (file_exists($full_filename)) {
                     $image = $filename;
                     $exists = true;
-                    //echo 'file exists!';
+                    // echo 'file exists!';
                   } else {
                     $image = $image . '.png';
-                    //echo 'not exists!';
+                    // echo 'not exists!';
+                    if (file_exists($_SERVER["DOCUMENT_ROOT"] . $image) == false) {
+                      $image = "/assets/images/products/blank.png";
+                    }
                   }
                   $image = strtolower(str_replace(' ', '_', $image));
                 }
