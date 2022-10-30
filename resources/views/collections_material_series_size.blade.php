@@ -135,7 +135,12 @@
                 //generate image path
 
                 $image = $product->img_url;
+                $material_desc = $product->material_desc;
                 $series = str_replace('Ã©', 'é', $product->series);
+                $size = $product->size_technical_name;
+                if($size ==""){
+                  $size = $product->size;
+                }
 
                 //if item image url is blank, use local image if exists, otherwise use series image
                 if ($product->img_url == '') {
@@ -147,7 +152,7 @@
                     $finish = '-';
                   }
 
-                  $filename = $image . '/' . $series . '_' . $product->size . '_' . $product->color . '_' . $finish . '.jpg';
+                  $filename = $image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg';
                   $filename = strtolower(str_replace(' ', '_', $filename));
                   $filename = str_replace('_-', '', $filename);
                   $filename = str_replace('hexagon', 'hex', $filename);
@@ -162,6 +167,9 @@
                   } else {
                     $image = $image . '.png';
                     //echo 'not exists!';
+                    if (file_exists($_SERVER["DOCUMENT_ROOT"] . $image) == false) {
+                      $image = "/assets/images/products/blank.png";
+                    }                    
                   }
                   $image = strtolower(str_replace(' ', '_', $image));
                 }

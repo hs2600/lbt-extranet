@@ -21,37 +21,43 @@
             @if (count($collections) > 0)
             @foreach ($collections as $collection)
             <?php
-            $image = '';
-            $category = '';
-            $path = '';
-            $featured = '';
+              $image = '';
+              $category = '';
+              $path = '';
+              $featured = '';
 
-            if ($collection->status == 3) {
-              $featured = 'new';
-            } elseif ($collection->status == 2) {
-              $featured = 'featured';
-            }
+              if ($collection->status == 3) {
+                  $featured = 'new';
+              } elseif ($collection->status == 2) {
+                  $featured = 'featured';
+              }
 
-            if ($collection->material != '-') {
-              //if category is series
-              $category = $collection->series;
-              $path = $collection->material . '/' . str_replace('/', '_', $category);
-              $image = $collection->series;
-              $image = str_replace(' ', '_', $image);
-              $image = '/assets/images/products/' . $collection->material . '/' . $image . '.png';
+              if ($collection->material != '-') {
+                  //if category is series
+                  $category = $collection->series;
+                  $path = $collection->material . '/' . str_replace('/', '_', $category);
+                  $image = $collection->series;
+                  $image = str_replace(' ', '_', $image);
+                  $image = '/assets/images/products/' . $collection->material . '/' . $image . '.png';
 
-              $path = strtolower($path);
-              $image = strtolower($image);
-            } else {
-              $category = $collection->material;
-              $image = '/assets/images/products/' . str_replace(' ', '_', $category) . '_h.png';
-              $path = strtolower($category);
-              $image = strtolower($image);
-            }
+                  $path = strtolower($path);
+                  $image = strtolower($image);
 
-            if ($collection->img_url != '') {
-              $image = $collection->img_url;
-            }
+                  if (file_exists($_SERVER["DOCUMENT_ROOT"] . $image) == false) {
+                    $image = "/assets/images/products/blank.png";
+                  }
+
+              } else {
+                  $category = $collection->material;
+                  $image = '/assets/images/products/' . str_replace(' ', '_', $category) . '_h.png';
+                  $path = strtolower($category);
+                  $image = strtolower($image);
+              }
+
+              // if ($collection->img_url != '') {
+              //   $image = $collection->img_url;
+              // }
+              
             ?>
 
             <div class="col-lg-3 img-container"

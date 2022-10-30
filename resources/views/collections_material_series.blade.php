@@ -2,8 +2,6 @@
 
 @section('content')
 
-
-
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center 
  pt-3 mb-2 border-bottom">
 
@@ -38,11 +36,11 @@
             <?php
             $default_color = $collection->default_color;
             $default_color_str = '';
-            
-            if($default_color != ''){
-              $default_color_str = 'Color shown: ' . $default_color;
+
+            if ($default_color != '') {
+              $default_color_str = 'Default color: ' . $default_color;
             }
-           
+
             ?>
 
             <div style="max-height: 200px; max-width: 450px;
@@ -63,7 +61,7 @@
 
           <div class="row" style="--bs-gutter-x: 0rem;">
 
-            <div class="col" style="padding: 3px 10px;"><span style="float: right;">{{ $default_color_str }} </span></div>
+            <div class="col" style="padding: 3px 10px;"><span style="float: right; color: #999;">{{ $default_color_str }} </span></div>
           </div>
 
           <div class="row" style="--bs-gutter-x: 0rem;">
@@ -72,7 +70,12 @@
             //generate image path
 
             $image = $product->img_url;
+            $material_desc = $product->material_desc;
             $series = str_replace('Ã©', 'é', $product->series);
+            $size = $product->size_technical_name;
+            if ($size == "") {
+              $size = $product->size;
+            }
 
             //if item image url is blank, use local image if exists, otherwise use series image
             if ($product->img_url == '') {
@@ -84,7 +87,7 @@
                 $finish = '-';
               }
 
-              $filename = $image . '/' . $series . '_' . $product->size . '_' . $default_color . '_' . $finish . '.jpg';
+              $filename = $image . '/' . $series . '_' . $size . '_' . $default_color . '_' . $finish . '.jpg';
               $filename = strtolower(str_replace(' ', '_', $filename));
               $filename = str_replace('_-', '', $filename);
               $filename = str_replace('hexagon', 'hex', $filename);
@@ -101,7 +104,10 @@
                 //echo 'file exists!';
               } else {
                 $image = $image . '.png';
-                //echo 'not exists!';
+                // echo 'not exists!';
+                if (file_exists($_SERVER["DOCUMENT_ROOT"] . $image) == false) {
+                  $image = "/assets/images/products/blank.png";
+                }
               }
               $image = strtolower(str_replace(' ', '_', $image));
             }
@@ -126,11 +132,25 @@
             $image = str_replace('é', 'e', $image);
 
             ?>
-            <div class="col-2 img-container" Style="padding:5px;">
-              <a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}/{{ strtolower(str_replace('/', '_', $product->size)) }}">
-                <img class="img-thumbnail" src="{{$image}}" width="400" height="400"></a>
-              {{$product->size}}
+
+            <div class="col-lg-2 img-container" Style="padding: 3px; margin: 0px; border-radius: 4px;">
+              <div>
+                <div class="img-thumbnail">
+                  <a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}/{{ strtolower(str_replace('/', '_', $product->size)) }}">
+                    <img src="{{$image}}" style="
+                         border: 0px; padding: 0px;" alt="{{ ucwords(strtolower($product->description)) }}">
+                  </a>
+
+                  <div class="w-100 ph1 pv2 tc f2">
+                    <span class="db gray5 hover-blue7" style=" width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;" title="{{ $product->description }}">
+                      {{$product->size}}
+                    </span>
+                  </div>
+                </div>
+
+              </div>
             </div>
+
             @endforeach
           </div>
 
