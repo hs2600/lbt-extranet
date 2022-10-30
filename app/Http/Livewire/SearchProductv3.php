@@ -61,7 +61,8 @@ class SearchProductv3 extends Component
         ->leftjoin('collections as series', function ($join) {
             $join->on('products.material', '=', 'series.material')
                 ->On('products.series', '=', 'series.series')
-                ->where('series.category', '=', 'series');
+                ->where('series.category', '=', 'series')
+                ->where('series.status', '!=', 1);
         })
         ->selectRaw('count(*) as count, products.series as name, series.status as status')
         ->Where('products.material', 'like', $this->material.'%')
