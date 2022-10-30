@@ -137,10 +137,12 @@
                 $image = $product->img_url;
                 $material_desc = $product->material_desc;
                 $series = str_replace('Ã©', 'é', $product->series);
+                $series = str_replace('é', 'e', $series);
                 $size = $product->size_technical_name;
-                if($size ==""){
+
+                if(is_null($size) == true){
                   $size = $product->size;
-                }
+                } 
 
                 //if item image url is blank, use local image if exists, otherwise use series image
                 if ($product->img_url == '') {

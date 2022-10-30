@@ -62,8 +62,11 @@
         $image = $product->img_url;
         $material_desc = $product->material_desc;
         $series = str_replace('Ã©', 'é', $product->series);
+        $series = str_replace('é', 'e', $series);
+        
         $size = $product->size_technical_name;
-        if($size ==""){
+
+        if (is_null($size) == true) {
           $size = $product->size;
         }
 
@@ -87,7 +90,7 @@
           $filename = str_replace('japonaise', 'japon', $filename);
           $full_filename = $_SERVER["DOCUMENT_ROOT"] . $filename;
 
-          // echo $full_filename;
+          //  echo $full_filename;
 
           $exists = false;
           if (file_exists($full_filename)) {
@@ -99,7 +102,7 @@
             //echo 'not exists!';
             if (file_exists($_SERVER["DOCUMENT_ROOT"] . $image) == false) {
               $image = "/assets/images/products/blank.png";
-            }            
+            }
           }
           $image = strtolower(str_replace(' ', '_', $image));
         }
@@ -340,11 +343,11 @@
           <!-- Size variation sub tabs -->
           <ul class="nav nav-pills" style="float: right;" id="mySizeTab" role="tablist">
             <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="size-table-tab" data-bs-toggle="tab" data-bs-target="#size-table-tab-pane" type="button" role="tab" aria-controls="size-table-tab-pane" aria-selected="true">
+              <button class="nav-link" id="size-table-tab" data-bs-toggle="tab" data-bs-target="#size-table-tab-pane" type="button" role="tab" aria-controls="size-table-tab-pane" aria-selected="true">
                 <i class="bi bi-table" style="font-size: 20px;"></i></button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" id="size-grid-tab" data-bs-toggle="tab" data-bs-target="#size-grid-tab-pane" type="button" role="tab" aria-controls="size-grid-tab-pane" aria-selected="false">
+              <button class="nav-link active" id="size-grid-tab" data-bs-toggle="tab" data-bs-target="#size-grid-tab-pane" type="button" role="tab" aria-controls="size-grid-tab-pane" aria-selected="false">
                 <i class="bi bi-grid-fill" style="font-size: 20px;"></i></button>
             </li>
           </ul>
@@ -352,7 +355,7 @@
 
         <div class="tab-content" id="mySizeTabContent">
 
-          <div class="tab-pane fade show active" id="size-table-tab-pane" role="tabpanel" aria-labelledby="table-tab" tabindex="0">
+          <div class="tab-pane fade" id="size-table-tab-pane" role="tabpanel" aria-labelledby="table-tab" tabindex="0">
 
             <div class="card-body" style="padding-top: 10px;">
               <table class="table table-striped table-borderless datatable">
@@ -410,7 +413,7 @@
 
           </div>
 
-          <div class="tab-pane fade" id="size-grid-tab-pane" role="tabpanel" aria-labelledby="size-grid-tab" tabindex="0">
+          <div class="tab-pane fade show active" id="size-grid-tab-pane" role="tabpanel" aria-labelledby="size-grid-tab" tabindex="0">
 
             <div class="card-body" style="padding: 10px;">
 
@@ -422,8 +425,11 @@
                 $image = $product->img_url;
                 $material_desc = $product->material_desc;
                 $series = str_replace('Ã©', 'é', $product->series);
+                $series = str_replace('é', 'e', $series);
+        
                 $size = $product->size_technical_name;
-                if($size ==""){
+
+                if (is_null($size) == true) {
                   $size = $product->size;
                 }
 
@@ -444,18 +450,19 @@
                   $filename = str_replace('japonaise', 'japon', $filename);
                   $full_filename = $_SERVER["DOCUMENT_ROOT"] . $filename;
 
+                  //  echo $filename; 
+
                   $exists = false;
                   if (file_exists($full_filename)) {
                     $image = $filename;
                     $exists = true;
-                    //echo 'file exists!';
+                    // echo 'file exists!';
                   } else {
                     $image = $image . '.png';
                     // echo 'not exists!';
-                    if (file_exists($_SERVER["DOCUMENT_ROOT"] . $image) == false) {
+                    if (file_exists($_SERVER["DOCUMENT_ROOT"] . $full_filename) == false) {
                       $image = "/assets/images/products/blank.png";
-                    }                    
-                    
+                    }
                   }
                   $image = strtolower(str_replace(' ', '_', $image));
                 }
@@ -477,6 +484,7 @@
                   $image = $product->series_img_url;
                 }
 
+
                 $image = str_replace('é', 'e', $image);
 
                 ?>
@@ -486,11 +494,13 @@
                   <div>
                     <div class="img-thumbnail">
                       <a href="/products/{{ $product->sku }}">
-                        <img src="{{$image}}" style="
+                        <div style="min-height: 195px;">
+                          <img src="{{$image}}" style="
                          border: 0px; padding: 0px;" alt="{{ ucwords(strtolower($product->description)) }}">
+                        </div>
                       </a>
 
-                      <div class="w-100 ph1 pv2 tc f2">
+                      <div class="w-100 ph1 pv2 tc f2" style="border-top: 1px solid #efefef;">
                         <span class="db gray5 hover-blue7" style=" width: 135px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;" title="{{ $product->description }}">
                           {{$product->size . ' ' . str_replace('-', '', $product->finish)}}
                         </span>
@@ -529,11 +539,11 @@
           <ul class="nav nav-pills" style="float: right;" id="myColorTab" role="tablist">
 
             <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="color-table-tab" data-bs-toggle="tab" data-bs-target="#color-table-tab-pane" type="button" role="tab" aria-controls="color-table-tab-pane" aria-selected="true">
+              <button class="nav-link" id="color-table-tab" data-bs-toggle="tab" data-bs-target="#color-table-tab-pane" type="button" role="tab" aria-controls="color-table-tab-pane" aria-selected="true">
                 <i class="bi bi-table" style="font-size: 20px;"></i></button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" id="color-grid-tab" data-bs-toggle="tab" data-bs-target="#color-grid-tab-pane" type="button" role="tab" aria-controls="color-grid-tab-pane" aria-selected="false">
+              <button class="nav-link active" id="color-grid-tab" data-bs-toggle="tab" data-bs-target="#color-grid-tab-pane" type="button" role="tab" aria-controls="color-grid-tab-pane" aria-selected="false">
                 <i class="bi bi-grid-fill" style="font-size: 20px;"></i></button>
             </li>
           </ul>
@@ -541,7 +551,7 @@
 
         <div class="tab-content" id="myColorTabContent">
 
-          <div class="tab-pane fade show active" id="color-table-tab-pane" role="tabpanel" aria-labelledby="table-tab" tabindex="0">
+          <div class="tab-pane fade" id="color-table-tab-pane" role="tabpanel" aria-labelledby="table-tab" tabindex="0">
 
             <div class="card-body" style="padding-top: 10px;">
               <table class="table table-striped table-borderless datatable">
@@ -599,7 +609,7 @@
 
           </div>
 
-          <div class="tab-pane fade" id="color-grid-tab-pane" role="tabpanel" aria-labelledby="color-grid-tab" tabindex="0">
+          <div class="tab-pane fade show active" id="color-grid-tab-pane" role="tabpanel" aria-labelledby="color-grid-tab" tabindex="0">
 
             <div class="card-body" style="padding: 10px;">
 
@@ -611,8 +621,11 @@
                 $image = $product->img_url;
                 $material_desc = $product->material_desc;
                 $series = str_replace('Ã©', 'é', $product->series);
+                $series = str_replace('é', 'e', $series);
+        
                 $size = $product->size_technical_name;
-                if($size ==""){
+
+                if (is_null($size) == true) {
                   $size = $product->size;
                 }
 
@@ -633,15 +646,17 @@
                   $filename = str_replace('japonaise', 'japon', $filename);
                   $full_filename = $_SERVER["DOCUMENT_ROOT"] . $filename;
 
+                  // echo $full_filename;
+
                   $exists = false;
                   if (file_exists($full_filename)) {
                     $image = $filename;
                     $exists = true;
-                    // echo 'file exists!';
+                    //  echo 'file exists!';
                   } else {
                     $image = $image . '.png';
-                    // echo 'not exists!';
-                    if (file_exists($_SERVER["DOCUMENT_ROOT"] . $image) == false) {
+                    //  echo 'not exists!';
+                    if (file_exists($_SERVER["DOCUMENT_ROOT"] . $full_filename) == false) {
                       $image = "/assets/images/products/blank.png";
                     }
                   }
@@ -674,8 +689,10 @@
                   <div>
                     <div class="img-thumbnail">
                       <a href="/products/{{ $product->sku }}">
-                        <img src="{{$image}}" style="
+                        <div style="min-height: 196px;">
+                          <img src="{{$image}}" style="
                          border: 0px; padding: 0px;" alt="{{ ucwords(strtolower($product->description)) }}">
+                        </div>
                       </a>
 
                       <div class="w-100 ph1 pv2 tc f2">
