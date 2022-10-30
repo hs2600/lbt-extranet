@@ -20,10 +20,10 @@
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 
-<!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-<script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
 
   <!-- Vendor CSS Files -->
   <link href="/assets/dashboard/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
@@ -246,88 +246,85 @@
   @livewireScripts
 
 
-<!-- Product Info Modal -->
-<div class="modal fade p-5" id="exModal" tabindex="-1" style="display: none;" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <span class="product-title" id="title" style="text-transform: capitalize; font-size: 27px;">title</span>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-size: 35%;"></button>
-      </div>
-      <div class="modal-body">
+  <!-- Product Info Modal -->
+  <div class="modal fade p-5" id="exModal" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="product-title" id="title" style="text-transform: capitalize; font-size: 27px;">title</span>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-size: 35%;"></button>
+        </div>
+        <div class="modal-body">
 
-        <div class="row">
-          <div class="col-md">
+          <div class="row">
+            <div class="col-md">
 
-            <div class="row" style="padding: 10px; margin: 0px; margin-bottom: 15px; background-color: #efefef;">
-              <div class="col-sm-6">
-                <label><b>Material:</b></label>
-                <span id="material"></span>
+              <div class="row" style="padding: 10px; margin: 0px; margin-bottom: 15px; background-color: #efefef;">
+                <div class="col-sm-6">
+                  <label><b>Material:</b></label>
+                  <span id="material"></span>
+                </div>
+                <div class="col-sm-6">
+                  <label><b>Series:</b></label>
+                  <span id="series"></span>
+                </div>
+                <div class="col-sm-6">
+                  <label><b>Size:</b></label>
+                  <span id="size"></span>
+                </div>
+                <div class="col-sm-6">
+                  <label><b>Color:</b></label>
+                  <span id="color"></span>
+                </div>
+                <div class="col-sm-6">
+                  <label><b>Finish:</b></label>
+                  <span id="finish"></span>
+                </div>
               </div>
-              <div class="col-sm-6">
-                <label><b>Series:</b></label>
-                <span id="series"></span>
-              </div>
-              <div class="col-sm-6">
-                <label><b>Size:</b></label>
-                <span id="size"></span>
-              </div>
-              <div class="col-sm-6">
-                <label><b>Color:</b></label>
-                <span id="color"></span>
-              </div>
-              <div class="col-sm-6">
-                <label><b>Finish:</b></label>
-                <span id="finish"></span>
-              </div>
-            </div>
 
-            <div style="background-color: #fafafa; padding: 5px; margin-bottom: 20px;
+              <div style="background-color: #fafafa; padding: 5px; margin-bottom: 20px;
                 border-bottom: 1px solid #ddd;">
-              <div class="">
-                <span id="qty" class="product-price"></span>
+                <div class="">
+                  <span id="qty" class="product-price"></span>
+                </div>
               </div>
+
             </div>
 
           </div>
 
         </div>
-
       </div>
     </div>
   </div>
-</div>
 
 
-<script>
-  function titleCase(str) {
-    return str.toLowerCase().replace(/\b\w/g, s => s.toUpperCase());
-  }
-
-  function fileMenu(data, ID) {
-
-    const json = data;
-    const obj = JSON.parse(json);
-
-    document.getElementById("title").innerHTML = titleCase(obj.description);
-
-    document.getElementById("material").innerHTML = obj.material;
-    document.getElementById("series").innerHTML = obj.series;
-    document.getElementById("size").innerHTML = obj.size;
-    document.getElementById("color").innerHTML = obj.color;
-    document.getElementById("finish").innerHTML = obj.finish;
-
-    if (obj.qty > 0){
-      document.getElementById("qty").innerHTML = '<b><i>' + obj.qty + ' ' + obj.uofm + '</i></b><i> stocked in Harbor City</i>';
-    } else {
-      document.getElementById("qty").innerHTML = '<b><i style="color: #d35d5d;">Item is currently out of stock.</i></b>';
+  <script>
+    function titleCase(str) {
+      return str.toLowerCase().replace(/\b\w/g, s => s.toUpperCase());
     }
 
+    function fileMenu(data, ID) {
 
+      const json = data;
+      const obj = JSON.parse(json);
 
+      document.getElementById("title").innerHTML = titleCase(obj.description);
 
-  }
-</script>
+      document.getElementById("material").innerHTML = obj.material;
+      document.getElementById("series").innerHTML = obj.series;
+      document.getElementById("size").innerHTML = obj.size;
+      document.getElementById("color").innerHTML = obj.color;
+      document.getElementById("finish").innerHTML = obj.finish;
+
+      if (obj.qty_p > 0) {
+        document.getElementById("qty").innerHTML = '<b><i>' + obj.qty_p + ' ' + obj.uofm + '</i></b><i> stocked in Harbor City</i>';
+      } else {
+        document.getElementById("qty").innerHTML = '<b><i style="color: #d35d5d;">Item is currently out of stock.</i></b>';
+      }
+
+    }
+  </script>
 
 
   <!-- Template Main JS File -->
@@ -370,9 +367,6 @@
       })
     });
   </script>
-
-
-
 
 
 </body>
