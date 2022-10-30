@@ -695,9 +695,9 @@
                         </div>
                       </a>
 
-                      <div class="w-100 ph1 pv2 tc f2">
-                        <span class="db gray5 hover-blue7" style=" width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;" title="{{ $product->description }}">
-                          {{ $product->color . ' ' . str_replace('-', '', $product->finish) }}
+                      <div class="w-100 ph1 pv2 tc f2" style="border-top: 1px solid #efefef;">
+                        <span class="db gray5 hover-blue7" style=" width: 135px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;" title="{{ $product->description }}">
+                          {{$product->size . ' ' . str_replace('-', '', $product->finish)}}
                         </span>
                       </div>
                     </div>
