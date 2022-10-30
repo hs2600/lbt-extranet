@@ -19,6 +19,7 @@ class SearchProduct extends Component
                 ->paginate(50);
 
         $series = Collection::where('series','like', '%'.$this->search.'%')
+        ->where('category', '=', 'series')
         ->limit(5)
         ->get();
 
@@ -26,7 +27,14 @@ class SearchProduct extends Component
                 ->orWhere('item', 'like', '%'.$this->search.'%')
                 ->get();
 
-        $items = Product::where('item','=', $this->search)->get();
+        $items = Product::where('item','=', $this->search)
+            ->leftjoin('collections as series', function ($join) {
+            $join->on('products.material', '=', 'series.material')
+              ->On('products.series', '=', 'series.series')
+              ->where('series.category', '=', 'series');
+            })
+            ->selectRaw('products.*, series.size_desc')
+            ->get();
 
         if($this->search == ''){
             return view('livewire.search-product',['products' => $this->search]);

@@ -64,11 +64,11 @@
             @foreach($products as $product)
 
             <?php
-            $qty = $product->qty_p;
+            $qty = $product->qty;
             $uofm = strtolower(str_replace('each', 'piece', strtolower($product->uofm)));
 
             if (str_replace('each', 'piece', strtolower($product->uofm)) == 'piece') {
-              $qty = $product->qty_p;
+              $qty = $product->qty;
               $uofm = $uofm . 's';
             }
             ?>
@@ -90,7 +90,7 @@
 
         @else
 
-        <div class="search">
+        <div style="max-width: 500px;">
           @foreach($items as $item)
 
           <?php
@@ -98,7 +98,6 @@
           $uofm = strtolower(str_replace('each', 'piece', strtolower($item->uofm)));
 
           if (str_replace('each', 'piece', strtolower($item->uofm)) == 'piece') {
-            $qty = $item->qty_p;
             $uofm = $uofm . 's';
           }
           ?>
@@ -108,34 +107,41 @@
           <span class="product-title" style="font-size: 30px;">{{ ucwords(strtolower($item->description)) }}</span>
           <hr style="margin-top: 10px; border: 0.5px solid #999;">
 
-          <div class="row" style="padding: 10px; margin: 0px; margin-bottom: 15px; background-color: #efefef;">
+          <div class="row" style="padding: 10px; margin: 0px; margin-bottom: 15px;
+           background-color: #efefef;
+           --bs-gutter-x: 0px;           
+           ">
             <div class="col-sm-6">
-              <label class="">Material:</label>
+              <label><b>Material:</b></label>
               <span>{{ $item->material }}</span>
             </div>
             <div class="col-sm-6">
-              <label class="">Series:</label>
+              <label><b>Series:</b></label>
               <span>{{ str_replace('Ã©', 'é', $item->series) }}</span>
             </div>
             <div class="col-sm-6">
-              <label class="">Size:</label>
+              <label><b>Size:</b></label>
               <span>{{ $item->size }}</span>
             </div>
             <div class="col-sm-6">
-              <label class="">Color:</label>
+              <label><b>Color:</b></label>
               <span>{{ $item->color }}</span>
             </div>
             <div class="col-sm-6">
-              <label class="">Finish:</label>
+              <label><b>Finish:</b></label>
               <span>{{ $item->finish }}</span>
             </div>
           </div>
-          <p class="product-description">{{ $item->series_desc }}</p>
+          <p class="product-description" style="font-size: 17px;">{{ $item->size_desc }}</p>
 
           <div style="background-color: #fafafa; padding: 5px; margin-bottom: 20px;
-              border-bottom: 1px solid #ddd;">
+            border-bottom: 1px solid #ddd;">
             <div class="">
-              <span class="product-price"><b><i>{{ $qty }} {{ $uofm }} </b> in stock in Harbor City</i></span>
+              @if ($qty > 0)
+              <span class="product-price"><b><i>{{ $qty }} {{ $uofm }} </b> stocked in Harbor City</i></span>
+              @else
+              <span class="product-price" style="color: #d35d5d;"><b><i>Item is currently out of stock.</b></i></span>
+              @endif
             </div>
           </div>
 
