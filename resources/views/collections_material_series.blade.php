@@ -35,6 +35,7 @@
             @foreach ($collection as $collection)
             <?php
             $default_color = $collection->default_color;
+            $default_finish = $collection->default_finish;
             $default_color_str = '';
 
             if ($default_color != '') {
@@ -85,7 +86,7 @@
             if ($product->img_url == '') {
               $image = $product->material . '/' . $series;
               $image = '/assets/images/products/' . $image;
-              $finish = 'pearl'; //TODO: use default finish from series
+              $finish = $default_finish;
 
               if ($finish == '') {
                 $finish = '-';
@@ -97,7 +98,7 @@
               $filename = str_replace('hexagon', 'hex', $filename);
               $filename = str_replace('japonaise', 'japon', $filename);
 
-              //  echo $filename;
+              // echo $filename;
 
               $full_filename = $_SERVER["DOCUMENT_ROOT"] . $filename;
 

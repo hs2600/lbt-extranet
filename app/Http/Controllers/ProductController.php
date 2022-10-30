@@ -200,7 +200,7 @@ class ProductController extends Controller
             ],
             [
                 'collection' => Collection::orderBy('material', 'asc')
-                    ->selectRaw('description, default_color, img_url')
+                    ->selectRaw('description, default_color, default_finish, img_url')
                     ->where('category', '=', 'series')
                     ->where('material', '=', $material)
                     ->where('series', '=', $series)
