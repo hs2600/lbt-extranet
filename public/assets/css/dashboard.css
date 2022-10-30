@@ -44,6 +44,14 @@
     text-transform: uppercase;
 }
 
+.breadcrumb-sticky {
+    position: sticky;
+    top: 60px;
+    background-color: #fff;
+    margin: -3px;
+    z-index: 1;
+}
+
  * Nav
  */
 
