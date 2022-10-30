@@ -21,7 +21,7 @@
   }
 </style>
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center 
+<div class="breadcrumb-sticky d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center 
  pt-3 mb-2 border-bottom">
 
   <nav aria-label="breadcrumb">
@@ -47,26 +47,36 @@
 
 
       <div class="card" style="margin: 0px;">
-        <div class="card-header">
+        <div class="card-header" style="padding: 0px;">
 
-        <div class="row" style="padding: 0px;">
-        <div class="col-lg-8">
-          <h4 class="card-title" style="padding: 0px;">{{ ucwords(str_replace('1/2','0.5', str_replace('_', '/', $size))) }}</h4>
-        </div>
-        <div class="col-lg-4">
-          <!-- Size variation sub tabs -->
-          <ul class="nav nav-pills" style="float: right;" id="mySizeTab" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="size-table-tab" data-bs-toggle="tab" data-bs-target="#size-table-tab-pane" type="button" role="tab" aria-controls="size-table-tab-pane" aria-selected="true">
-                <i class="bi bi-table" style="font-size: 20px;"></i></button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="size-grid-tab" data-bs-toggle="tab" data-bs-target="#size-grid-tab-pane" type="button" role="tab" aria-controls="size-grid-tab-pane" aria-selected="false">
-                <i class="bi bi-grid-fill" style="font-size: 20px;"></i></button>
-            </li>
-          </ul></div>
+          <div class="row" style="padding: 8px 16px;">
+            <div class="col-lg-8">
+              <span class="card-title" style="padding: 0px; font-size: 1.5rem;">
+                {{ ucwords($size) }}
+              </span>
+            </div>
+            <div class="col-lg-4">
+              <!-- Size variation sub tabs -->
+              <ul class="nav nav-pills" style="float: right;" id="mySizeTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="size-table-tab" data-bs-toggle="tab" data-bs-target="#size-table-tab-pane" type="button" role="tab" aria-controls="size-table-tab-pane" aria-selected="true">
+                    <i class="bi bi-table" style="font-size: 20px;"></i></button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="size-grid-tab" data-bs-toggle="tab" data-bs-target="#size-grid-tab-pane" type="button" role="tab" aria-controls="size-grid-tab-pane" aria-selected="false">
+                    <i class="bi bi-grid-fill" style="font-size: 20px;"></i></button>
+                </li>
+              </ul>
+            </div>
 
-        </div>
+          </div>
+
+          <div class="row" style="padding: 10px 30px; padding-top: 0px;">
+            @foreach ($collection as $collection)
+            {{ $collection->description }}
+            @endforeach
+          </div>
+
         </div>
 
         <div class="tab-content" id="mySizeTabContent">
@@ -140,9 +150,9 @@
                 $series = str_replace('é', 'e', $series);
                 $size = $product->size_technical_name;
 
-                if(is_null($size) == true){
+                if (is_null($size) == true) {
                   $size = $product->size;
-                } 
+                }
 
                 //if item image url is blank, use local image if exists, otherwise use series image
                 if ($product->img_url == '') {
@@ -171,7 +181,7 @@
                     //echo 'not exists!';
                     if (file_exists($_SERVER["DOCUMENT_ROOT"] . $image) == false) {
                       $image = "/assets/images/products/blank.png";
-                    }                    
+                    }
                   }
                   $image = strtolower(str_replace(' ', '_', $image));
                 }
@@ -206,9 +216,9 @@
                          border: 0px; padding: 0px;" alt="{{ ucwords(strtolower($product->description)) }}">
                       </a>
 
-                      <div class="w-100 ph1 pv2 tc f2">
+                      <div class="w-100 ph1 pv2 tc f2" style="border-top: 1px solid #efefef;">
                         <span class="db gray5 hover-blue7" style=" width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;" title="{{ $product->description }}">
-                        {{$product->size . ' ' . $product->color . ' ' . str_replace('-', '', $product->finish) }} &nbsp;
+                          {{$product->size . ' ' . $product->color . ' ' . str_replace('-', '', $product->finish) }} &nbsp;
                         </span>
                       </div>
                     </div>

@@ -236,6 +236,15 @@ class ProductController extends Controller
                 ->where('products.series', '=', str_replace('Ã©', 'é', $series))
                 ->where('products.size', '=', str_replace('_', '/', $size))
                 ->paginate(50)
+        ],
+        [
+            'collection' => Collection::orderBy('material', 'asc')
+                ->selectRaw('size_desc as description, img_url')
+                ->where('category', '=', 'series')
+                ->where('material', '=', $material)
+                ->where('series', '=', $series)
+                ->limit(1)
+                ->get()
         ])
             ->with('material', ucfirst($material))
             ->with('series', ucfirst($series))

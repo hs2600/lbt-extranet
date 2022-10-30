@@ -689,7 +689,7 @@
                   <div>
                     <div class="img-thumbnail">
                       <a href="/products/{{ $product->sku }}">
-                        <div style="min-height: 196px;">
+                        <div style="min-height: 195px;">
                           <img src="{{$image}}" style="
                          border: 0px; padding: 0px;" alt="{{ ucwords(strtolower($product->description)) }}">
                         </div>

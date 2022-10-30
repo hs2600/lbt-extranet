@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center 
+<div class="breadcrumb-sticky d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center 
  pt-3 mb-2 border-bottom">
 
   <nav aria-label="breadcrumb">
@@ -146,7 +146,7 @@
                          border: 0px; padding: 0px;" alt="{{ ucwords(strtolower($product->description)) }}">
                   </a>
 
-                  <div class="w-100 ph1 pv2 tc f2">
+                  <div class="w-100 ph1 pv2 tc f2" style="border-top: 1px solid #efefef;">
                     <span class="db gray5 hover-blue7" style=" width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;" title="{{ $product->description }}">
                       {{$product->size}}
                     </span>
