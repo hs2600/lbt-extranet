@@ -43,7 +43,7 @@
 
             ?>
 
-            <div style="max-height: 200px; max-width: 450px;
+            <div style="max-height: 200px; max-width: 610px;
               overflow: hidden;
               border-radius: 5px;
               box-shadow: 1px 1px #ccc;
@@ -51,9 +51,11 @@
               margin-right: 20px;">
               <img src="{{ $collection->img_url }}" alt="{{ $collection->series }}" class="product-image">
             </div>
-
-            {{ $collection->description }}
-            @endforeach
+            <p style="font-size: 20px;
+              font-family: Playfair Display,Georgia,Times New Roman,serif;">
+              {{ $collection->description }}
+              @endforeach
+            </p>
           </div>
 
         </div>
@@ -72,8 +74,10 @@
             $image = $product->img_url;
             $material_desc = $product->material_desc;
             $series = str_replace('Ã©', 'é', $product->series);
+            $series = str_replace('é', 'e', $series);
             $size = $product->size_technical_name;
-            if ($size == "") {
+
+            if (is_null($size) == true) {
               $size = $product->size;
             }
 
@@ -81,7 +85,7 @@
             if ($product->img_url == '') {
               $image = $product->material . '/' . $series;
               $image = '/assets/images/products/' . $image;
-              $finish = $product->finish;
+              $finish = 'pearl'; //TODO: use default finish from series
 
               if ($finish == '') {
                 $finish = '-';
@@ -93,7 +97,7 @@
               $filename = str_replace('hexagon', 'hex', $filename);
               $filename = str_replace('japonaise', 'japon', $filename);
 
-              // echo $filename;
+              //  echo $filename;
 
               $full_filename = $_SERVER["DOCUMENT_ROOT"] . $filename;
 
@@ -105,7 +109,7 @@
               } else {
                 $image = $image . '.png';
                 // echo 'not exists!';
-                if (file_exists($_SERVER["DOCUMENT_ROOT"] . $image) == false) {
+                if (file_exists($_SERVER["DOCUMENT_ROOT"] . $filename) == false) {
                   $image = "/assets/images/products/blank.png";
                 }
               }
