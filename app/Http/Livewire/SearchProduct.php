@@ -34,6 +34,7 @@ class SearchProduct extends Component
               ->where('series.category', '=', 'series');
             })
             ->selectRaw('products.*, series.size_desc')
+            ->limit(1)
             ->get();
 
         if($this->search == ''){

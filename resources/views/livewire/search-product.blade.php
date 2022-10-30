@@ -6,13 +6,13 @@
 
   <div class="search-bar">
     <form class="search-form d-flex align-items-center">
-      <input id="txtSearch" type="search" placeholder="Search" title="Enter search keyword" wire:model="search" class="txtShowDiv" style="padding: 7px 10px;">
+      <input id="txtSearch" type="search" placeholder="Search" title="Enter search keyword" wire:model="search" class="txtShowDiv" style="padding: 7px 10px;" autocomplete="off">
     </form>
 
 
     <div id="divSearch" class="searchDiv" style="z-index: 1;
     position: absolute;
-    min-width: 380px;
+    min-width: 360px;
     ">
 
       <div class="search" wire:loading style="position: absolute;
@@ -54,9 +54,13 @@
           @if($items->isEmpty())
 
           @if($products->isEmpty())
-          <div style="padding: 20px;">
-            No matching results found for '{{ $search }}'
+          <div class="text-gray-500 text-sm"
+           style="max-width: 315px;">
+            <p>No matching results found for '{{ $search }}'</p>
+            <p><b><i>Search tips:</i></b> search by series, item number, or item description</p>
+            <img src="/assets/images/search.png" alt="Enter search criteria" style="padding-bottom: 30px; width: 200px;">
           </div>
+
           @else
           <!-- <div id="search-inner" class="search"> -->
           <i>Products:</i>
@@ -64,17 +68,24 @@
             @foreach($products as $product)
 
             <?php
-            $qty = $product->qty;
-            $uofm = strtolower(str_replace('each', 'piece', strtolower($product->uofm)));
-
-            if (str_replace('each', 'piece', strtolower($product->uofm)) == 'piece') {
-              $qty = $product->qty;
+            $qty = $product->qty_p;
+            $uofm = strtolower(str_replace('sheet','piece',str_replace('each', 'piece', strtolower($product->uofm))));
+  
+            if ($uofm == 'piece') {
               $uofm = $uofm . 's';
             }
+
+            $qty_str = $qty . ' ' . $uofm;
+            $span_color = '#000';
+            if($qty == 0){
+              $span_color = '#FF0000';
+              $qty_str = 'out of stock';
+            }
+
             ?>
 
             <li><a href="/products/{{ $product->sku }}">{{ $product->description }}</a>
-              - ({{ $qty }} {{ $uofm }})
+              - (<span style="color: {{ $span_color }};">{{ $qty_str }}<span>)
             </li>
             @endforeach
           </ul>
@@ -95,9 +106,9 @@
 
           <?php
           $qty = $item->qty_p;
-          $uofm = strtolower(str_replace('each', 'piece', strtolower($item->uofm)));
+          $uofm = strtolower(str_replace('sheet','piece',str_replace('each', 'piece', strtolower($item->uofm))));
 
-          if (str_replace('each', 'piece', strtolower($item->uofm)) == 'piece') {
+          if ($uofm == 'piece') {
             $uofm = $uofm . 's';
           }
           ?>
