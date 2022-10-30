@@ -58,14 +58,21 @@ class SearchProductv3 extends Component
         ->get();
         
         $series = DB::table('products')
-        ->selectRaw('count(*) as count, series as name')
-        ->Where('material', 'like', $this->material.'%')
-        ->Where('series', 'like', '%'.$this->series.'%')
-        ->Where('size', 'like', '%'.$this->size.'%')
-        ->Where('color', 'like', '%'.$this->color.'%')
-        ->Where('finish', 'like', $this->finish.'%')
-        ->groupBy('series')
-        ->orderBy('name', 'asc')
+        ->leftjoin('collections as series', function ($join) {
+            $join->on('products.material', '=', 'series.material')
+                ->On('products.series', '=', 'series.series')
+                ->where('series.category', '=', 'series');
+        })
+        ->selectRaw('count(*) as count, products.series as name, series.status as status')
+        ->Where('products.material', 'like', $this->material.'%')
+        ->Where('products.series', 'like', '%'.$this->series.'%')
+        ->Where('products.size', 'like', '%'.$this->size.'%')
+        ->Where('products.color', 'like', '%'.$this->color.'%')
+        ->Where('products.finish', 'like', $this->finish.'%')
+        ->groupBy('products.series')
+        ->groupBy('series.status')
+        ->orderBy('series.status', 'desc')
+        ->orderBy('name', 'asc')        
         ->limit(15)
         ->get();
 
