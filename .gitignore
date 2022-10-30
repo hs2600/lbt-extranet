@@ -2,7 +2,9 @@
 /public/build
 /public/hot
 /public/storage
-/public/assets/images/products
+/public/assets/images/products/ceramic
+/public/assets/images/products/concrete
+/public/assets/images/products/glass
 /storage/*.key
 /vendor
 .env
