@@ -69,7 +69,7 @@
 
             <?php
             $qty = $product->qty_p;
-            $uofm = strtolower(str_replace('sheet','piece',str_replace('each', 'piece', strtolower($product->uofm))));
+            $uofm = strtolower(str_replace('each', 'piece', strtolower($product->uofm)));
   
             if ($uofm == 'piece') {
               $uofm = $uofm . 's';
@@ -106,7 +106,7 @@
 
           <?php
           $qty = $item->qty_p;
-          $uofm = strtolower(str_replace('sheet','piece',str_replace('each', 'piece', strtolower($item->uofm))));
+          $uofm = strtolower(str_replace('each', 'piece', strtolower($item->uofm)));
 
           if ($uofm == 'piece') {
             $uofm = $uofm . 's';

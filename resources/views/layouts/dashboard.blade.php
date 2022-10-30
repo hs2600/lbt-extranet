@@ -335,8 +335,13 @@ $series = DB::table('collections')
       document.getElementById("color").innerHTML = obj.color;
       document.getElementById("finish").innerHTML = obj.finish;
 
+      var uofm = obj.uofm.toLowerCase();
+      
+      uofm = uofm.replace('each','piece');
+      uofm = uofm + 's';
+
       if (obj.qty_p > 0) {
-        document.getElementById("qty").innerHTML = '<b><i>' + obj.qty_p + ' ' + obj.uofm + '</i></b><i> stocked in Harbor City</i>';
+        document.getElementById("qty").innerHTML = '<b><i>' + obj.qty_p + ' ' + uofm + '</i></b><i> stocked in Harbor City</i>';
       } else {
         document.getElementById("qty").innerHTML = '<b><i style="color: #d35d5d;">Item is currently out of stock.</i></b>';
       }
