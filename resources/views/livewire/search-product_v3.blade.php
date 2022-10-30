@@ -249,6 +249,9 @@
                       } else {
                         $image = $image . '.png';
                         //echo 'not exists!';
+                        if (file_exists($_SERVER["DOCUMENT_ROOT"] . $full_filename) == false) {
+                          $image = "/assets/images/products/blank.png";
+                        }                        
                       }
                       $image = strtolower(str_replace(' ', '_', $image));
                     }
