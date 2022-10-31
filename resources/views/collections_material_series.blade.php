@@ -2,6 +2,18 @@
 
 @section('content')
 
+<?php
+
+$image_path = '/assets/images/products/';
+$server_root = $_SERVER["DOCUMENT_ROOT"];
+$cdn_url = 'https://cdn.lunadabaytile.com/portal';
+
+if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
+  $server_root = '/portal';
+}
+
+?>
+
 <div class="breadcrumb-sticky d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center 
  pt-3 mb-2 border-bottom">
 
@@ -93,14 +105,10 @@
               }
 
               $filename = $image . '/' . $series . '_' . $size . '_' . $default_color . '_' . $finish . '.jpg';
-              $filename = strtolower(str_replace(' ', '_', $filename));
+              $filename = str_replace('é', 'e', $filename);
+              $filename = str_replace(' ', '_', $filename);
               $filename = str_replace('_-', '', $filename);
-              $filename = str_replace('hexagon', 'hex', $filename);
-              $filename = str_replace('japonaise', 'japon', $filename);
-
-              // echo $filename;
-
-              $full_filename = $_SERVER["DOCUMENT_ROOT"] . $filename;
+              $full_filename = $server_root . $filename;              
 
               $exists = false;
               if (file_exists($full_filename)) {
@@ -108,31 +116,32 @@
                 $exists = true;
                 //echo 'file exists!';
               } else {
-                $image = $image . '.png';
-                // echo 'not exists!';
-                if (file_exists($_SERVER["DOCUMENT_ROOT"] . $filename) == false) {
-                  $image = "/assets/images/products/blank.png";
-                }
+                // $image = $image . '.png';
+                $image = $filename;
+                //echo 'not exists!';
+                // if (file_exists($server_root . $image) == false) {
+                //   $image = $image_path."blank.png";
+                // }
               }
-              $image = strtolower(str_replace(' ', '_', $image));
             }
 
-            //if item has image url and is not located on http path, use local path
-            if ($product->img_url != '' and strpos($product->img_url, 'http') === false) {
-              $image = $product->material . '/' . $series . '/' . $product->img_url;
-              $image = strtolower(str_replace(' ', '_', $image));
-              $image = '/assets/images/products/' . $image;
-            }
+            $image = $cdn_url. strtolower($image);
 
-            //if item has image url and is located on http path, use image url
-            if ($product->img_url != '' and strpos($product->img_url, 'http') != 0) {
-              $image = $product->img_url;
-            }
+                //if item has image url and is not located on http path, use local path
+                if ($product->img_url != '' and strpos($product->img_url, 'http') === false) {
+                  $image = $product->material . '/' . $series . '/' . $product->img_url;
+                  $image = $image_path . $image;
+                }
 
-            //if item image url is blank and series image url exists, use series url path
-            // if ($product->img_url == '' and $exists == false and $product->series_img_url != '') {
-            //   $image = $product->series_img_url;
-            // }
+                //if item has image url and is located on http path, use image url
+                if ($product->img_url != '' and strpos($product->img_url, 'http') != 0) {
+                  $image = $product->img_url;
+                }
+
+                // //if item image url is blank and series image url exists, use series url path
+                // if ($product->img_url == '' and $exists == false and $product->series_img_url != '') {
+                //   $image = $product->series_img_url;
+                // }
 
             $image = str_replace('é', 'e', $image);
 

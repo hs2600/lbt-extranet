@@ -2,6 +2,19 @@
 
 @section('content')
 
+
+<?php
+
+$image_path = '/assets/images/products/';
+$server_root = $_SERVER["DOCUMENT_ROOT"];
+$cdn_url = 'https://cdn.lunadabaytile.com/portal';
+
+if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
+  $server_root = '/portal';
+}
+
+?>
+
 <style>
   .nav-pills .nav-link {
     padding: 0px 10px 5px 10px;
@@ -165,11 +178,10 @@
                   }
 
                   $filename = $image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg';
-                  $filename = strtolower(str_replace(' ', '_', $filename));
+                  $filename = str_replace('é', 'e', $filename);
+                  $filename = str_replace(' ', '_', $filename);
                   $filename = str_replace('_-', '', $filename);
-                  $filename = str_replace('hexagon', 'hex', $filename);
-                  $filename = str_replace('japonaise', 'japon', $filename);
-                  $full_filename = $_SERVER["DOCUMENT_ROOT"] . $filename;
+                  $full_filename = $server_root . $filename;
 
                   $exists = false;
                   if (file_exists($full_filename)) {
@@ -177,20 +189,21 @@
                     $exists = true;
                     //echo 'file exists!';
                   } else {
-                    $image = $image . '.png';
+                    // $image = $image . '.png';
+                    $image = $filename;
                     //echo 'not exists!';
-                    if (file_exists($_SERVER["DOCUMENT_ROOT"] . $image) == false) {
-                      $image = "/assets/images/products/blank.png";
-                    }
+                    // if (file_exists($server_root . $image) == false) {
+                    //   $image = $image_path."blank.png";
+                    // }
                   }
-                  $image = strtolower(str_replace(' ', '_', $image));
                 }
+
+                $image = $cdn_url. strtolower($image);
 
                 //if item has image url and is not located on http path, use local path
                 if ($product->img_url != '' and strpos($product->img_url, 'http') === false) {
                   $image = $product->material . '/' . $series . '/' . $product->img_url;
-                  $image = strtolower(str_replace(' ', '_', $image));
-                  $image = '/assets/images/products/' . $image;
+                  $image = $image_path . $image;
                 }
 
                 //if item has image url and is located on http path, use image url
@@ -198,12 +211,17 @@
                   $image = $product->img_url;
                 }
 
-                //if item image url is blank and series image url exists, use series url path
-                if ($product->img_url == '' and $exists == false and $product->series_img_url != '') {
-                  $image = $product->series_img_url;
-                }
+                // //if item image url is blank and series image url exists, use series url path
+                // if ($product->img_url == '' and $exists == false and $product->series_img_url != '') {
+                //   $image = $product->series_img_url;
+                // }
 
-                $image = str_replace('é', 'e', $image);
+                $qty = $product->qty;
+                $uofm = strtolower(str_replace('each', 'piece', strtolower($product->uofm)));
+
+                if (str_replace('each', 'piece', strtolower($product->uofm)) == 'piece') {
+                  $uofm = $uofm . 's';
+                }
 
                 ?>
                 <div class="col-lg-2 img-container" Style="padding: 3px;
