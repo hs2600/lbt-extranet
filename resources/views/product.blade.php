@@ -115,9 +115,9 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
             // $image = $image . '.png';
             $image = $filename;
             //echo 'not exists!';
-            // if (file_exists($server_root . $image) == false) {
-            //   $image = $image_path."blank.png";
-            // }
+            if (file_exists($server_root . $image) == false) {
+              $image = $image_path."blank.png";
+            }
           }
         }
 
