@@ -97,7 +97,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
             //if item image url is blank, use local image if exists, otherwise use series image
             if ($product->img_url == '') {
               $image = $product->material . '/' . $series;
-              $image = '/assets/images/products/' . $image;
+              $image = $image_path . $image;
               $finish = $default_finish;
 
               if ($finish == '') {
@@ -108,7 +108,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
               $filename = str_replace('é', 'e', $filename);
               $filename = str_replace(' ', '_', $filename);
               $filename = str_replace('_-', '', $filename);
-              $full_filename = $server_root . $filename;              
+              $full_filename = strtolower($server_root . $filename);
 
               $exists = false;
               if (file_exists($full_filename)) {
@@ -116,8 +116,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                 $exists = true;
                 //echo 'file exists!';
               } else {
-                // $image = $image . '.png';
-                $image = $filename;
+                $image = $image . '.png';
                 //echo 'not exists!';
                 if (file_exists($server_root . $image) == false) {
                   $image = $image_path."blank.png";
@@ -142,8 +141,6 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                 // if ($product->img_url == '' and $exists == false and $product->series_img_url != '') {
                 //   $image = $product->series_img_url;
                 // }
-
-            $image = str_replace('é', 'e', $image);
 
             ?>
 
