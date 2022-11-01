@@ -4,7 +4,7 @@ $image_path = '/assets/images/products/';
 $server_root = $_SERVER["DOCUMENT_ROOT"];
 $cdn_url = 'https://cdn.lunadabaytile.com/portal';
 
-if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
+if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
   $server_root = '/portal';
 }
 
@@ -12,24 +12,24 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
 
 <div>
 
-<style>
-  .nav-pills .nav-link {
-    padding: 0px 10px 5px 10px;
-    margin-right: 10px;
-  }
+  <style>
+    .nav-pills .nav-link {
+      padding: 0px 10px 5px 10px;
+      margin-right: 10px;
+    }
 
-  .nav-pills .nav-link.active,
-  .nav-pills .show>.nav-link {
-    padding: 0px 10px 5px 10px;
-    border: 1px solid #a9a9a9;
-    color: #666;
-    background-color: #fcfcfc;
-  }
+    .nav-pills .nav-link.active,
+    .nav-pills .show>.nav-link {
+      padding: 0px 10px 5px 10px;
+      border: 1px solid #a9a9a9;
+      color: #666;
+      background-color: #fcfcfc;
+    }
 
-  .nav {
-    --bs-nav-link-hover-color: #198754;
-  }
-</style>
+    .nav {
+      --bs-nav-link-hover-color: #198754;
+    }
+  </style>
 
   <section class="section dashboard">
     <div class="row">
@@ -240,7 +240,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                       $image = $product->material . '/' . $series;
                       $image = $image_path . $image;
                       $finish = $product->finish;
-            
+
                       if ($finish == '') {
                         $finish = '-';
                       }
@@ -263,12 +263,12 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                         $image = $image . '.png';
                         //echo 'not exists!';
                         if (file_exists($server_root . $image) == false) {
-                          $image = $image_path."blank.png";
-                        }                    
+                          $image = $image_path . "blank.png";
+                        }
                       }
                     }
 
-                    $image = $cdn_url. strtolower($image);                    
+                    $image = $cdn_url . strtolower($image);
 
                     //if item has image url and is not located on http path, use local path
                     if ($product->img_url != '' and strpos($product->img_url, 'http') === false) {
@@ -296,16 +296,18 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                     ?>
 
                     <div class="col-lg-2 img-container" Style="padding: 3px;
-                      margin: 0px; border-radius: 4px;
-                      ">
+                      margin: 0px; border-radius: 4px;">
+
                       <div>
                         <div class="img-thumbnail">
                           <a href="/products/{{ $product->sku }}">
-                            <img src="{{$image}}" style="
+                            <div style="min-height: 195px;">
+                              <img src="{{$image}}" style="
                          border: 0px; padding: 0px;" alt="{{ ucwords(strtolower($product->description)) }}">
+                            </div>
                           </a>
 
-                          <div class="w-100 ph1 pv2 tc f2">
+                          <div class="w-100 ph1 pv2 tc f2" style="border-top: 1px solid #efefef;">
                             <span class="db gray5 hover-blue7" style=" width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;" title="{{ $product->description }}">
                               {{ ucwords(strtolower($product->description)) }}
                             </span>
@@ -317,8 +319,8 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                           </span> </a>
 
                         <!-- <span class="favorite-button absolute bottom-1 right-025 gray2 hover-yellow3" style="background-color: transparent; border: 0; cursor: pointer;">
-                      <i class="fas fa-star" style="font-size: 12px;"></i>
-                    </span> -->
+                          <i class="fas fa-star" style="font-size: 12px;"></i>
+                        </span> -->
 
                       </div>
                     </div>

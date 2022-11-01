@@ -8,7 +8,7 @@ $image_path = '/assets/images/products/';
 $server_root = $_SERVER["DOCUMENT_ROOT"];
 $cdn_url = 'https://cdn.lunadabaytile.com/portal';
 
-if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
+if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
   $server_root = '/portal';
 }
 
@@ -51,7 +51,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
             $default_color_str = '';
 
             if ($default_color != '') {
-              $default_color_str = 'Default color: ' . $default_color;
+              $default_color_str = 'Color shown: ' . $default_color;
             }
 
             ?>
@@ -119,28 +119,28 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                 $image = $image . '.png';
                 //echo 'not exists!';
                 if (file_exists($server_root . $image) == false) {
-                  $image = $image_path."blank.png";
+                  $image = $image_path . "blank.png";
                 }
               }
             }
 
-            $image = $cdn_url. strtolower($image);
+            $image = $cdn_url . strtolower($image);
 
-                //if item has image url and is not located on http path, use local path
-                if ($product->img_url != '' and strpos($product->img_url, 'http') === false) {
-                  $image = $product->material . '/' . $series . '/' . $product->img_url;
-                  $image = $image_path . $image;
-                }
+            //if item has image url and is not located on http path, use local path
+            if ($product->img_url != '' and strpos($product->img_url, 'http') === false) {
+              $image = $product->material . '/' . $series . '/' . $product->img_url;
+              $image = $image_path . $image;
+            }
 
-                //if item has image url and is located on http path, use image url
-                if ($product->img_url != '' and strpos($product->img_url, 'http') != 0) {
-                  $image = $product->img_url;
-                }
+            //if item has image url and is located on http path, use image url
+            if ($product->img_url != '' and strpos($product->img_url, 'http') != 0) {
+              $image = $product->img_url;
+            }
 
-                // //if item image url is blank and series image url exists, use series url path
-                // if ($product->img_url == '' and $exists == false and $product->series_img_url != '') {
-                //   $image = $product->series_img_url;
-                // }
+            // //if item image url is blank and series image url exists, use series url path
+            // if ($product->img_url == '' and $exists == false and $product->series_img_url != '') {
+            //   $image = $product->series_img_url;
+            // }
 
             ?>
 
@@ -148,18 +148,21 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
               <div>
                 <div class="img-thumbnail">
                   <a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}/{{ strtolower(str_replace('/', '_', $product->size)) }}">
-                    <img src="{{$image}}" style="
+                    <div style="min-height: 195px;">
+                      <img src="{{$image}}" style="
                          border: 0px; padding: 0px;" alt="{{ ucwords(strtolower($product->description)) }}">
+                    </div>
                   </a>
-
                   <div class="w-100 ph1 pv2 tc f2" style="border-top: 1px solid #efefef;">
                     <span class="db gray5 hover-blue7" style=" width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;" title="{{ $product->description }}">
-                    <a href="http://127.0.0.1:8000/collections/glass/agate/{{str_replace('/','_',$product->size)}}">{{$product->size}}</a>
+
+                      <a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}/{{ strtolower(str_replace('/', '_', $product->size)) }}">
+                        {{$product->size}}
+                      </a>
 
                     </span>
                   </div>
                 </div>
-
               </div>
             </div>
 

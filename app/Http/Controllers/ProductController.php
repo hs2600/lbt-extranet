@@ -220,32 +220,35 @@ class ProductController extends Controller
     public function collectionsByMaterialSeriesSize($material, $series, $size)
     {
         error_log("INFO: get /");
-        return view('collections_material_series_size', [
-            'products' => Product::orderBy('item', 'asc')
-                ->leftjoin('collections as size', function ($join) {
-                    $join->on('products.material', '=', 'size.material')
-                        ->On('products.series', '=', 'size.series')
-                        ->On('products.size', '=', 'size.size')
-                        ->where('size.category', '=', 'size');
-                })
-                ->select(
-                    'products.*',
-                    'size.technical_name as size_technical_name'
-                )
-                ->where('products.material', '=', $material)
-                ->where('products.series', '=', str_replace('Ã©', 'é', $series))
-                ->where('products.size', '=', str_replace('_', '/', $size))
-                ->paginate(50)
-        ],
-        [
-            'collection' => Collection::orderBy('material', 'asc')
-                ->selectRaw('size_desc as description, img_url')
-                ->where('category', '=', 'series')
-                ->where('material', '=', $material)
-                ->where('series', '=', $series)
-                ->limit(1)
-                ->get()
-        ])
+        return view(
+            'collections_material_series_size',
+            [
+                'products' => Product::orderBy('item', 'asc')
+                    ->leftjoin('collections as size', function ($join) {
+                        $join->on('products.material', '=', 'size.material')
+                            ->On('products.series', '=', 'size.series')
+                            ->On('products.size', '=', 'size.size')
+                            ->where('size.category', '=', 'size');
+                    })
+                    ->selectRaw('products.sku, products.item, products.description
+                    , products.material, products.series, products.size, products.color
+                    , products.finish, products.site, products.qty_p as qty, products.uofm, products.img_url
+                    , size.technical_name as size_technical_name')
+                    ->where('products.material', '=', $material)
+                    ->where('products.series', '=', str_replace('Ã©', 'é', $series))
+                    ->where('products.size', '=', str_replace('_', '/', $size))
+                    ->paginate(50)
+            ],
+            [
+                'collection' => Collection::orderBy('material', 'asc')
+                    ->selectRaw('size_desc as description, img_url')
+                    ->where('category', '=', 'series')
+                    ->where('material', '=', $material)
+                    ->where('series', '=', $series)
+                    ->limit(1)
+                    ->get()
+            ]
+        )
             ->with('material', ucfirst($material))
             ->with('series', ucfirst($series))
             ->with('size', ucfirst($size));
@@ -302,7 +305,7 @@ class ProductController extends Controller
                     ->On('sizes.series', '=', 'size.series')
                     ->On('sizes.size', '=', 'size.size')
                     ->where('size.category', '=', 'size');
-            })            
+            })
             ->selectRaw('sizes.sku, sizes.item, sizes.description, sizes.material
         , sizes.series, sizes.size, sizes.color, sizes.finish, sizes.max_lot_qty_p as qty
         , sizes.uofm, sizes.img_url, sizes.site, size.technical_name as size_technical_name')
