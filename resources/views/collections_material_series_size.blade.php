@@ -9,7 +9,7 @@ $image_path = '/assets/images/products/';
 $server_root = $_SERVER["DOCUMENT_ROOT"];
 $cdn_url = 'https://cdn.lunadabaytile.com/portal';
 
-if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
+if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
   $server_root = '/portal';
 }
 
@@ -192,12 +192,12 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                     $image = $image . '.png';
                     //echo 'not exists!';
                     if (file_exists($server_root . $image) == false) {
-                      $image = $image_path."blank.png";
+                      $image = $image_path . "blank.png";
                     }
                   }
                 }
-    
-                $image = $cdn_url. strtolower($image);
+
+                $image = $cdn_url . strtolower($image);
 
                 //if item has image url and is not located on http path, use local path
                 if ($product->img_url != '' and strpos($product->img_url, 'http') === false) {
@@ -226,11 +226,14 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                 <div class="col-lg-2 img-container" Style="padding: 3px;
                   margin: 0px; border-radius: 4px;
                   ">
+
                   <div>
                     <div class="img-thumbnail">
                       <a href="/products/{{ $product->sku }}">
-                        <img src="{{$image}}" style="
+                        <div style="min-height: 195px;">
+                          <img src="{{$image}}" style="
                          border: 0px; padding: 0px;" alt="{{ ucwords(strtolower($product->description)) }}">
+                        </div>
                       </a>
 
                       <div class="w-100 ph1 pv2 tc f2" style="border-top: 1px solid #efefef;">
@@ -249,6 +252,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                     </span> -->
 
                   </div>
+                  
                 </div>
 
                 @endforeach

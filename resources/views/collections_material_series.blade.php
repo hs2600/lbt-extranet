@@ -148,10 +148,11 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
               <div>
                 <div class="img-thumbnail">
                   <a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}/{{ strtolower(str_replace('/', '_', $product->size)) }}">
-                    <img src="{{$image}}" style="
+                    <div style="min-height: 195px;">
+                      <img src="{{$image}}" style="
                          border: 0px; padding: 0px;" alt="{{ ucwords(strtolower($product->description)) }}">
+                    </div>
                   </a>
-
                   <div class="w-100 ph1 pv2 tc f2" style="border-top: 1px solid #efefef;">
                     <span class="db gray5 hover-blue7" style=" width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;" title="{{ $product->description }}">
                       <a href="/collections/{{ strtolower($product->material) }}/{{ strtolower(str_replace('Ã©', 'é', $product->series)) }}/{{ strtolower(str_replace('/', '_', $product->size)) }}">
@@ -160,7 +161,6 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
                     </span>
                   </div>
                 </div>
-
               </div>
             </div>
 
