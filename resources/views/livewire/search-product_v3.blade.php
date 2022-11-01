@@ -1,3 +1,15 @@
+<?php
+
+$image_path = '/assets/images/products/';
+$server_root = $_SERVER["DOCUMENT_ROOT"];
+$cdn_url = 'https://cdn.lunadabaytile.com/portal';
+
+if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
+  $server_root = '/portal';
+}
+
+?>
+
 <div>
 
 <style>
@@ -130,18 +142,18 @@
                 <!-- Table/Grid section -->
                 <ul class="nav nav-pills" style="padding-bottom: 10px;" id="myTab" role="tablist">
                   <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="table-tab" data-bs-toggle="tab" data-bs-target="#table-tab-pane" type="button" role="tab" aria-controls="table-tab-pane" aria-selected="true">
+                    <button class="nav-link" id="table-tab" data-bs-toggle="tab" data-bs-target="#table-tab-pane" type="button" role="tab" aria-controls="table-tab-pane" aria-selected="true">
                       <i class="bi bi-table" style="font-size: 20px;"></i></button>
                   </li>
                   <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="grid-tab" data-bs-toggle="tab" data-bs-target="#grid-tab-pane" type="button" role="tab" aria-controls="grid-tab-pane" aria-selected="false">
+                    <button class="nav-link active" id="grid-tab" data-bs-toggle="tab" data-bs-target="#grid-tab-pane" type="button" role="tab" aria-controls="grid-tab-pane" aria-selected="false">
                       <i class="bi bi-grid-fill" style="font-size: 20px;"></i></button>
                   </li>
                 </ul>
               </div>
               <div class="tab-content" id="myTabContent">
 
-                <div class="tab-pane fade show active" id="table-tab-pane" role="tabpanel" aria-labelledby="table-tab" tabindex="0">
+                <div class="tab-pane fade" id="table-tab-pane" role="tabpanel" aria-labelledby="table-tab" tabindex="0">
 
                   <table class="table table-striped table-borderless datatable">
                     <thead>
@@ -202,7 +214,7 @@
 
                 </div>
 
-                <div class="tab-pane fade" id="grid-tab-pane" role="tabpanel" aria-labelledby="grid-tab" tabindex="0">
+                <div class="tab-pane fade show active" id="grid-tab-pane" role="tabpanel" aria-labelledby="grid-tab" tabindex="0">
 
                   <div class="row" style="--bs-gutter-x: 0rem;">
                     @foreach ($products as $product)
@@ -211,12 +223,14 @@
 
                     $image = $product->img_url;
                     $material_desc = $product->material_desc;
-                    $series = str_replace('Ã©', 'é', $product->series);
-                    $series = str_replace('1/2', '0.5', $series);
-                    $series = str_replace('1/4', '0.25', $series);
+                    $series = str_replace('Ã©', 'é', strtolower($product->series));
+                    $series = str_replace('é', 'e', $series);
 
-                    //$series = $product->series;
-                    //print_r($_SERVER);
+                    $size = $product->size_technical_name;
+
+                    if (is_null($size) == true) {
+                      $size = $product->size;
+                    }
 
                     //if item image url is blank, use local image if exists, otherwise use series image
                     if ($product->img_url == '') {
@@ -224,22 +238,21 @@
                       // print_r($product);
 
                       $image = $product->material . '/' . $series;
-                      $image = '/assets/images/products/' . $image;
+                      $image = $image_path . $image;
                       $finish = $product->finish;
-
+            
                       if ($finish == '') {
                         $finish = '-';
                       }
 
-                      $filename = $image . '/' . $series . '_' . $product->size . '_' . $product->color . '_' . $finish . '.jpg';
-                      // echo $filename;
-                      $filename = strtolower(str_replace(' ', '_', $filename));
-                      $filename = str_replace('_-', '', $filename);
-                      $filename = str_replace('hexagon', 'hex', $filename);
-                      $filename = str_replace('japonaise', 'japon', $filename);
-                      $full_filename = $_SERVER["DOCUMENT_ROOT"] . $filename;
+                      $filename = $image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg';
 
-                      // echo $full_filename;
+                      $filename = str_replace('é', 'e', $filename);
+                      $filename = str_replace(' ', '_', $filename);
+                      $filename = str_replace('_-', '', $filename);
+                      $full_filename = strtolower($server_root . $filename);
+
+                      //  echo $full_filename;
 
                       $exists = false;
                       if (file_exists($full_filename)) {
@@ -249,18 +262,18 @@
                       } else {
                         $image = $image . '.png';
                         //echo 'not exists!';
-                        if (file_exists($_SERVER["DOCUMENT_ROOT"] . $full_filename) == false) {
-                          $image = "/assets/images/products/blank.png";
-                        }                        
+                        if (file_exists($server_root . $image) == false) {
+                          $image = $image_path."blank.png";
+                        }                    
                       }
-                      $image = strtolower(str_replace(' ', '_', $image));
                     }
+
+                    $image = $cdn_url. strtolower($image);                    
 
                     //if item has image url and is not located on http path, use local path
                     if ($product->img_url != '' and strpos($product->img_url, 'http') === false) {
                       $image = $product->material . '/' . $series . '/' . $product->img_url;
-                      $image = strtolower(str_replace(' ', '_', $image));
-                      $image = '/assets/images/products/' . $image;
+                      $image = $image_path . $image;
                     }
 
                     //if item has image url and is located on http path, use image url
@@ -277,12 +290,8 @@
                     $uofm = strtolower(str_replace('each', 'piece', strtolower($product->uofm)));
 
                     if (str_replace('each', 'piece', strtolower($product->uofm)) == 'piece') {
-                      $qty = $product->qty_p;
                       $uofm = $uofm . 's';
                     }
-
-
-                    $image = str_replace('é', 'e', $image);
 
                     ?>
 

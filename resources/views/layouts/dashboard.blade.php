@@ -280,23 +280,23 @@ $series = DB::table('collections')
               <div class="row" style="padding: 10px; margin: 0px; margin-bottom: 15px; background-color: #efefef;">
                 <div class="col-sm-6">
                   <label><b>Material:</b></label>
-                  <span id="material"></span>
+                  <span id="cat_material"></span>
                 </div>
                 <div class="col-sm-6">
                   <label><b>Series:</b></label>
-                  <span id="series"></span>
+                  <span id="cat_series"></span>
                 </div>
                 <div class="col-sm-6">
                   <label><b>Size:</b></label>
-                  <span id="size"></span>
+                  <span id="cat_size"></span>
                 </div>
                 <div class="col-sm-6">
                   <label><b>Color:</b></label>
-                  <span id="color"></span>
+                  <span id="cat_color"></span>
                 </div>
                 <div class="col-sm-6">
                   <label><b>Finish:</b></label>
-                  <span id="finish"></span>
+                  <span id="cat_finish"></span>
                 </div>
               </div>
 
@@ -329,11 +329,11 @@ $series = DB::table('collections')
 
       document.getElementById("title").innerHTML = titleCase(obj.description);
 
-      document.getElementById("material").innerHTML = obj.material;
-      document.getElementById("series").innerHTML = obj.series;
-      document.getElementById("size").innerHTML = obj.size;
-      document.getElementById("color").innerHTML = obj.color;
-      document.getElementById("finish").innerHTML = obj.finish;
+      document.getElementById("cat_material").innerHTML = obj.material;
+      document.getElementById("cat_series").innerHTML = obj.series;
+      document.getElementById("cat_size").innerHTML = obj.size;
+      document.getElementById("cat_color").innerHTML = obj.color;
+      document.getElementById("cat_finish").innerHTML = obj.finish;
 
       var uofm = obj.uofm.toLowerCase();
       
