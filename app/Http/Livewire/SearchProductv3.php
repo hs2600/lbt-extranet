@@ -13,7 +13,7 @@ class SearchProductv3 extends Component
     public $size = '';
     public $color = '';
     public $finish = '';
-    public $qty = 0;
+    public $qty = '';
     
     public function render()
     {
