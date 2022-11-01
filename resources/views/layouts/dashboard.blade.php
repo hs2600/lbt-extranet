@@ -340,8 +340,8 @@ $series = DB::table('collections')
       uofm = uofm.replace('each','piece');
       uofm = uofm + 's';
 
-      if (obj.qty_p > 0) {
-        document.getElementById("qty").innerHTML = '<b><i>' + obj.qty_p + ' ' + uofm + '</i></b><i> stocked in Harbor City</i>';
+      if (obj.qty > 0) {
+        document.getElementById("qty").innerHTML = '<b><i>' + obj.qty + ' ' + uofm + '</i></b><i> stocked in Harbor City</i>';
       } else {
         document.getElementById("qty").innerHTML = '<b><i style="color: #d35d5d;">Item is currently out of stock.</i></b>';
       }
