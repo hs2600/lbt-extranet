@@ -34,12 +34,42 @@ class SearchProductv3 extends Component
         $productsAll = Product::orderBy('item', 'asc')
             ->get();
 
-        $productsFiltered = Product::where('material', 'like', $this->material.'%')
-            ->Where('series', 'like', '%'.$this->series.'%')
-            ->Where('size', 'like', '%'.$this->size.'%')
-            ->Where('color', 'like', '%'.$this->color.'%')
-            ->Where('finish', 'like', $this->finish.'%')
-            ->Where('qty', '>', $this->qty)
+
+        $productsFiltered = Product::orderBy('item', 'asc')
+            ->leftjoin('collections as series', function ($join) {
+                $join->on('products.material', '=', 'series.material')
+                    ->On('products.series', '=', 'series.series')
+                    ->On('products.size', '=', 'series.size')
+                    ->where('series.category', '=', 'series');
+            })
+            ->leftjoin('collections as size', function ($join) {
+                $join->on('products.material', '=', 'size.material')
+                    ->On('products.series', '=', 'size.series')
+                    ->On('products.size', '=', 'size.size')
+                    ->where('size.category', '=', 'size');
+            })            
+            ->select(
+                'products.sku',
+                'products.item',
+                'products.description',
+                'products.site',
+                'products.material',
+                'products.series',
+                'products.size',
+                'products.color',
+                'products.finish',
+                'products.qty_p as qty',
+                'products.uofm',
+                'products.img_url',
+                'series.img_url as series_img_url',
+                'size.technical_name as size_technical_name'
+            )
+            ->Where('products.material', 'like', '%'.$this->material.'%')
+            ->Where('products.series', 'like', '%'.$this->series.'%')
+            ->Where('products.size', 'like', '%'.$this->size.'%')
+            ->Where('products.color', 'like', '%'.$this->color.'%')
+            ->Where('products.finish', 'like', $this->finish.'%')
+            ->Where('products.qty', '>', $this->qty)
             ->simplePaginate(50);
 
         $productsFilteredAll = Product::where('material', 'like', $this->material.'%')
@@ -57,23 +87,14 @@ class SearchProductv3 extends Component
         ->limit(5)
         ->get();
         
-        $series = DB::table('products')
-        ->leftjoin('collections as series', function ($join) {
-            $join->on('products.material', '=', 'series.material')
-                ->On('products.series', '=', 'series.series')
-                ->where('series.category', '=', 'series')
-                ->where('series.status', '!=', 1);
-        })
-        ->selectRaw('count(*) as count, products.series as name, series.status as status')
-        ->Where('products.material', 'like', $this->material.'%')
-        ->Where('products.series', 'like', '%'.$this->series.'%')
-        ->Where('products.size', 'like', '%'.$this->size.'%')
-        ->Where('products.color', 'like', '%'.$this->color.'%')
-        ->Where('products.finish', 'like', $this->finish.'%')
-        ->groupBy('products.series')
-        ->groupBy('series.status')
-        ->orderBy('series.status', 'desc')
-        ->orderBy('name', 'asc')        
+        $series = DB::table('collections')
+        ->selectRaw('count(*) as count, series as name')
+        ->where('category', '=', 'series')
+        ->where('status', '!=', '1')
+        ->groupBy('series')
+        ->groupBy('status')
+        ->orderBy('status', 'desc')
+        ->orderBy('name', 'asc')
         ->limit(15)
         ->get();
 
