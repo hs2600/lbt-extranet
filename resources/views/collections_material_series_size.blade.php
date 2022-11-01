@@ -65,7 +65,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
           <div class="row" style="padding: 8px 16px;">
             <div class="col-lg-8">
               <span class="card-title" style="padding: 0px; font-size: 1.5rem;">
-                {{ ucwords($size) }}
+                {{ ucwords(str_replace('_', '/', $size)) }}
               </span>
             </div>
             <div class="col-lg-4">
