@@ -68,7 +68,7 @@
             @foreach($products as $product)
 
             <?php
-            $qty = $product->qty_p;
+            $qty = $product->qty;
             $uofm = strtolower(str_replace('each', 'piece', strtolower($product->uofm)));
   
             if ($uofm == 'piece') {
