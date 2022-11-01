@@ -13,7 +13,7 @@ class SearchProductv3 extends Component
     public $size = '';
     public $color = '';
     public $finish = '';
-    public $qty = 0;
+    public $qty = '';
     
     public function render()
     {
@@ -39,8 +39,9 @@ class SearchProductv3 extends Component
             ->leftjoin('collections as series', function ($join) {
                 $join->on('products.material', '=', 'series.material')
                     ->On('products.series', '=', 'series.series')
-                    ->On('products.size', '=', 'series.size')
-                    ->where('series.category', '=', 'series');
+                    ->where('series.category', '=', 'series')
+                    ->where('series.status', '!=', 1)
+                    ;
             })
             ->leftjoin('collections as size', function ($join) {
                 $join->on('products.material', '=', 'size.material')
@@ -64,6 +65,7 @@ class SearchProductv3 extends Component
                 'series.img_url as series_img_url',
                 'size.technical_name as size_technical_name'
             )
+            ->Where('series.status', '!=', 1)
             ->Where('products.material', 'like', '%'.$this->material.'%')
             ->Where('products.series', 'like', '%'.$this->series.'%')
             ->Where('products.size', 'like', '%'.$this->size.'%')

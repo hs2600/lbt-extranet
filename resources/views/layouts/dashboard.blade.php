@@ -152,14 +152,14 @@ $series = DB::table('collections')
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
         <a class="nav-link" href="/collections">
-        <i class="fa-solid fa-layer-group"></i>
+          <i class="fa-solid fa-layer-group"></i>
           <span>Collections</span>
         </a>
       </li>
 
       <li class="nav-item">
         <a class="nav-link" href="/collections/material">
-        <i class="fa-solid fa-layer-group"></i>
+          <i class="fa-solid fa-layer-group"></i>
           <span>Materials</span>
         </a>
       </li>
@@ -167,7 +167,7 @@ $series = DB::table('collections')
       <!-- Material -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#material-nav" data-bs-toggle="collapse" href="#">
-        <i class="fa-solid fa-layer-group"></i>
+          <i class="fa-solid fa-layer-group"></i>
           <span>Material</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="material-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
@@ -194,7 +194,7 @@ $series = DB::table('collections')
       <!-- Series -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#series-nav" data-bs-toggle="collapse" href="#">
-        <i class="fa-solid fa-layer-group"></i>
+          <i class="fa-solid fa-layer-group"></i>
           <span>Series</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="series-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
@@ -202,16 +202,16 @@ $series = DB::table('collections')
           @foreach ($series as $series)
 
           <?php
-            $icon = 'bi bi-circle';
-            $icon_size = '6px';
+          $icon = 'bi bi-circle';
+          $icon_size = '6px';
 
-            if($series->status == 2){
-                $icon = 'fa-regular fa-star';
-                $icon_size = '15px';
-            } elseif($series->status == 3){
-              $icon = 'fa-solid fa-bullhorn';
-              $icon_size = '15px';
-            }
+          if ($series->status == 2) {
+            $icon = 'fa-regular fa-star';
+            $icon_size = '15px';
+          } elseif ($series->status == 3) {
+            $icon = 'fa-solid fa-bullhorn';
+            $icon_size = '15px';
+          }
 
           ?>
           <li>
@@ -228,7 +228,7 @@ $series = DB::table('collections')
 
       <li class="nav-item">
         <a class="nav-link" href="/products">
-        <i class="fa-solid fa-binoculars"></i>
+          <i class="fa-solid fa-binoculars"></i>
           <span>Products Search</span>
         </a>
       </li>
@@ -337,9 +337,12 @@ $series = DB::table('collections')
       document.getElementById("cat_finish").innerHTML = obj.finish;
 
       var uofm = obj.uofm.toLowerCase();
-      
-      uofm = uofm.replace('each','piece');
-      uofm = uofm + 's';
+
+      uofm = uofm.replace('each', 'piece');
+
+      if (uofm == 'piece') {
+        uofm = uofm + 's';
+      }
 
       if (obj.qty > 0) {
         document.getElementById("qty").innerHTML = '<b><i>' + obj.qty + ' ' + uofm + '</i></b><i> stocked in Harbor City</i>';
