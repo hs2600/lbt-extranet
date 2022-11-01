@@ -201,7 +201,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                           <div>{{ $product->site }}</div>
                         </td>
                         <td>
-                          <div>{{ $product->qty_p }}</div>
+                          <div>{{ $product->qty }}</div>
                         </td>
                         <td>
                           <div>{{ $product->uofm }}</div>
@@ -286,7 +286,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                       $image = $product->series_img_url;
                     }
 
-                    $qty = $product->qty_p;
+                    $qty = $product->qty;
                     $uofm = strtolower(str_replace('each', 'piece', strtolower($product->uofm)));
 
                     if (str_replace('each', 'piece', strtolower($product->uofm)) == 'piece') {

@@ -13,7 +13,7 @@ class SearchProductv3 extends Component
     public $size = '';
     public $color = '';
     public $finish = '';
-    public $qty = '';
+    public $qty = 0;
     
     public function render()
     {
@@ -69,7 +69,7 @@ class SearchProductv3 extends Component
             ->Where('products.size', 'like', '%'.$this->size.'%')
             ->Where('products.color', 'like', '%'.$this->color.'%')
             ->Where('products.finish', 'like', $this->finish.'%')
-            ->Where('products.qty', '>', $this->qty)
+            ->Where('products.qty_p', '>=', $this->qty)
             ->simplePaginate(50);
 
         $productsFilteredAll = Product::where('material', 'like', $this->material.'%')
@@ -87,13 +87,22 @@ class SearchProductv3 extends Component
         ->limit(5)
         ->get();
         
-        $series = DB::table('collections')
-        ->selectRaw('count(*) as count, series as name')
-        ->where('category', '=', 'series')
-        ->where('status', '!=', '1')
-        ->groupBy('series')
-        ->groupBy('status')
-        ->orderBy('status', 'desc')
+        $series = DB::table('products')
+        ->leftjoin('collections as series', function ($join) {
+            $join->on('products.material', '=', 'series.material')
+                ->On('products.series', '=', 'series.series')
+                ->where('series.category', '=', 'series')
+                ->where('series.status', '!=', 1);
+        })
+        ->selectRaw('count(*) as count, products.series as name, series.status as status')
+        ->Where('products.material', 'like', $this->material.'%')
+        ->Where('products.series', 'like', '%'.$this->series.'%')
+        ->Where('products.size', 'like', '%'.$this->size.'%')
+        ->Where('products.color', 'like', '%'.$this->color.'%')
+        ->Where('products.finish', 'like', $this->finish.'%')
+        ->groupBy('products.series')
+        ->groupBy('series.status')
+        ->orderBy('series.status', 'desc')
         ->orderBy('name', 'asc')
         ->limit(15)
         ->get();
