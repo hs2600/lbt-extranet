@@ -19,14 +19,16 @@ Contact [horacio@lunadabaytile.com](mailto:horacio@lunadabaytile.com) with quest
 
 ## Quick Installation
 
-    git clone https://github.com/hs2600/lbt-extranet quickstart
+    git clone https://github.com/hs2600/lbt-extranet lbt-extranet
 
-    cd quickstart
+    cd lbt-extranet
 
     composer update
 
     composer install
-
+    
     php artisan migrate
+    
+    npm run build
 
     php artisan serve
