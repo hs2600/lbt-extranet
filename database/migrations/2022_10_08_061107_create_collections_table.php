@@ -21,10 +21,15 @@ class CreateCollectionsTable extends Migration
             $table->string('size',50);
             $table->text('description');
             $table->string('default_Color',50);
+                $table->string('default_finish',50);
             $table->date('launch_Date');
             $table->string('img_url',200);
-            $table->tinyInteger('status');            
-            $table->timestamps();
+                $table->string('technical_name',45);
+            $table->tinyInteger('status');
+                $table->timestamps('created_at');
+                $table->timestamps('updated_at');
+                $table->string('series_desc',45);
+                $table->text('size_desc');
         });
     }
 
