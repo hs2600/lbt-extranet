@@ -61,7 +61,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
 
 //Public routes
-
+Route::get('/products_pl',[ProductController::class, 'productsPL']);
 
 /**  TESTING */
 /**
