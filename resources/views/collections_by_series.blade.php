@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <section class="section dashboard">
   <div class="row">
     <div class="col-lg-12">
@@ -34,9 +33,13 @@
 
               if ($collection->material != '-') {
                   //if category is series
-                  $category = $collection->series;
+                  
+                  $series = str_replace('Ã©', 'é', $collection->series);
+                  $series = str_replace('é', 'e', $series);
+
+                  $category = $series;
                   $path = $collection->material . '/' . str_replace('/', '_', $category);
-                  $image = $collection->series;
+                  $image = $series;
                   $image = str_replace(' ', '_', $image);
                   $image = '/assets/images/products/' . $collection->material . '/' . $image . '.png';
 

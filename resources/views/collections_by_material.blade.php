@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <div class="breadcrumb-sticky d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center 
  pt-3 mb-2 border-bottom">
 
@@ -48,9 +47,13 @@
 
                         if ($collection->category = 'series') {
                             //if category is series
-                            $category = $collection->series;
+                            
+                            $series = str_replace('Ã©', 'é', $collection->series);
+                            $series = str_replace('é', 'e', $series);
+                            
+                            $category = $series;
                             $path = $collection->material . '/' . str_replace('/', '_', $category);
-                            $image = $collection->series;
+                            $image = $series;
                             $image = str_replace(' ', '_', $image);
                             $image = '/assets/images/products/' . $collection->material . '/' . $image . '.png';
 
