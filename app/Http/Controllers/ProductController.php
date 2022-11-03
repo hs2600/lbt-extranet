@@ -267,6 +267,24 @@ class ProductController extends Controller
         ]);
     }
 
+    /**
+     * [TEST] Show products by price level
+     */
+    public function productsPL()
+    {
+        error_log("INFO: get /");
+        
+        $testColumn = 'material as qty';
+
+        $selectedFields = 'sku, item, description, series, size, color, finish, site, uofm, ' . $testColumn;
+
+        return view('products_pl', [
+            'products' => Product::orderBy('item', 'asc')
+            ->selectRaw($selectedFields)
+            ->simplePaginate(30)
+        ])
+        ->with('selectedFields', $selectedFields);
+    }
 
     /**
      * Show products - Search
@@ -355,7 +373,7 @@ class ProductController extends Controller
                 })
                 ->selectRaw('products.sku, products.item, products.description
         , products.material, products.series, products.size, products.color
-        , products.finish, products.qty_p as qty, products.uofm, products.img_url
+        , products.finish, products.qty_p as qty, products.uofm, products.pl_57 as price, products.img_url
         , series.description as series_desc, series.size_desc
         , series.img_url as series_img_url, size.technical_name as size_technical_name')
                 ->where('sku', '=', $id)

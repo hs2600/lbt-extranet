@@ -72,11 +72,11 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
               <!-- Size variation sub tabs -->
               <ul class="nav nav-pills" style="float: right;" id="mySizeTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="size-table-tab" data-bs-toggle="tab" data-bs-target="#size-table-tab-pane" type="button" role="tab" aria-controls="size-table-tab-pane" aria-selected="true">
+                  <button class="nav-link" id="size-table-tab" data-bs-toggle="tab" data-bs-target="#size-table-tab-pane" type="button" role="tab" aria-controls="size-table-tab-pane" aria-selected="true">
                     <i class="bi bi-table" style="font-size: 20px;"></i></button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="size-grid-tab" data-bs-toggle="tab" data-bs-target="#size-grid-tab-pane" type="button" role="tab" aria-controls="size-grid-tab-pane" aria-selected="false">
+                  <button class="nav-link active" id="size-grid-tab" data-bs-toggle="tab" data-bs-target="#size-grid-tab-pane" type="button" role="tab" aria-controls="size-grid-tab-pane" aria-selected="false">
                     <i class="bi bi-grid-fill" style="font-size: 20px;"></i></button>
                 </li>
               </ul>
@@ -94,7 +94,7 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
 
         <div class="tab-content" id="mySizeTabContent">
 
-          <div class="tab-pane fade show active" id="size-table-tab-pane" role="tabpanel" aria-labelledby="table-tab" tabindex="0">
+          <div class="tab-pane fade" id="size-table-tab-pane" role="tabpanel" aria-labelledby="table-tab" tabindex="0">
 
             <div class="card-body" style="padding-top: 10px;">
               <table class="table table-striped table-borderless datatable">
@@ -148,7 +148,7 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
 
           </div>
 
-          <div class="tab-pane fade" id="size-grid-tab-pane" role="tabpanel" aria-labelledby="size-grid-tab" tabindex="0">
+          <div class="tab-pane fade show active" id="size-grid-tab-pane" role="tabpanel" aria-labelledby="size-grid-tab" tabindex="0">
 
             <div class="card-body" style="padding: 10px;">
 
@@ -169,15 +169,15 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
 
                 //if item image url is blank, use local image if exists, otherwise use series image
                 if ($product->img_url == '') {
-                  $image = $product->material . '/' . $series;
-                  $image = '/assets/images/products/' . $image;
+                  $image = strtolower($product->material . '/' . $series);
+                  $image = $image_path . $image;
                   $finish = $product->finish;
-
+    
                   if ($finish == '') {
                     $finish = '-';
                   }
-
-                  $filename = $image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg';
+    
+                  $filename = strtolower($image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg');
                   $filename = str_replace('é', 'e', $filename);
                   $filename = str_replace(' ', '_', $filename);
                   $filename = str_replace('_-', '', $filename);

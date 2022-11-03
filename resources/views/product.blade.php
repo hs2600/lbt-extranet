@@ -89,7 +89,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
         //if item image url is blank, use local image if exists, otherwise use series image
         if ($product->img_url == '') {
 
-          $image = $product->material . '/' . $series;
+          $image = strtolower($product->material . '/' . $series);
           $image = $image_path . $image;
           $finish = $product->finish;
 
@@ -97,7 +97,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
             $finish = '-';
           }
 
-          $filename = $image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg';
+          $filename = strtolower($image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg');
           $filename = str_replace('é', 'e', $filename);
           $filename = str_replace(' ', '_', $filename);
           $filename = str_replace('_-', '', $filename);
@@ -154,9 +154,11 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
 
     <div class="col-md-6">
       <span class="product-title">{{ ucwords(strtolower($product->description)) }}</span>
-      <hr style="margin-top: 10px; border: 0.5px solid #999;">
+      <hr style="margin: 10px 0px; border: 0.5px solid #999;">
+      <span class="product-price" style="padding-bottom: 10px;"><b> {{ '$'.number_format(sprintf("%.2f", $product->price),2) }}</b> / <i> {{ strtolower($product->uofm) }}</i></span>
+      &nbsp;&nbsp;<span><i> ([TEST] Price shown is for PL 57)</i>
 
-      <div class="row" style="padding: 10px; margin: 0px; margin-bottom: 15px; background-color: #efefef;">
+      <div class="row" style="padding: 10px; margin: 0px; margin-bottom: 15px; margin-top: 10px; background-color: #efefef;">
         <div class="col-sm-6">
           <label><B>Material:</B></label>
           <span>{{ $product->material }}</span>
@@ -189,7 +191,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-Qty" aria-expanded="false" aria-controls="panelsStayOpen-Qty" style="
              
              padding: 10px;">
-              <span class="product-price"><b><i>{{ $qty }} {{ $uofm }} </b> stocked in Harbor City</i></span>
+              <span class="product-qty"><b><i>{{ number_format($qty) }} {{ $uofm }} </b> stocked in Harbor City</i></span>
             </button>
           </h2>
           <div id="panelsStayOpen-Qty" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
@@ -232,7 +234,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
 
                   <tr>
                     <td style="padding: 5px;">{{ str_replace('M','*', $lot->lot) }}</td>
-                    <td style="padding: 5px;">{{ $qty }}</td>
+                    <td style="padding: 5px;">{{ number_format($qty) }}</td>
                   </tr>
                   @endforeach
                 </tbody>
@@ -255,9 +257,9 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
         border-bottom: 1px solid #ddd;">
         <div class="">
           @if ($qty > 0)
-          <span class="product-price"><b><i>{{ $qty }} {{ $uofm }} </b> stocked in Harbor City</i></span>
+          <span class="product-qty"><b><i>{{ number_format($qty) }} {{ $uofm }} </b> stocked in Harbor City</i></span>
           @else
-          <span class="product-price" style="color: #d35d5d;"><b><i>Item is currently out of stock.</b></i></span>
+          <span class="product-qty" style="color: #d35d5d;"><b><i>Item is currently out of stock.</b></i></span>
           @endif
         </div>
       </div>
@@ -444,7 +446,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
 
                 //if item image url is blank, use local image if exists, otherwise use series image
                 if ($product->img_url == '') {
-                  $image = $product->material . '/' . $series;
+                  $image = strtolower($product->material . '/' . $series);
                   $image = $image_path . $image;
                   $finish = $product->finish;
 
@@ -452,7 +454,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                     $finish = '-';
                   }
 
-                  $filename = $image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg';
+                  $filename = strtolower($image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg');
                   $filename = str_replace('é', 'e', $filename);
                   $filename = str_replace(' ', '_', $filename);
                   $filename = str_replace('_-', '', $filename);
@@ -634,7 +636,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
 
                 //if item image url is blank, use local image if exists, otherwise use series image
                 if ($product->img_url == '') {
-                  $image = $product->material . '/' . $series;
+                  $image = strtolower($product->material . '/' . $series);
                   $image = $image_path . $image;
                   $finish = $product->finish;
 
@@ -642,7 +644,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                     $finish = '-';
                   }
 
-                  $filename = $image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg';
+                  $filename = strtolower($image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg');
                   $filename = str_replace('é', 'e', $filename);
                   $filename = str_replace(' ', '_', $filename);
                   $filename = str_replace('_-', '', $filename);
@@ -695,7 +697,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
 
                       <div class="w-100 ph1 pv2 tc f2" style="border-top: 1px solid #efefef;">
                         <span class="db gray5 hover-blue7" style=" width: 135px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block;" title="{{ $product->description }}">
-                          {{$product->size . ' ' . str_replace('-', '', $product->finish)}}
+                          {{$product->color . ' ' . str_replace('-', '', $product->finish)}}
                         </span>
                       </div>
                     </div>
