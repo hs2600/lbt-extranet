@@ -17,7 +17,7 @@
 
             <!-- Name -->
             <div class="mt-4"> 
-                <x-text-input id="name" class="block mt-1 w-full" type="text" placeholder="Name" name="name" :value="old('name')" required autofocus />
+                <x-text-input id="name" class="block mt-1 w-full" style="padding:8px; border:1px solid #dcdee3" type="text" placeholder="Name" name="name" :value="old('name')" required autofocus />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
 
