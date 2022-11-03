@@ -89,7 +89,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
         //if item image url is blank, use local image if exists, otherwise use series image
         if ($product->img_url == '') {
 
-          $image = $product->material . '/' . $series;
+          $image = strtolower($product->material . '/' . $series);
           $image = $image_path . $image;
           $finish = $product->finish;
 
@@ -97,7 +97,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
             $finish = '-';
           }
 
-          $filename = $image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg';
+          $filename = strtolower($image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg');
           $filename = str_replace('é', 'e', $filename);
           $filename = str_replace(' ', '_', $filename);
           $filename = str_replace('_-', '', $filename);
@@ -444,7 +444,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
 
                 //if item image url is blank, use local image if exists, otherwise use series image
                 if ($product->img_url == '') {
-                  $image = $product->material . '/' . $series;
+                  $image = strtolower($product->material . '/' . $series);
                   $image = $image_path . $image;
                   $finish = $product->finish;
 
@@ -452,7 +452,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                     $finish = '-';
                   }
 
-                  $filename = $image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg';
+                  $filename = strtolower($image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg');
                   $filename = str_replace('é', 'e', $filename);
                   $filename = str_replace(' ', '_', $filename);
                   $filename = str_replace('_-', '', $filename);
@@ -634,7 +634,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
 
                 //if item image url is blank, use local image if exists, otherwise use series image
                 if ($product->img_url == '') {
-                  $image = $product->material . '/' . $series;
+                  $image = strtolower($product->material . '/' . $series);
                   $image = $image_path . $image;
                   $finish = $product->finish;
 
@@ -642,7 +642,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                     $finish = '-';
                   }
 
-                  $filename = $image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg';
+                  $filename = strtolower($image . '/' . $series . '_' . $size . '_' . $product->color . '_' . $finish . '.jpg');
                   $filename = str_replace('é', 'e', $filename);
                   $filename = str_replace(' ', '_', $filename);
                   $filename = str_replace('_-', '', $filename);
