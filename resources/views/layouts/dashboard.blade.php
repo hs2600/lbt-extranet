@@ -50,6 +50,7 @@ $series = DB::table('collections')
 </head>
 
 <body>
+
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center" style="border-bottom: 1px solid #dadce0; box-shadow: 0px 0px 0px #ffffff;">
     <div class="d-flex align-items-center justify-content-between">
@@ -83,8 +84,15 @@ $series = DB::table('collections')
         <?php
         $name = Auth::user()->name;
         $name_arr = explode(" ", $name);
-        $initials = substr($name_arr[0], 0, 1) . substr($name_arr[1], 0, 1);
-        $shortname = substr($name_arr[0], 0, 1) . '.' . $name_arr[1];
+
+        if(count($name_arr) == 2){
+          $initials =  substr($name_arr[0], 0, 1) . substr($name_arr[1], 0, 1);
+          $shortname = substr($name_arr[0], 0, 1) . '.' . $name_arr[1];  
+        } else {
+          $initials =  strtoupper(substr($name_arr[0], 0, 2));
+          $shortname = $name_arr[0];
+        }
+    
         ?>
 
         <li class="nav-item dropdown pe-4">
