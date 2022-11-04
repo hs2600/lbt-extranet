@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InvitationController;
 use Illuminate\Support\Facades\Route;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +62,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
 //Public routes
 Route::get('/products_pl',[ProductController::class, 'productsPL']);
+Route::get('/dealer_locator/{zip}',[Controller::class, 'dealerLocator']);
+Route::get('/dealer_locator_js/{zip}',[Controller::class, 'dealerLocatorJS']);
 
 /**  TESTING */
 /**
