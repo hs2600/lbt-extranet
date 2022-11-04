@@ -8,12 +8,43 @@
     }
 
     #map {
-        width: "100%";
-        height: 70vh;
+        width: 100%;
+        height: calc(100vh - 200px);
     }
 </style>
-<h1 class="text-center">Dealer Locator</h1>
-<div id="map"></div>
+
+<section class="section dashboard">
+    <div class="row">
+        <div class="col">
+            <h1 class="text-center">Dealer Locator</h1>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-lg-3">
+            @foreach ($showrooms as $showroom)
+
+            <div class="card" style="margin-top: 20px;">
+                <div class="card-body" style="padding-bottom: 10px;">
+                <h5 class="card-title">
+                <span class="position-absolute top-0 left-0 translate-middle badge rounded-pill bg-primary text-light">
+                    {{ $loop->iteration }}</span>
+                {{ ucwords(strtolower($showroom->ship_to_name)) }}</h6>
+                    <span class="card-text">{{ ucwords(strtolower($showroom->address1 . ' ' . $showroom->address2)) }}</span><br>
+                    <span class="card-text">{{ ucwords(strtolower($showroom->city)) . ', ' . $showroom->state . '  ' . $showroom->zip }}</span>
+                </div>
+            </div>
+
+            @endforeach
+        </div>
+
+        <div class="col-lg-9">
+
+            <div id="map"></div>
+
+        </div>
+    </div>
+</section>
 
 <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap&v=weekly" defer></script>
 
@@ -29,7 +60,7 @@
     function initMap() {
         map = new google.maps.Map(document.getElementById("map"), {
             zoom: 12,
-            mapId: 'd17a10fca4693276'
+            mapId: '2ea9fe570296658e'
         });
 
         geocoder = new google.maps.Geocoder();
@@ -80,7 +111,7 @@
                 var marker = new google.maps.Marker({
                     position: results[0].geometry.location,
                     label: {
-                        color: "black",
+                        color: "white",
                         text: index
                     },
                     title: label,
@@ -91,7 +122,7 @@
                     '<div id="content">' +
                     '<div id="siteNotice">' +
                     "</div>" +
-                    '<h5 id="firstHeading" class="firstHeading">'+ label + '</h5>' +
+                    '<h5 id="firstHeading" class="firstHeading">' + label + '</h5>' +
                     '<div id="bodyContent">' +
                     "<p style='font-size: 16px;'>" + address + "</p>" +
                     "</div>" +
