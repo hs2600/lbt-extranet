@@ -20,12 +20,26 @@ class Controller extends BaseController
     public function dealerLocator($zip)
     {
         error_log("INFO: get /");
-        return view('dealer_locator', [
-            'showrooms' => Address::orderBy('zip', 'asc')
-                ->where('zip', '=', $zip)
-                ->limit(1)
-                ->get()
-        ]);
+
+        $field_list = 'min(abs('. $zip. '-zip)) as diff, customer, ship_to_name, address1, address2, city, state, zip, phone1';
+
+        $showrooms = DB::table('addresses')
+        ->selectRaw($field_list)
+        ->groupBy('customer')
+        ->groupBy('ship_to_name')
+        ->groupBy('address1')
+        ->groupBy('address2')        
+        ->groupBy('city')
+        ->groupBy('state')
+        ->groupBy('zip')
+        ->groupBy('phone1') 
+        ->orderBy('diff')
+        ->limit(1)
+        ->get();
+
+        return view('dealer_locator')
+        ->with('showrooms', $showrooms)
+        ->with('zip', $zip);
     }
 
     /**
