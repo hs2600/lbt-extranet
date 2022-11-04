@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\Address;
+use Illuminate\Support\Facades\DB;
 
 class Controller extends BaseController
 {
@@ -34,10 +35,18 @@ class Controller extends BaseController
     {
         error_log("INFO: get /");
 
-        $zip4 = substr($zip,0,4);
+        $field_list = 'min(abs('. $zip. '-zip)) as diff, customer, ship_to_name, address1, address2, city, state, zip';
 
-        $showrooms = Address::orderBy('zip', 'asc')
-        ->where('zip', 'like', $zip4.'%')
+        $showrooms = DB::table('addresses')
+        ->selectRaw($field_list)
+        ->groupBy('customer')
+        ->groupBy('ship_to_name')
+        ->groupBy('address1')
+        ->groupBy('address2')        
+        ->groupBy('city')
+        ->groupBy('state')
+        ->groupBy('zip')
+        ->orderBy('diff')
         ->limit(5)
         ->get();
 

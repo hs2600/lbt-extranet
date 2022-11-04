@@ -21,6 +21,9 @@
     let map, markers = [];
     var geocoder;
     var zip = <?php echo '"' . $zip . '"' ?>;
+    // const initialMarkers = <?php echo json_encode($showrooms); ?>;
+
+    // console.log(initMarkers);
 
     /* ----------------------------- Initialize Map ----------------------------- */
     function initMap() {
