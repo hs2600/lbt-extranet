@@ -34,35 +34,16 @@ class Controller extends BaseController
     {
         error_log("INFO: get /");
 
-        $initialMarkers = [
-            [
-                'position' => [
-                    'lat' => 28.625485,
-                    'lng' => 79.821091
-                ],
-                'label' => [ 'color' => 'white', 'text' => 'P1' ],
-                'draggable' => true
-            ],
-            [
-                'position' => [
-                    'lat' => 28.625293,
-                    'lng' => 79.817926
-                ],
-                'label' => [ 'color' => 'white', 'text' => 'P2' ],
-                'draggable' => false
-            ],
-            [
-                'position' => [
-                    'lat' => 28.625182,
-                    'lng' => 79.81464
-                ],
-                'label' => [ 'color' => 'white', 'text' => 'P3' ],
-                'draggable' => true
-            ]
-        ];
+        $zip4 = substr($zip,0,4);
+
+        $showrooms = Address::orderBy('zip', 'asc')
+        ->where('zip', 'like', $zip4.'%')
+        ->limit(5)
+        ->get();
 
         return view('dealer_locator_js')
-        ->with('initialMarkers', $initialMarkers);
+        ->with('showrooms', $showrooms)
+        ->with('zip', $zip);
     }    
 
 }
