@@ -63,6 +63,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 //Public routes
 Route::get('/products_pl',[ProductController::class, 'productsPL']);
 Route::get('/dealer_locator/{zip}',[Controller::class, 'dealerLocator']);
+Route::get('/dealer_locator_js/{zip}',[Controller::class, 'dealerLocatorJS']);
 
 /**  TESTING */
 /**
