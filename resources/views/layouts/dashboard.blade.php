@@ -38,8 +38,6 @@ $series = DB::table('collections')
   <!-- CSS only -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-  <script src="https://unpkg.com/@popperjs/core@2"></script>
-
   <!-- Vendor CSS Files -->
   <link href="/assets/dashboard/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
   <link href="/assets/dashboard/vendor/simple-datatables/style.css" rel="stylesheet" />
@@ -235,11 +233,18 @@ $series = DB::table('collections')
       <!-- End Series Nav -->
 
       <li class="nav-item">
-        <a class="nav-link" href="/products">
+        <a class="nav-link collapsed" href="/products">
           <i class="fa-solid fa-binoculars"></i>
           <span>Products Search</span>
         </a>
       </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/dealer-locator">
+          <i class="fa-solid fa-store"></i>
+          <span>Dealer Locator</span>
+        </a>
+      </li>      
 
       <li class="nav-heading">Pages</li>
 
