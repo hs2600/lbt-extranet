@@ -27,7 +27,7 @@
                 </div>
                 <div class="card-body" style="padding: 10px;">
 
-                    <iframe width="100%" style="border:0; height: 60vh;" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed/v1/search?q={{ $address. ' ' . $city. ' ' . $state. ' ' . $zip. ' ' }}USA&key=AIzaSyCFX6HB-zkjkqf4KNSDjOTNHCl4wGBdpwU"></iframe>
+                    <iframe width="100%" style="border:0; height: 70vh;" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed/v1/search?q={{ $address. ' ' . $city. ' ' . $state. ' ' . $zip. ' ' }}USA&key=AIzaSyCFX6HB-zkjkqf4KNSDjOTNHCl4wGBdpwU"></iframe>
 
                 </div>
                 @endforeach

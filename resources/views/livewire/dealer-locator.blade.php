@@ -7,38 +7,36 @@
 
         #map {
             width: 100%;
-            height: calc(100vh - 200px);
+            height: calc(100vh - 125px);
         }
     </style>
 
     <section class="section dashboard">
-        <div class="row">
+        <!-- <div class="row">
             <div class="col">
                 <h1 class="text-center">Dealer Locator</h1>
             </div>
-        </div>
+        </div> -->
 
         <div class="row">
 
             <div class="col-lg-3">
 
-                <div style="margin-bottom: 40px;">
-                <h3 style="font-size: 1.35rem;">
-                @if ($error != 'invalid' && $zip != '')
-                Dealers near {{ $zip }}
-                @endif
-                &nbsp;</h3>
-                    <input type="text" placeholder="Search by ZIP" 
-                    title="Search by ZIP code" 
-                    wire:model.defer="zip"
-                    wire:keydown.enter="locator" autocomplete="off" required>
-                    <button type="button" 
-                    class="btn btn-outline-primary" wire:click="locator" 
-                    style="transition: all .3s ease-out 0s;
+                <div style="margin: 20px 0px 30px 0px;
+                border-bottom: 1px solid #c1c1c1;
+                padding-bottom: 20px;
+                ">
+                    <h3 style="font-size: 1.35rem;">
+                        @if ($error != 'invalid' && $zip != '')
+                        Dealers near {{ $zip }}
+                        @endif
+                        &nbsp;</h3>
+                    <input type="text" placeholder="Search by ZIP" title="Search by ZIP code" wire:model.defer="zip" wire:keydown.enter="locator" autocomplete="off" required>
+                    <button type="button" class="btn btn-outline-primary" wire:click="locator" style="transition: all .3s ease-out 0s;
                     padding: 5px;
                     margin-bottom: 4px;
                     ">
-                    Update</button><br>
+                        Update</button><br>
                     @error('zip') <span class="error">{{ $message }}</span><br> @enderror
                     <span style="color: red;"><i>@if ($error == 'invalid' && strlen($zip) > 4) Please enter a valid ZIP Code @endif
                         </i></span>
@@ -55,7 +53,8 @@
                             <span class="position-absolute top-0 left-0 translate-middle badge rounded-pill bg-primary text-light">
                                 {{ $loop->iteration }}</span>
                             {{ ucwords(strtolower($showroom->ship_to_name)) }}</h6>
-                            <span style="font-size: 14px;">{{ round($showroom->distance,2) }} miles away</span><br>
+                            <i><span style="font-size: 14px; color: #555;"><b>{{ round($showroom->distance,2) }}</b> miles away
+                                </span></i><br>
                             <span class="card-text">{{ ucwords(strtolower($showroom->address1 . ' ' . $showroom->address2)) }}</span><br>
                             <span class="card-text">{{ ucwords(strtolower($showroom->city)) . ', ' . $showroom->state . '  ' . $showroom->zip }}</span>
                     </div>
@@ -92,12 +91,14 @@
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
                 center: {
-                        lat: 33.799904,
-                        lng: -118.298661,
-                    },
+                    lat: 33.799904,
+                    lng: -118.298661,
+                },
                 zoom: 9,
                 mapId: '2ea9fe570296658e',
-                gestureHandling: 'greedy'
+                gestureHandling: 'greedy',
+                mapTypeControl: false,
+                scrollwheel: true
             });
 
             geocoder = new google.maps.Geocoder();
@@ -120,9 +121,9 @@
 
             for (let index = 0; index < initialMarkers.length; index++) {
                 const markerData = initialMarkers[index];
-                address = (markerData.address1.trim() + ' ' + markerData.address2.trim()).trim() + ', ' +
-                    markerData.city.trim() + ', ' + markerData.state.trim() + '  ' + markerData.zip.trim();
-                customer = markerData.ship_to_name.trim();
+                address = toTitleCase((markerData.address1.trim() + ' ' + markerData.address2.trim()).trim()) + '<br>' +
+                    toTitleCase(markerData.city.trim()) + ', ' + markerData.state.trim() + '  ' + markerData.zip.trim();
+                customer = toTitleCase(markerData.ship_to_name.trim());
                 zip = markerData.zip.trim();
                 lat = markerData.lat;
                 distance = markerData.distance;
@@ -234,6 +235,20 @@
             map.setZoom(zoom);
 
         }
+    </script>
+
+    <script>
+        function toTitleCase(str) {
+            return str.replace(
+                /\w\S*/g,
+                function(txt) {
+                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                }
+            );
+        }
+        // example
+        toTitleCase("the pains and gains of self study");
+        // "The Pains And Gains Of Self Study"
     </script>
 
 </div>

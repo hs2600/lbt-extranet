@@ -62,12 +62,18 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
 //Public routes
 Route::get('/products_pl',[ProductController::class, 'productsPL']);
-Route::get('/dealer_locator/{zip}',[Controller::class, 'dealerLocator']);
-Route::get('/dealer_locator_js/{zip}',[Controller::class, 'dealerLocatorJS']);
+
+Route::get('/find-a-dealer', function () {
+    return view('find-dealer.dealer_locator_form');
+});
+
+Route::get('/dealer_locator',[Controller::class, 'dealerLocatorJS']);
 
 Route::get('/dealer-locator', function () {
-    return view('dealer_locator_livewire');
+    return view('find-dealer.dealer_locator_livewire');
 });
+
+Route::get('/dealer_locator/{zip}',[Controller::class, 'dealerLocator']);
 
 
 /**  TESTING */

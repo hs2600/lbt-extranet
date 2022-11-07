@@ -240,9 +240,23 @@ $series = DB::table('collections')
       </li>
 
       <li class="nav-item">
+        <a class="nav-link collapsed" href="/find-a-dealer">
+          <i class="fa-solid fa-store"></i>
+          <span>Dealer Locator v1</span>
+        </a>
+      </li>      
+
+      <li class="nav-item">
         <a class="nav-link collapsed" href="/dealer-locator">
           <i class="fa-solid fa-store"></i>
-          <span>Dealer Locator</span>
+          <span>Dealer Locator v2</span>
+        </a>
+      </li>      
+      
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/dealer_locator/90710">
+          <i class="fa-solid fa-store"></i>
+          <span>Dealer Locator v3</span>
         </a>
       </li>      
 

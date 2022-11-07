@@ -40,7 +40,7 @@ class DealerLocator extends Component
             $this->showrooms = DB::table('addresses')
                 ->selectRaw($field_list)
                 ->orderBy('distance')
-                ->limit(6)
+                ->limit(5)
                 ->get();
         }
         $this->validate();
