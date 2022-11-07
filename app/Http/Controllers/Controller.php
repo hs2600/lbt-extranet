@@ -37,36 +37,50 @@ class Controller extends BaseController
         ->limit(1)
         ->get();
 
-        return view('dealer_locator')
+        return view('find-dealer.dealer_locator_zip')
         ->with('showrooms', $showrooms)
         ->with('zip', $zip);
     }
 
     /**
-     * Dealer locator JS
-     */
-    public function dealerLocatorJS($zip)
+    * Dealer locator JS
+    */
+    public function dealerLocatorJS()
     {
-        error_log("INFO: get /");
 
-        $field_list = 'min(abs('. $zip. '-zip)) as diff, customer, ship_to_name, address1, address2, city, state, zip';
+        $zip = '';
+        if(isset($_GET['location'])){
+            $zip = $_GET['location'];
+        }
+        $error = '';
 
-        $showrooms = DB::table('addresses')
-        ->selectRaw($field_list)
-        ->groupBy('customer')
-        ->groupBy('ship_to_name')
-        ->groupBy('address1')
-        ->groupBy('address2')        
-        ->groupBy('city')
-        ->groupBy('state')
-        ->groupBy('zip')
-        ->orderBy('diff')
-        ->limit(5)
-        ->get();
+        $latlon = DB::table('zip_lat_lon')
+            ->where('zip', '=', $zip)
+            ->first();
 
-        return view('dealer_locator_js')
+        if (is_null($latlon) || strlen($zip) < 5) {
+            $error = 'invalid';
+            $showrooms = array();
+        } else {
+            $error = '';
+            $zip =  substr($latlon->zip, 0, 5);
+            $lat =  $latlon->lat;
+            $lon =  $latlon->lon;
+
+            $field_list = 'ship_to_name, address1, address2, city, state, zip, lat, (6371 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians(' . $lon . ') - radians(lon) ) + sin( radians(' . $lat . ') ) * sin( radians(lat) ) )) as distance';
+
+            $showrooms = DB::table('addresses')
+                ->selectRaw($field_list)
+                ->orderBy('distance')
+                ->limit(5)
+                ->get();
+        }
+
+        return view('find-dealer.dealer_locator')
         ->with('showrooms', $showrooms)
-        ->with('zip', $zip);
-    }    
+        ->with('zip', $zip)
+        ->with('error', $error);
+
+    }
 
 }
