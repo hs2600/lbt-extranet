@@ -162,7 +162,7 @@
         <div class="find-a-dealer-banner" style="height: calc(100vh - 80px);">
             <div class="find-overlay">
                 <div class="find-overlay-top">
-                    <p>Find a <span>Dealer</span> Near You</p> <img src="/assets/images/rep-demonstrating.png" width="275px" alt="Rep Demonstrating" class="lazyload-loading">
+                    <p>Find a <span>Dealer</span> Near You</p> <img src="/assets/images/rep.png" width="275px" alt="Rep with arms crossed" class="lazyload-loading" style="right: -30px;">
                 </div>
                 <div class="find-overlay-bottom">
                     <form method="GET" action="/dealer_locator/">
