@@ -33,6 +33,7 @@ class SearchProductv4 extends Component
             ->simplePaginate(50);
 
         $productsFiltered = Lot::orderBy('item', 'asc')
+            ->orderBy('qty', 'desc')
             ->Where('site', 'like', '%'.$this->site.'%')
             ->Where('material', 'like', '%'.$this->material.'%')
             ->Where('series', 'like', '%'.$this->series.'%')
