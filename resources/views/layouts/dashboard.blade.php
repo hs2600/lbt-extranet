@@ -21,7 +21,7 @@ $series = DB::table('collections')
 
   <title>Lunada Bay Tile Extranet</title>
 
-  <link rel="icon"  href="/favicon.ico"/>
+  <link rel="icon" href="/favicon.ico" />
 
   <!-- JQuery -->
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
@@ -83,14 +83,14 @@ $series = DB::table('collections')
         $name = Auth::user()->name;
         $name_arr = explode(" ", $name);
 
-        if(count($name_arr) == 2){
+        if (count($name_arr) == 2) {
           $initials =  substr($name_arr[0], 0, 1) . substr($name_arr[1], 0, 1);
-          $shortname = substr($name_arr[0], 0, 1) . '.' . $name_arr[1];  
+          $shortname = substr($name_arr[0], 0, 1) . '.' . $name_arr[1];
         } else {
           $initials =  strtoupper(substr($name_arr[0], 0, 2));
           $shortname = $name_arr[0];
         }
-    
+
         ?>
 
         <li class="nav-item dropdown pe-4">
@@ -235,30 +235,39 @@ $series = DB::table('collections')
       <li class="nav-item">
         <a class="nav-link collapsed" href="/products">
           <i class="fa-solid fa-binoculars"></i>
-          <span>Products Search</span>
+          <span>Product Search</span>
         </a>
       </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/products_lot">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span>Product Search by Lot</span>
+        </a>
+      </li>
+
+      <hr>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="/find-a-dealer">
           <i class="fa-solid fa-store"></i>
           <span>Dealer Locator v1</span>
         </a>
-      </li>      
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="/dealer-locator">
           <i class="fa-solid fa-store"></i>
           <span>Dealer Locator v2</span>
         </a>
-      </li>      
-      
+      </li>
+
       <li class="nav-item">
         <a class="nav-link collapsed" href="/dealer_locator/90710">
           <i class="fa-solid fa-store"></i>
           <span>Dealer Locator v3</span>
         </a>
-      </li>      
+      </li>
 
       <li class="nav-heading">Pages</li>
 
