@@ -2,13 +2,14 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Product;
+use App\Models\Lot;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
-class SearchProductv3 extends Component
+class SearchProductv4 extends Component
 {
-    public $material = '';
+    public $site = '';
+    public $material = '';    
     public $series = '';
     public $size = '';
     public $color = '';
@@ -27,47 +28,18 @@ class SearchProductv3 extends Component
             $null = 1;
         }
 
-        $products = Product::orderBy('item', 'asc')
+        $products = Lot::orderBy('item', 'asc')
             ->Where('item','=',1)
             ->simplePaginate(50);
 
-        $productsFiltered = Product::orderBy('item', 'asc')
-            ->leftjoin('collections as series', function ($join) {
-                $join->on('products.material', '=', 'series.material')
-                    ->On('products.series', '=', 'series.series')
-                    ->where('series.category', '=', 'series')
-                    ->where('series.status', '!=', 1)
-                    ;
-            })
-            ->leftjoin('collections as size', function ($join) {
-                $join->on('products.material', '=', 'size.material')
-                    ->On('products.series', '=', 'size.series')
-                    ->On('products.size', '=', 'size.size')
-                    ->where('size.category', '=', 'size');
-            })            
-            ->select(
-                'products.sku',
-                'products.item',
-                'products.description',
-                'products.site',
-                'products.material',
-                'products.series',
-                'products.size',
-                'products.color',
-                'products.finish',
-                'products.qty_p as qty',
-                'products.uofm',
-                'products.img_url',
-                'series.img_url as series_img_url',
-                'size.technical_name as size_technical_name'
-            )
-            ->Where('series.status', '!=', 1)
-            ->Where('products.material', 'like', '%'.$this->material.'%')
-            ->Where('products.series', 'like', '%'.$this->series.'%')
-            ->Where('products.size', 'like', '%'.$this->size.'%')
-            ->Where('products.color', 'like', '%'.$this->color.'%')
-            ->Where('products.finish', 'like', $this->finish.'%')
-            ->Where('products.qty_p', '>=', $this->qty)
+        $productsFiltered = Lot::orderBy('item', 'asc')
+            ->Where('site', 'like', '%'.$this->site.'%')
+            ->Where('material', 'like', '%'.$this->material.'%')
+            ->Where('series', 'like', '%'.$this->series.'%')
+            ->Where('size', 'like', '%'.$this->size.'%')
+            ->Where('color', 'like', '%'.$this->color.'%')
+            ->Where('finish', 'like', $this->finish.'%')
+            ->Where('qty', '>=', $this->qty)
             ->simplePaginate(50);
 
         $series = DB::table('products')
@@ -123,11 +95,11 @@ class SearchProductv3 extends Component
         ->Where('color', 'like', '%'.$this->color.'%')
         ->groupBy('finish')
         ->orderBy('name', 'asc')
-        ->limit(15)
+        ->limit(10)
         ->get();
 
         if ($null == 0) { //return results
-            return view('livewire.search-product_v3')
+            return view('livewire.search-product_v4')
                 ->with(['products' => $productsFiltered])
                 ->with('count', $productsFiltered->count())
                 ->with(['filter_series' => $series])
@@ -136,7 +108,7 @@ class SearchProductv3 extends Component
                 ->with(['filter_finish' => $finish])
                 ->with('null', $null);
         } else { //return nothing
-            return view('livewire.search-product_v3')
+            return view('livewire.search-product_v4')
                 ->with(['products' => $products])
                 ->with('count', 0)
                 ->with(['filter_series' => $series])
@@ -149,6 +121,7 @@ class SearchProductv3 extends Component
 
     public function resetFilters()
     {
+        $this->site = '';
         $this->material = '';
         $this->series = '';
         $this->size = '';

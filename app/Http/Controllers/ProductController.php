@@ -306,6 +306,16 @@ class ProductController extends Controller
     }
 
     /**
+     * Show products - Search CSR
+     */
+    public function productsSearchv4()
+    {
+        error_log("INFO: get /");
+
+        return view('products_searchv4');
+    }
+
+    /**
      * Show products
      */
     public function productsID($id)

@@ -37,14 +37,13 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
       <form style="padding-bottom: 10px;">
         <div class="row">
 
-          <div class="col-sm">
+        <div class="col-sm">
             <label for="input">Material</label>
-            <input type="search" class="form-control" placeholder="Material" wire:model="material" list="materials">
-            <datalist id="materials">
-              @foreach ($filter_materials as $filter)
-              <option value="{{ $filter->name }}">
-                @endforeach
-            </datalist>
+            <select id="sites" class="form-control" wire:model.debounce.500ms="material">
+              <option value="Glass">Glass</option>
+              <option value="Ceramic">Ceramic</option>
+              <option value="Concrete">Concrete</option>
+            </select>
           </div>
 
           <div class="col-sm">
@@ -58,7 +57,7 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
           </div>
 
           <div class="col-sm">
-            <label for="input">Size/Pattern</label>
+            <label for="input">Size</label>
             <input type="search" class="form-control" placeholder="Size" wire:model="size" list="sizes">
             <datalist id="sizes">
               @foreach ($filter_size as $filter)
@@ -89,7 +88,7 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
 
           <div class="col-sm-1">
             <label for="input">Min. Qty</label>
-            <input type="search" class="form-control" placeholder="Qty" wire:model="qty">
+            <input type="search" class="form-control" placeholder="Qty" wire:model.lazy="qty">
           </div>
 
           <div class="col-sm-1">

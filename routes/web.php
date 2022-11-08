@@ -50,6 +50,7 @@ Route::group([
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/products',[ProductController::class, 'productsSearchv3'])->name('products');
     Route::get('/products_search',[ProductController::class, 'productsSearchv3']);
+    Route::get('/products_lot',[ProductController::class, 'productsSearchv4']);
     Route::get('/products/{id}',[ProductController::class, 'productsID']);
     Route::get('/products_all',[ProductController::class, 'productsAll']);
     Route::get('/collections',[ProductController::class, 'collections'])->name('collections');
