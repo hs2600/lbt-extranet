@@ -240,7 +240,7 @@ $series = DB::table('collections')
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="/products_lot">
+        <a class="nav-link collapsed" href="/products_lot">
           <i class="fa-solid fa-magnifying-glass"></i>
           <span>Product Search by Lot</span>
         </a>

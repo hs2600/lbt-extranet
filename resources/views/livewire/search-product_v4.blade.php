@@ -1,5 +1,13 @@
 <div>
 
+  <style>
+    .sticky-header {
+      position: sticky;
+      top: 60px;
+      background-color: #fff;
+    }
+  </style>
+
   <section class="section dashboard">
     <div class="row">
 
@@ -117,7 +125,7 @@
               @else
 
               <table class="table table-striped table-borderless datatable">
-                <thead>
+                <thead class="sticky-header">
                   <tr>
                     <th scope="col">Item</th>
                     <th scope="col">Site</th>
