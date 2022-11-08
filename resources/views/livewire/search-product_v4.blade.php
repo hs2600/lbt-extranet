@@ -1,35 +1,4 @@
-<?php
-
-$image_path = '/assets/images/products/';
-$server_root = $_SERVER["DOCUMENT_ROOT"];
-$cdn_url = 'https://cdn.lunadabaytile.com/portal';
-
-if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
-  $server_root = '/portal';
-}
-
-?>
-
 <div>
-
-  <style>
-    .nav-pills .nav-link {
-      padding: 0px 10px 5px 10px;
-      margin-right: 10px;
-    }
-
-    .nav-pills .nav-link.active,
-    .nav-pills .show>.nav-link {
-      padding: 0px 10px 5px 10px;
-      border: 1px solid #a9a9a9;
-      color: #666;
-      background-color: #fcfcfc;
-    }
-
-    .nav {
-      --bs-nav-link-hover-color: #198754;
-    }
-  </style>
 
   <section class="section dashboard">
     <div class="row">
@@ -40,9 +9,10 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
           <div class="col-sm">
             <label for="input">Material</label>
             <select id="sites" class="form-control" wire:model.debounce.500ms="material">
-              <option value="Glass">Glass</option>
+              <option value="">All</option>
               <option value="Ceramic">Ceramic</option>
               <option value="Concrete">Concrete</option>
+              <option value="Glass">Glass</option>
             </select>
           </div>
 
@@ -88,7 +58,8 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
 
           <div class="col-sm">
             <label for="input">Site</label>
-            <select id="sites" class="form-control" wire:model.lazy="site">
+            <select class="form-control" wire:model.lazy="site">
+              <option value="">All</option>
               <option value="HC">HC</option>
               <option value="PA">PA</option>
             </select>
@@ -162,7 +133,6 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
                     <th scope="col">Size</th>
                     <th scope="col">Color</th>
                     <th scope="col">Finish</th>
-                    <th scope="col">Format</th>
                     <th scope="col">Dimms</th>
                   </tr>
                 </thead>
@@ -227,9 +197,6 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
                     </td>
                     <td>
                       <div>{{ $product->finish }}</div>
-                    </td>
-                    <td>
-                      <div>{{ $product->format }}</div>
                     </td>
                     <td>
                       <div>{{ $product->dimms }}</div>
