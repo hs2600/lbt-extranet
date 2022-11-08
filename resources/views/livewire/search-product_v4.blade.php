@@ -5,6 +5,7 @@
       position: sticky;
       top: 60px;
       background-color: #fff;
+      box-shadow: 0px 2px 0px rgb(1 41 112 / 10%);
     }
   </style>
 
