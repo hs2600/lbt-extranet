@@ -14,6 +14,16 @@ class SearchProductv3 extends Component
     public $color = '';
     public $finish = '';
     public $qty = '';
+
+    public $perPage = 18;
+    protected $listeners = [
+        'load-more' => 'loadMore'
+    ];
+        
+    public function loadMore()
+    {
+        $this->perPage = $this->perPage + 12;
+    }    
     
     public function render()
     {
@@ -68,7 +78,7 @@ class SearchProductv3 extends Component
             ->Where('products.color', 'like', '%'.$this->color.'%')
             ->Where('products.finish', 'like', $this->finish.'%')
             ->Where('products.qty_p', '>=', $this->qty)
-            ->simplePaginate(50);
+            ->simplePaginate($this->perPage);
 
         $series = DB::table('products')
         ->leftjoin('collections as series', function ($join) {

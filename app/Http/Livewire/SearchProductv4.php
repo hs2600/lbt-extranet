@@ -15,11 +15,23 @@ class SearchProductv4 extends Component
     public $color = '';
     public $finish = '';
     public $qty = '';
-    
+
+    public $perPage = 30;
+    protected $listeners = [
+        'load-more' => 'loadMore'
+    ];
+        
+    public function loadMore()
+    {
+        $this->perPage = $this->perPage + 10;
+    }
+
     public function render()
     {
         // sleep(1);
         $null = 0;
+
+        $this->emit('userStorex');
 
         if (
             trim($this->material) == '' && trim($this->series) == '' && trim($this->size) == ''
@@ -41,7 +53,7 @@ class SearchProductv4 extends Component
             ->Where('color', 'like', '%'.$this->color.'%')
             ->Where('finish', 'like', $this->finish.'%')
             ->Where('qty', '>=', $this->qty)
-            ->simplePaginate(50);
+            ->simplePaginate($this->perPage);
 
         $series = DB::table('products')
         ->leftjoin('collections as series', function ($join) {

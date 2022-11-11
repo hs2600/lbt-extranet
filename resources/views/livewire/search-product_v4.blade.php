@@ -91,18 +91,8 @@
 
       <div>
 
-        <div wire:loading>
-          <div class="text-center pt-6">
-            <div class="spinner-border text-secondary" role="status">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-            <div>
-              <p style="font-size: 12px; color: #666;">loading...</p>
-            </div>
-          </div>
-        </div>
 
-        <div wire:loading.remove>
+        <div wire:loading.class="opacity-75">
 
           <div class="card">
             <div class="card-body" style="padding: 10px 20px; min-height: 290px;">
@@ -216,15 +206,17 @@
                   @endforeach
                 </tbody>
               </table>
-
               <?php
 
-              if ($count >= 50) {
-                echo '<p><b><i>50+ items</b></i></p>';
-              } else {
-                echo '<p><b><i>Items found: ' . $count . '</b></i></p>';
-              }
-              ?>
+              // if ($count >= 50) {
+              //   echo '<p><b><i>50+ items</b></i></p>';
+              // } else {
+              //   echo '<p><b><i>Items found: ' . $count . '</b></i></p>';
+              // }
+
+              echo '<p><b><i>Displaying ' . $count . ' items.</b></i></p>';
+              ?>              
+
               @endif
 
             </div>
