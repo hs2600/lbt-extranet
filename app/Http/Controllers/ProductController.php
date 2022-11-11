@@ -115,7 +115,7 @@ class ProductController extends Controller
                 ->orderBy('series', 'asc')
                 ->where('category', '=', 'series')
                 ->where('status', '!=', '1')
-                ->paginate(16)
+                ->paginate(12)
         ]);
     }
 
@@ -149,7 +149,7 @@ class ProductController extends Controller
                     ->where('category', '=', 'series')
                     ->where('material', '=', $material)
                     ->where('status', '!=', '1')
-                    ->paginate(16)
+                    ->paginate(12)
             ],
             [
                 'collection' => Collection::orderBy('material', 'asc')
