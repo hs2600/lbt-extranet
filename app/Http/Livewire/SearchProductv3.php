@@ -165,6 +165,6 @@ class SearchProductv3 extends Component
         $this->color = '';
         $this->finish = '';
         $this->qty = '';
-    
+        $this->perPage = 18;
     }
 }

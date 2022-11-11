@@ -141,6 +141,7 @@ class SearchProductv4 extends Component
         $this->color = '';
         $this->finish = '';
         $this->qty = '';
+        $this->perPage = 30;
     
     }
 }
