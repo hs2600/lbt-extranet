@@ -240,7 +240,7 @@ $series = DB::table('collections')
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="/products_lot">
+        <a class="nav-link collapsed" href="/products_lot">
           <i class="fa-solid fa-magnifying-glass"></i>
           <span>Product Search by Lot</span>
         </a>
@@ -255,17 +255,17 @@ $series = DB::table('collections')
         </a>
       </li>
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="/dealer-locator">
           <i class="fa-solid fa-store"></i>
           <span>Dealer Locator v2</span>
         </a>
-      </li>
+      </li> -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="/dealer_locator/90710">
           <i class="fa-solid fa-store"></i>
-          <span>Dealer Locator v3</span>
+          <span>Dealer Locator v2</span>
         </a>
       </li>
 
@@ -299,7 +299,13 @@ $series = DB::table('collections')
   <script src="/assets/dashboard/vendor/tinymce/tinymce.min.js"></script>
 
   @livewireScripts
-
+  <script type="text/javascript">
+    window.onscroll = function(ev) {
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        window.livewire.emit('load-more');
+      }
+    };
+  </script>
 
   <!-- Product Info Modal -->
   <div class="modal fade p-5" id="exModal" tabindex="-1" style="display: none;" aria-hidden="true">

@@ -1,33 +1,12 @@
-<?php
-
-$image_path = '/assets/images/products/';
-$server_root = $_SERVER["DOCUMENT_ROOT"];
-$cdn_url = 'https://cdn.lunadabaytile.com/portal';
-
-if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
-  $server_root = '/portal';
-}
-
-?>
-
 <div>
 
   <style>
-    .nav-pills .nav-link {
-      padding: 0px 10px 5px 10px;
-      margin-right: 10px;
-    }
-
-    .nav-pills .nav-link.active,
-    .nav-pills .show>.nav-link {
-      padding: 0px 10px 5px 10px;
-      border: 1px solid #a9a9a9;
-      color: #666;
-      background-color: #fcfcfc;
-    }
-
-    .nav {
-      --bs-nav-link-hover-color: #198754;
+    .sticky-header {
+      position: sticky;
+      top: 60px;
+      color:#FFFFFF;
+      background-color:#7f7f7f;
+      box-shadow: 0px 2px 0px rgb(1 41 112 / 10%);
     }
   </style>
 
@@ -40,9 +19,10 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
           <div class="col-sm">
             <label for="input">Material</label>
             <select id="sites" class="form-control" wire:model.debounce.500ms="material">
-              <option value="Glass">Glass</option>
+              <option value="">All</option>
               <option value="Ceramic">Ceramic</option>
               <option value="Concrete">Concrete</option>
+              <option value="Glass">Glass</option>
             </select>
           </div>
 
@@ -88,7 +68,8 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
 
           <div class="col-sm">
             <label for="input">Site</label>
-            <select id="sites" class="form-control" wire:model.lazy="site">
+            <select class="form-control" wire:model.lazy="site">
+              <option value="">All</option>
               <option value="HC">HC</option>
               <option value="PA">PA</option>
             </select>
@@ -110,18 +91,8 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
 
       <div>
 
-        <div wire:loading>
-          <div class="text-center pt-6">
-            <div class="spinner-border text-secondary" role="status">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-            <div>
-              <p style="font-size: 12px; color: #666;">loading...</p>
-            </div>
-          </div>
-        </div>
 
-        <div wire:loading.remove>
+        <div wire:loading.class="opacity-75">
 
           <div class="card">
             <div class="card-body" style="padding: 10px 20px; min-height: 290px;">
@@ -146,7 +117,7 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
               @else
 
               <table class="table table-striped table-borderless datatable">
-                <thead>
+                <thead class="sticky-header">
                   <tr>
                     <th scope="col">Item</th>
                     <th scope="col">Site</th>
@@ -162,7 +133,6 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
                     <th scope="col">Size</th>
                     <th scope="col">Color</th>
                     <th scope="col">Finish</th>
-                    <th scope="col">Format</th>
                     <th scope="col">Dimms</th>
                   </tr>
                 </thead>
@@ -229,9 +199,6 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
                       <div>{{ $product->finish }}</div>
                     </td>
                     <td>
-                      <div>{{ $product->format }}</div>
-                    </td>
-                    <td>
                       <div>{{ $product->dimms }}</div>
                     </td>
 
@@ -239,15 +206,17 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
                   @endforeach
                 </tbody>
               </table>
-
               <?php
 
-              if ($count >= 50) {
-                echo '<p><b><i>50+ items</b></i></p>';
-              } else {
-                echo '<p><b><i>Items found: ' . $count . '</b></i></p>';
-              }
-              ?>
+              // if ($count >= 50) {
+              //   echo '<p><b><i>50+ items</b></i></p>';
+              // } else {
+              //   echo '<p><b><i>Items found: ' . $count . '</b></i></p>';
+              // }
+
+              echo '<p><b><i>Displaying ' . $count . ' items.</b></i></p>';
+              ?>              
+
               @endif
 
             </div>
