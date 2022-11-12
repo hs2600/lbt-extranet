@@ -37,7 +37,6 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
 <div class="breadcrumb-sticky d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center 
  pt-3 mb-2 border-bottom">
 
-  @foreach ($products as $product)
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="/collections/">Collections</a></li>
@@ -48,7 +47,6 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
       <!-- <li class="breadcrumb-item active" aria-current="page">{{ $product->item }}</li> -->
     </ol>
   </nav>
-  @endforeach
 
 </div>
 
@@ -64,9 +62,6 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
        border-radius: 5px;
        box-shadow: 1px 1px #ccc;
        ">
-
-        @foreach ($products as $product)
-
 
         <?php
         
@@ -180,7 +175,7 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
           <span>{{ $product->finish }}</span>
         </div>
       </div>
-      <p class="product-description">{{ $product->size_desc }}</p>
+      <p class="product-description">{{ $size_desc }}</p>
 
 
       @if (count($product_lots) > 0 && $qty > 0)
@@ -266,8 +261,6 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
 
       @endif
 
-      @endforeach
-
       <!-- <div class="row justify-content-md-center">
         <div class="col-md-8 col-sm-7" style="padding-bottom: 5px;">
           <button type="button" class="btn btn-info disabled" style="width: 100%; border-bottom: 5px solid rgb(136, 41, 41);">
@@ -311,14 +304,14 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
 
   <?php
 
-  if ($product->series_desc != "") {
+  if ($series_desc != "") {
   ?>
 
 
     <div class="card" style="margin-top: 20px;">
       <div class="card-body" style="padding-bottom: 10px;">
         <h5 class="card-title">Series overview</h5>
-        <p class="card-text">{{ $product->series_desc }}</p>
+        <p class="card-text">{{ $series_desc }}</p>
       </div>
     </div>
 

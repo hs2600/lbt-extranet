@@ -90,7 +90,9 @@
             @endforeach
           </ul>
           <?php
-          if ($count > 50) {
+          $count = count($products);
+
+          if ($count >= 50) {
             echo '<b><i>50+ results </b></i>';
           } else {
             echo '<b><i>Items found: ' . $count . '</b></i>';

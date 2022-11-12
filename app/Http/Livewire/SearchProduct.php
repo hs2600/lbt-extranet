@@ -13,8 +13,14 @@ class SearchProduct extends Component
 
     public function render()
     {
-        sleep(1);
-        $products = Product::where('series.status', '!=', 1)
+        // sleep(1);
+
+        if ($this->search == '') {
+            return view('livewire.search-product')
+            ->with('search', $this->search);
+        } else {
+
+            $products = Product::where('series.status', '!=', 1)
             ->leftjoin('collections as series', function ($join) {
                 $join->on('products.material', '=', 'series.material')
                     ->On('products.series', '=', 'series.series')
@@ -41,10 +47,6 @@ class SearchProduct extends Component
             ->limit(5)
             ->get();
 
-        $productsAll = Product::where('description', 'like', '%' . $this->search . '%')
-            ->orWhere('item', 'like', '%' . $this->search . '%')
-            ->get();
-
         $items = Product::where('item', '=', $this->search)
             ->leftjoin('collections as series', function ($join) {
                 $join->on('products.material', '=', 'series.material')
@@ -56,15 +58,11 @@ class SearchProduct extends Component
             ->limit(1)
             ->get();
 
-        if ($this->search == '') {
-            return view('livewire.search-product', ['products' => $this->search]);
-        } else {
             return view('livewire.search-product')
                 ->with(['products' => $products])
                 ->with(['items' => $items])
                 ->with('search', $this->search)
-                ->with(['series' => $series])
-                ->with('count', $productsAll->count());
+                ->with(['series' => $series]);
         }
     }
 }
