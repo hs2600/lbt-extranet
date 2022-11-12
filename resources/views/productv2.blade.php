@@ -1,4 +1,4 @@
-@extends('layouts.dashboardv2')
+@extends('layouts.dashboard')
 
 @section('content')
 
@@ -416,7 +416,7 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
                   ">
                 <div>
                   <div class="img-thumbnail">
-                    <a href="/productsv2/{{ $product->sku }}">
+                    <a href="/products/{{ $product->sku }}">
                       <div style="min-height: 195px;">
                         <img src="{{$image}}" style="
                          border: 0px; padding: 0px;" alt="{{ ucwords(strtolower($product->description)) }}">
@@ -530,7 +530,7 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
                   ">
                 <div>
                   <div class="img-thumbnail">
-                    <a href="/productsv2/{{ $product->sku }}">
+                    <a href="/products/{{ $product->sku }}">
                       <div style="min-height: 195px;">
                         <img src="{{$image}}" style="
                          border: 0px; padding: 0px;" alt="{{ ucwords(strtolower($product->description)) }}">

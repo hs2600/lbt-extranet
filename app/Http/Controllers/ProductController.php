@@ -357,7 +357,7 @@ class ProductController extends Controller
             ->orderBy('lot', 'asc')
             ->get();
 
-        return view('productv2')
+        return view('product')
             ->with('product', $product)
             ->with('product_sizes', $product_sizes)
             ->with('product_colors', $product_colors)
