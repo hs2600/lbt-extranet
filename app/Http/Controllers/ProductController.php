@@ -316,46 +316,35 @@ class ProductController extends Controller
     }
 
     /**
-     * Show products
+     * Show products v2
      */
     public function productsID($id)
     {
-        error_log("INFO: get /");
+
+        $series_desc = '';
+        $size_desc = '';
+
+        $product = Product::where('sku','=', $id)
+        ->first();
+
+        $collection = Collection::where('category','=', 'series')
+        ->where('material','=', $product->material)
+        ->where('series','=', $product->series)
+        ->first();
+
+        $series_desc = $collection->description;
+        $size_desc = $collection->size_desc;
 
         $product_sizes = Product::orderBy('item', 'asc')
-            ->leftjoin('products as sizes', function ($join) {
-                $join->on('products.material', '=', 'sizes.material')
-                    ->On('products.series', '=', 'sizes.series')
-                    ->On('products.color', '=', 'sizes.color');
-            })
-            ->leftjoin('collections as size', function ($join) {
-                $join->on('sizes.material', '=', 'size.material')
-                    ->On('sizes.series', '=', 'size.series')
-                    ->On('sizes.size', '=', 'size.size')
-                    ->where('size.category', '=', 'size');
-            })
-            ->selectRaw('sizes.sku, sizes.item, sizes.description, sizes.material
-        , sizes.series, sizes.size, sizes.color, sizes.finish, sizes.max_lot_qty_p as qty
-        , sizes.uofm, sizes.img_url, sizes.site, size.technical_name as size_technical_name')
-            ->where('products.sku', '=', $id)
+            ->where('material', '=', $product->material)
+            ->where('series', '=', $product->series)
+            ->where('color', '=', $product->color)
             ->get();
 
         $product_colors = Product::orderBy('item', 'asc')
-            ->leftjoin('products as colors', function ($join) {
-                $join->on('products.material', '=', 'colors.material')
-                    ->On('products.series', '=', 'colors.series')
-                    ->On('products.size', '=', 'colors.size');
-            })
-            ->leftjoin('collections as size', function ($join) {
-                $join->on('colors.material', '=', 'size.material')
-                    ->On('colors.series', '=', 'size.series')
-                    ->On('colors.size', '=', 'size.size')
-                    ->where('size.category', '=', 'size');
-            })
-            ->selectRaw('colors.sku, colors.item, colors.description, colors.material
-        , colors.series, colors.size, colors.color, colors.finish, colors.max_lot_qty_p as qty
-        , colors.uofm, colors.img_url, colors.site, size.technical_name as size_technical_name')
-            ->where('products.sku', '=', $id)
+            ->where('material', '=', $product->material)
+            ->where('series', '=', $product->series)        
+            ->where('size', '=', $product->size)
             ->get();
 
         $product_lots = Quantity::orderBy('item', 'asc')
@@ -368,30 +357,14 @@ class ProductController extends Controller
             ->orderBy('lot', 'asc')
             ->get();
 
-        return view('product', [
-            'products' => Product::orderBy('item', 'asc')
-                ->leftjoin('collections as series', function ($join) {
-                    $join->on('products.material', '=', 'series.material')
-                        ->On('products.series', '=', 'series.series')
-                        ->where('series.category', '=', 'series');
-                })
-                ->leftjoin('collections as size', function ($join) {
-                    $join->on('products.material', '=', 'size.material')
-                        ->On('products.series', '=', 'size.series')
-                        ->On('products.size', '=', 'size.size')
-                        ->where('size.category', '=', 'size');
-                })
-                ->selectRaw('products.sku, products.item, products.description
-        , products.material, products.series, products.size, products.color
-        , products.finish, products.qty_p as qty, products.uofm, products.pl_57 as price, products.img_url
-        , series.description as series_desc, series.size_desc
-        , series.img_url as series_img_url, size.technical_name as size_technical_name')
-                ->where('sku', '=', $id)
-                ->limit(1)
-                ->get()
-        ])
+        return view('productv2')
+            ->with('product', $product)
             ->with('product_sizes', $product_sizes)
             ->with('product_colors', $product_colors)
-            ->with('product_lots', $product_lots);
+            ->with('product_lots', $product_lots)
+            ->with('series_desc', $series_desc)
+            ->with('size_desc', $size_desc);
+
     }
+
 }
