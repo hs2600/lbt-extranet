@@ -40,9 +40,10 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
         <div class="col-sm">
             <label for="input">Material</label>
             <select id="sites" class="form-control" wire:model.debounce.500ms="material">
-              <option value="Glass">Glass</option>
+              <option value="">All</option>
               <option value="Ceramic">Ceramic</option>
               <option value="Concrete">Concrete</option>
+              <option value="Glass">Glass</option>
             </select>
           </div>
 
@@ -225,11 +226,9 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
                     $series = str_replace('Ã©', 'é', strtolower($product->series));
                     $series = str_replace('é', 'e', $series);
 
-                    $size = $product->size_technical_name;
-
-                    if (is_null($size) == true) {
-                      $size = $product->size;
-                    }
+                    $size = str_replace('/', '_', $product->size);
+                    $size = str_replace(' ', '_', $size);
+                    $size = str_replace('"', '', $size);
 
                     //if item image url is blank, use local image if exists, otherwise use series image
                     if ($product->img_url == '') {
@@ -238,7 +237,7 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
 
                       $image = $product->material . '/' . $series;
                       $image = $image_path . $image;
-                      $finish = $product->finish;
+                      $finish = str_replace('glazed','',strtolower($product->finish));
 
                       if ($finish == '') {
                         $finish = '-';

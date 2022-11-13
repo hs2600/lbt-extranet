@@ -9,7 +9,7 @@ $image_path = '/assets/images/products/';
 $server_root = $_SERVER["DOCUMENT_ROOT"];
 $cdn_url = 'https://cdn.lunadabaytile.com/portal';
 
-if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
+if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
   $server_root = '/portal';
 }
 
@@ -64,19 +64,17 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
        ">
 
         <?php
-        
+
         //generate image path
 
         $image = $product->img_url;
         $material_desc = $product->material_desc;
         $series = str_replace('Ã©', 'é', $product->series);
         $series = str_replace('é', 'e', $series);
-        
-        $size = $product->size_technical_name;
 
-        if (is_null($size) == true) {
-          $size = $product->size;
-        }
+        $size = str_replace('/', '_', $product->size);
+        $size = str_replace(' ', '_', $size);
+        $size = str_replace('"', '', $size);
 
         //$series = $product->series;
         //print_r($_SERVER);
@@ -86,7 +84,8 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
 
           $image = strtolower($product->material . '/' . $series);
           $image = $image_path . $image;
-          $finish = $product->finish;
+          $finish = str_replace('glazed','',strtolower($product->finish));
+          $finish = str_replace('mix','',$finish);
 
           if ($finish == '') {
             $finish = '-';
@@ -98,6 +97,8 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
           $filename = str_replace('_-', '', $filename);
           $full_filename = strtolower($server_root . $filename);
 
+          // echo $filename;
+
           $exists = false;
           if (file_exists($full_filename)) {
             $image = $filename;
@@ -107,12 +108,14 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
             $image = $image . '.png';
             //echo 'not exists!';
             if (file_exists($server_root . $image) == false) {
-              $image = $image_path."blank.png";
+              $image = $image_path . "blank.png";
             }
           }
         }
 
-        $image = $cdn_url. strtolower($image);     
+        // echo $image;
+
+        $image = $cdn_url . strtolower($image);
 
         //if item has image url and is not located on http path, use local path
         if ($product->img_url != '' and strpos($product->img_url, 'http') === false) {
@@ -150,8 +153,19 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
     <div class="col-md-6">
       <span class="product-title">{{ ucwords(strtolower($product->description)) }}</span>
       <hr style="margin: 10px 0px; border: 0.5px solid #999;">
-      <span class="product-price" style="padding-bottom: 10px;"><b> {{ '$'.number_format(sprintf("%.2f", $product->price),2) }}</b> / <i> {{ strtolower($product->uofm) }}</i></span>
-      &nbsp;&nbsp;<span><i> ([TEST] Price shown is for PL 57)</i>
+      <span class="product-price" style="padding-bottom: 10px;">
+
+        <?php
+        // only show if price is available
+        $price = $product->price;
+        if (is_null($price) == false) {
+          echo '<b>$' . number_format(sprintf("%.2f", $product->price), 2) . '</b>';
+          echo '<i>' .  strtolower($product->uofm) . '</i>';
+          echo '&nbsp;&nbsp;<i> ([TEST] Price shown is for PL 57)</i>';
+        }
+        ?>
+
+      </span>
 
       <div class="row" style="padding: 10px; margin: 0px; margin-bottom: 15px; margin-top: 10px; background-color: #efefef;">
         <div class="col-sm-6">
@@ -430,18 +444,17 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                 $material_desc = $product->material_desc;
                 $series = str_replace('Ã©', 'é', $product->series);
                 $series = str_replace('é', 'e', $series);
-        
-                $size = $product->size_technical_name;
 
-                if (is_null($size) == true) {
-                  $size = $product->size;
-                }
+                $size = str_replace('/', '_', $product->size);
+                $size = str_replace(' ', '_', $size);
+                $size = str_replace('"', '', $size);
 
                 //if item image url is blank, use local image if exists, otherwise use series image
                 if ($product->img_url == '') {
                   $image = strtolower($product->material . '/' . $series);
                   $image = $image_path . $image;
-                  $finish = $product->finish;
+                  $finish = str_replace('glazed','',strtolower($product->finish));
+                  $finish = str_replace('mix','',$finish);
 
                   if ($finish == '') {
                     $finish = '-';
@@ -462,12 +475,12 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                     $image = $image . '.png';
                     //echo 'not exists!';
                     if (file_exists($server_root . $image) == false) {
-                      $image = $image_path."blank.png";
+                      $image = $image_path . "blank.png";
                     }
                   }
                 }
-    
-                $image = $cdn_url. strtolower($image);     
+
+                $image = $cdn_url . strtolower($image);
 
                 //if item has image url and is not located on http path, use local path
                 if ($product->img_url != '' and strpos($product->img_url, 'http') === false) {
@@ -620,18 +633,17 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                 $material_desc = $product->material_desc;
                 $series = str_replace('Ã©', 'é', $product->series);
                 $series = str_replace('é', 'e', $series);
-        
-                $size = $product->size_technical_name;
 
-                if (is_null($size) == true) {
-                  $size = $product->size;
-                }
+                $size = str_replace('/', '_', $product->size);
+                $size = str_replace(' ', '_', $size);
+                $size = str_replace('"', '', $size);
 
                 //if item image url is blank, use local image if exists, otherwise use series image
                 if ($product->img_url == '') {
                   $image = strtolower($product->material . '/' . $series);
                   $image = $image_path . $image;
-                  $finish = $product->finish;
+                  $finish = str_replace('glazed','',strtolower($product->finish));
+                  $finish = str_replace('mix','',$finish);
 
                   if ($finish == '') {
                     $finish = '-';
@@ -652,12 +664,12 @@ if(strpos($_SERVER ['HTTP_HOST'],'8000') == false){
                     $image = $image . '.png';
                     //echo 'not exists!';
                     if (file_exists($server_root . $image) == false) {
-                      $image = $image_path."blank.png";
+                      $image = $image_path . "blank.png";
                     }
                   }
                 }
-    
-                $image = $cdn_url. strtolower($image);
+
+                $image = $cdn_url . strtolower($image);
 
                 //if item has image url and is not located on http path, use local path
                 if ($product->img_url != '' and strpos($product->img_url, 'http') === false) {
