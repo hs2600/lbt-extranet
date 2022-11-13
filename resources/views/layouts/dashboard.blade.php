@@ -7,6 +7,7 @@ $series = DB::table('collections')
   ->where('status', '!=', 1)
   ->orderBy('status', 'desc')
   ->orderBy('series')
+  ->select('material','series','status')
   ->limit(10)
   ->get();
 
@@ -70,13 +71,6 @@ $series = DB::table('collections')
         </li>
         <!-- End Search Icon-->
 
-        @if (Route::has('login'))
-        @guest
-        <li class="nav-item dropdown pe-4">
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-        </li>
-        @endguest
-
         @auth
 
         <?php
@@ -124,12 +118,13 @@ $series = DB::table('collections')
               </a>
             </li>
 
-            <!-- <li>
+            <li>
               <a class="dropdown-item d-flex align-items-center" href="#">
                 <i class="bi bi-question-circle"></i>
                 <span>Need Help?</span>
               </a>
-            </li> -->
+            </li>
+            
             <li>
               <hr class="dropdown-divider" />
             </li>
@@ -144,7 +139,6 @@ $series = DB::table('collections')
           <!-- End Profile Dropdown Items -->
         </li>
         @endauth
-        @endif
 
         <!-- End Profile Nav -->
       </ul>

@@ -11,6 +11,13 @@
         width: 100%;
         height: calc(100vh - 125px);
     }
+
+    .marker-position {
+    bottom: 0;
+    left: 0;
+    position: relative;
+    }
+
 </style>
 
 <section class="section dashboard">
@@ -45,15 +52,14 @@
                 <div data-lastpass-icon-root="true" style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div>
             </div>
 
-
             @foreach ($showrooms as $showroom)
 
             <div class="card" style="margin-top: 20px;">
                 <div class="card-body" style="padding-bottom: 10px;">
                     <h5 class="card-title" style="padding: 8px 0 0px 0;">
-                        <span class="position-absolute top-0 left-0 translate-middle badge rounded-pill bg-primary text-light">
+                        <span class="position-absolute top-0 left-0 translate-middle badge rounded-pill text-light" style="background-color: #04403c85;">
                             {{ $loop->iteration }}</span>
-                        {{ ucwords(strtolower($showroom->ship_to_name)) }}</h6>
+                        {{ ucwords(strtolower($showroom->customer_name)) }}</h6>
                         <i><span style="font-size: 14px; color: #555;"><b>{{ round($showroom->distance,2) }}</b> miles away
                             </span></i><br>
                         <span class="card-text">{{ ucwords(strtolower($showroom->address1 . ' ' . $showroom->address2)) }}</span><br>
@@ -121,14 +127,14 @@
             const markerData = initialMarkers[index];
             address = toTitleCase((markerData.address1.trim() + ' ' + markerData.address2.trim()).trim()) + '<br>' +
                 toTitleCase(markerData.city.trim()) + ', ' + markerData.state.trim() + '  ' + markerData.zip.trim();
-            customer = toTitleCase(markerData.ship_to_name.trim());
+            customer = toTitleCase(markerData.customer_name.trim());
             zip = markerData.zip.trim();
             lat = markerData.lat;
             distance = markerData.distance;
 
             codeAddress(address, customer, distance, (index + 1).toString());
 
-            // console.log(address + ' - ' + customer);
+            console.log("(" + markerData.locator_priority + ")" + customer + "(" + address + ")");
 
             if (index == 0) {
                 centerZip(zip);
@@ -149,8 +155,25 @@
 
     //Call this to place marker based on address
     function codeAddress(address, label, distance, index) {
-        const image =
-            "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
+        const svgMarker = {
+            path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+            fillColor: "blue",
+            fillOpacity: 0.6,
+            strokeWeight: 0,
+            rotation: 0,
+            scale: 2,
+            anchor: new google.maps.Point(15, 30),
+        };
+
+        const pin = "https://img.icons8.com/cotton/512/shipping-location.png";
+
+        const icon = {
+            url: "http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_green.png", // url
+            scaledSize: new google.maps.Size(0, 0), // scaled size
+            opacity: 1,
+            origin: new google.maps.Point(0,0), // origin
+            anchor: new google.maps.Point(0, 0) // anchor
+        };
 
         geocoder.geocode({
             'address': address
@@ -160,11 +183,11 @@
                     position: results[0].geometry.location,
                     label: {
                         color: "white",
-                        text: index
+                        text: index,
+                        fontSize: '15px',
+                        className: 'marker-position'
                     },
-                    title: label,
-                    distance: distance,
-                    map: map
+                    map
                 });
 
                 const contentString =

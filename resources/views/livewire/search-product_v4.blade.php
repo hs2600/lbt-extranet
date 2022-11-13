@@ -214,7 +214,7 @@
               //   echo '<p><b><i>Items found: ' . $count . '</b></i></p>';
               // }
 
-              echo '<p><b><i>Displaying ' . $count . ' items.</b></i></p>';
+              echo '<p><b><i>Displaying ' . $count . ' records.</b></i></p>';
               ?>              
 
               @endif

@@ -35,11 +35,13 @@ class DealerLocator extends Component
             $this->lat =  $latlon->lat;
             $this->lon =  $latlon->lon;
 
-            $field_list = 'ship_to_name, address1, address2, city, state, zip, lat, (6371 * acos( cos( radians(' . $this->lat . ') ) * cos( radians( lat ) ) * cos( radians(' . $this->lon . ') - radians(lon) ) + sin( radians(' . $this->lat . ') ) * sin( radians(lat) ) )) as distance';
+            $distance_calc = '(6371 * acos( cos( radians(' . $this->lat . ') ) * cos( radians( lat ) ) * cos( radians(' . $this->lon . ') - radians(lon) ) + sin( radians(' . $this->lat . ') ) * sin( radians(lat) ) ))';
+
+            $field_list = 'customer_name, address1, address2, city, state, zip, locator_priority, ifnull(' . $distance_calc . ',1) as distance, ifnull(' . $distance_calc . ',10) * locator_priority as distance_priority';
 
             $this->showrooms = DB::table('addresses')
                 ->selectRaw($field_list)
-                ->orderBy('distance')
+                ->orderBy('distance_priority')
                 ->limit(5)
                 ->get();
         }

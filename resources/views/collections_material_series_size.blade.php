@@ -161,17 +161,19 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
                 $material_desc = $product->material_desc;
                 $series = str_replace('Ã©', 'é', $product->series);
                 $series = str_replace('é', 'e', $series);
-                $size = $product->size_technical_name;
 
-                if (is_null($size) == true) {
-                  $size = $product->size;
-                }
+                $size = str_replace('/','_',$product->size);
+                $size = str_replace(' ','_',$size);
+                $size = str_replace('"','',$size);
 
+                // echo $size;
+                                
                 //if item image url is blank, use local image if exists, otherwise use series image
                 if ($product->img_url == '') {
                   $image = strtolower($product->material . '/' . $series);
                   $image = $image_path . $image;
-                  $finish = $product->finish;
+                  $finish = str_replace('glazed','',strtolower($product->finish));
+                  $finish = str_replace('mix','',$finish);
     
                   if ($finish == '') {
                     $finish = '-';
@@ -182,6 +184,8 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
                   $filename = str_replace(' ', '_', $filename);
                   $filename = str_replace('_-', '', $filename);
                   $full_filename = strtolower($server_root . $filename);
+
+                  // echo $filename;
 
                   $exists = false;
                   if (file_exists($full_filename)) {
@@ -197,6 +201,7 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
                   }
                 }
 
+                // echo $image;
                 $image = $cdn_url . strtolower($image);
 
                 //if item has image url and is not located on http path, use local path

@@ -52,7 +52,7 @@
                         <h5 class="card-title" style="padding: 8px 0 0px 0;">
                             <span class="position-absolute top-0 left-0 translate-middle badge rounded-pill bg-primary text-light">
                                 {{ $loop->iteration }}</span>
-                            {{ ucwords(strtolower($showroom->ship_to_name)) }}</h6>
+                            {{ ucwords(strtolower($showroom->customer_name)) }}</h6>
                             <i><span style="font-size: 14px; color: #555;"><b>{{ round($showroom->distance,2) }}</b> miles away
                                 </span></i><br>
                             <span class="card-text">{{ ucwords(strtolower($showroom->address1 . ' ' . $showroom->address2)) }}</span><br>
@@ -123,7 +123,7 @@
                 const markerData = initialMarkers[index];
                 address = toTitleCase((markerData.address1.trim() + ' ' + markerData.address2.trim()).trim()) + '<br>' +
                     toTitleCase(markerData.city.trim()) + ', ' + markerData.state.trim() + '  ' + markerData.zip.trim();
-                customer = toTitleCase(markerData.ship_to_name.trim());
+                customer = toTitleCase(markerData.customer_name.trim());
                 zip = markerData.zip.trim();
                 lat = markerData.lat;
                 distance = markerData.distance;

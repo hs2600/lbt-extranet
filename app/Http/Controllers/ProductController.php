@@ -325,7 +325,10 @@ class ProductController extends Controller
         $size_desc = '';
 
         $product = Product::where('sku','=', $id)
+        ->selectraw('sku, item, description, material, series, size, color, finish, qty_p as qty, pl_57 as price')
         ->first();
+
+        // print_r($product);
 
         $collection = Collection::where('category','=', 'series')
         ->where('material','=', $product->material)
@@ -339,12 +342,14 @@ class ProductController extends Controller
             ->where('material', '=', $product->material)
             ->where('series', '=', $product->series)
             ->where('color', '=', $product->color)
+            ->selectraw('sku, item, description, material, series, size, color, finish, qty_p as qty')
             ->get();
 
         $product_colors = Product::orderBy('item', 'asc')
             ->where('material', '=', $product->material)
             ->where('series', '=', $product->series)        
             ->where('size', '=', $product->size)
+            ->selectraw('sku, item, description, material, series, size, color, finish, qty_p as qty')
             ->get();
 
         $product_lots = Quantity::orderBy('item', 'asc')

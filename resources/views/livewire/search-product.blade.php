@@ -6,7 +6,8 @@
 
   <div class="search-bar">
     <form class="search-form d-flex align-items-center">
-      <input id="txtSearch" type="search" placeholder="Search" title="Enter search keyword" wire:model="search" class="txtShowDiv" style="padding: 7px 10px;" autocomplete="off">
+      <input id="txtSearch" type="search" placeholder="Search" 
+      title="Enter search keyword" wire:model.debounce.750ms="search" class="txtShowDiv" style="padding: 7px 10px;" autocomplete="off">
     </form>
 
 
