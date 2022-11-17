@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Collection;
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Quantity;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -273,17 +275,17 @@ class ProductController extends Controller
     public function productsPL()
     {
         error_log("INFO: get /");
-        
+
         $testColumn = 'material as qty';
 
         $selectedFields = 'sku, item, description, series, size, color, finish, site, uofm, ' . $testColumn;
 
         return view('products_pl', [
             'products' => Product::orderBy('item', 'asc')
-            ->selectRaw($selectedFields)
-            ->simplePaginate(30)
+                ->selectRaw($selectedFields)
+                ->simplePaginate(30)
         ])
-        ->with('selectedFields', $selectedFields);
+            ->with('selectedFields', $selectedFields);
     }
 
     /**
@@ -324,16 +326,28 @@ class ProductController extends Controller
         $series_desc = '';
         $size_desc = '';
 
-        $product = Product::where('sku','=', $id)
-        ->selectraw('sku, item, description, material, series, size, color, finish, qty_p as qty, pl_57 as price')
-        ->first();
+        $customer = Customer::where('customer', Auth::user()->company)->first();
+
+        $price_level = '57';
+
+        if (is_null($customer) == false) {
+            if (is_null($customer->pricelevel) == false) {
+                $price_level = $customer->pricelevel;
+            }
+        }
+
+        $product = Product::where('sku', '=', $id)
+            ->selectraw('sku, item, description, material, series, size, color, finish, qty_p as qty, uofm, pl_' . $price_level . ' as price')
+            ->first();
+
+        Auth::user()->sku = $product->sku;
 
         // print_r($product);
 
-        $collection = Collection::where('category','=', 'series')
-        ->where('material','=', $product->material)
-        ->where('series','=', $product->series)
-        ->first();
+        $collection = Collection::where('category', '=', 'series')
+            ->where('material', '=', $product->material)
+            ->where('series', '=', $product->series)
+            ->first();
 
         $series_desc = $collection->description;
         $size_desc = $collection->size_desc;
@@ -347,7 +361,7 @@ class ProductController extends Controller
 
         $product_colors = Product::orderBy('item', 'asc')
             ->where('material', '=', $product->material)
-            ->where('series', '=', $product->series)        
+            ->where('series', '=', $product->series)
             ->where('size', '=', $product->size)
             ->selectraw('sku, item, description, material, series, size, color, finish, qty_p as qty')
             ->get();
@@ -369,7 +383,5 @@ class ProductController extends Controller
             ->with('product_lots', $product_lots)
             ->with('series_desc', $series_desc)
             ->with('size_desc', $size_desc);
-
     }
-
 }

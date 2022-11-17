@@ -40,13 +40,16 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $invitation = Invitation::where('email', $request->email)->firstOrFail();
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'company' => $invitation->company,
+            'role' => $invitation->role,
             'password' => Hash::make($request->password),
         ]);
 
-        $invitation = Invitation::where('email', $user->email)->firstOrFail();
         $invitation->registered_at = $user->created_at;
         $invitation->save();
 

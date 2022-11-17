@@ -84,8 +84,8 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
 
           $image = strtolower($product->material . '/' . $series);
           $image = $image_path . $image;
-          $finish = str_replace('glazed','',strtolower($product->finish));
-          $finish = str_replace('mix','',$finish);
+          $finish = str_replace('glazed', '', strtolower($product->finish));
+          $finish = str_replace('mix', '', $finish);
 
           if ($finish == '') {
             $finish = '-';
@@ -156,14 +156,11 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
       <span class="product-price" style="padding-bottom: 10px;">
 
         <?php
-        // only show if price is available
-        $price = $product->price;
-        if (is_null($price) == false) {
-          echo '<b>$' . number_format(sprintf("%.2f", $product->price), 2) . '</b>';
-          echo '<i>' .  strtolower($product->uofm) . '</i>';
-          echo '&nbsp;&nbsp;<i> ([TEST] Price shown is for PL 57)</i>';
-        }
+        $sku = array_values(array_filter(explode("/", $_SERVER['REQUEST_URI'])));
+        $sku = $sku[1];
         ?>
+
+        @livewire('price', ['sku' => $sku])
 
       </span>
 
@@ -453,8 +450,8 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
                 if ($product->img_url == '') {
                   $image = strtolower($product->material . '/' . $series);
                   $image = $image_path . $image;
-                  $finish = str_replace('glazed','',strtolower($product->finish));
-                  $finish = str_replace('mix','',$finish);
+                  $finish = str_replace('glazed', '', strtolower($product->finish));
+                  $finish = str_replace('mix', '', $finish);
 
                   if ($finish == '') {
                     $finish = '-';
@@ -642,8 +639,8 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
                 if ($product->img_url == '') {
                   $image = strtolower($product->material . '/' . $series);
                   $image = $image_path . $image;
-                  $finish = str_replace('glazed','',strtolower($product->finish));
-                  $finish = str_replace('mix','',$finish);
+                  $finish = str_replace('glazed', '', strtolower($product->finish));
+                  $finish = str_replace('mix', '', $finish);
 
                   if ($finish == '') {
                     $finish = '-';

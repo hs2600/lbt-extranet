@@ -17,7 +17,7 @@ class IsAdmin
     {
         if (!auth()->check() || (auth()->user()->email != 'horacio@lunadabaytile.com' && auth()->user()->email != 'oscar@lunadabaytile.com' && auth()->user()->email != 'hs2600@gmail.com')
         ) {
-            return redirect(route('dashboard'));
+            return redirect(route('login'));
         }
 
         return $next($request);

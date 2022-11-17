@@ -7,7 +7,7 @@ $series = DB::table('collections')
   ->where('status', '!=', 1)
   ->orderBy('status', 'desc')
   ->orderBy('series')
-  ->select('material','series','status')
+  ->select('material', 'series', 'status')
   ->limit(10)
   ->get();
 
@@ -74,6 +74,7 @@ $series = DB::table('collections')
         @auth
 
         <?php
+
         $name = Auth::user()->name;
         $name_arr = explode(" ", $name);
 
@@ -111,12 +112,23 @@ $series = DB::table('collections')
               <hr class="dropdown-divider" />
             </li>
 
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="/invitations">
-                <i class="bi bi-envelope"></i>
-                <span>Invitations</span>
-              </a>
-            </li>
+            <?php
+            if (Auth::user()->role == 'admin') {
+
+            ?>
+
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="/invitations">
+                  <i class="bi bi-envelope"></i>
+                  <span>Invitations</span>
+                </a>
+              </li>
+
+            <?php
+
+            }
+
+            ?>
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="#">
@@ -124,7 +136,7 @@ $series = DB::table('collections')
                 <span>Need Help?</span>
               </a>
             </li>
-            
+
             <li>
               <hr class="dropdown-divider" />
             </li>
