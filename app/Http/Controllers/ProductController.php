@@ -181,23 +181,16 @@ class ProductController extends Controller
                             ->On('products.series', '=', 'series.series')
                             ->where('series.category', '=', 'series');
                     })
-                    ->leftjoin('collections as size', function ($join) {
-                        $join->on('products.material', '=', 'size.material')
-                            ->On('products.series', '=', 'size.series')
-                            ->On('products.size', '=', 'size.size')
-                            ->where('size.category', '=', 'size');
-                    })
                     ->select(
                         'products.material',
                         'products.series',
                         'products.size',
-                        'series.img_url as series_img_url',
-                        'size.technical_name as size_technical_name'
+                        'series.img_url as series_img_url'
                     )
                     ->where('products.material', '=', $material)
                     ->where('products.series', '=', str_replace('Ã©', 'é', $series))
-                    ->where('products.status', '!=', '1')
-                    ->groupBy('products.material', 'products.series', 'products.size', 'series.img_url', 'size.technical_name')
+                    ->where('products.status', '=', 0)
+                    ->groupBy('products.material', 'products.series', 'products.size', 'series.img_url')
                     ->paginate(18)
             ],
             [
@@ -226,19 +219,13 @@ class ProductController extends Controller
             'collections_material_series_size',
             [
                 'products' => Product::orderBy('item', 'asc')
-                    ->leftjoin('collections as size', function ($join) {
-                        $join->on('products.material', '=', 'size.material')
-                            ->On('products.series', '=', 'size.series')
-                            ->On('products.size', '=', 'size.size')
-                            ->where('size.category', '=', 'size');
-                    })
-                    ->selectRaw('products.sku, products.item, products.description
-                    , products.material, products.series, products.size, products.color
-                    , products.finish, products.site, products.qty_p as qty, products.uofm, products.img_url
-                    , size.technical_name as size_technical_name')
-                    ->where('products.material', '=', $material)
-                    ->where('products.series', '=', str_replace('Ã©', 'é', $series))
-                    ->where('products.size', '=', str_replace('_', '/', $size))
+                    ->selectRaw('sku, item, description
+                    , material, series, size, color
+                    , finish, site, qty_p as qty, uofm, img_url')
+                    ->where('material', '=', $material)
+                    ->where('series', '=', str_replace('Ã©', 'é', $series))
+                    ->where('size', '=', str_replace('_', '/', $size))
+                    ->where('status','=',0)
                     ->paginate(50)
             ],
             [
@@ -265,6 +252,7 @@ class ProductController extends Controller
         error_log("INFO: get /");
         return view('products', [
             'products' => Product::orderBy('item', 'asc')
+            ->where('status','=',0)
                 ->simplePaginate(30)
         ]);
     }
@@ -356,6 +344,7 @@ class ProductController extends Controller
             ->where('material', '=', $product->material)
             ->where('series', '=', $product->series)
             ->where('color', '=', $product->color)
+            ->where('status','=',0)
             ->selectraw('sku, item, description, material, series, size, color, finish, qty_p as qty')
             ->get();
 
@@ -363,6 +352,7 @@ class ProductController extends Controller
             ->where('material', '=', $product->material)
             ->where('series', '=', $product->series)
             ->where('size', '=', $product->size)
+            ->where('status','=',0)            
             ->selectraw('sku, item, description, material, series, size, color, finish, qty_p as qty')
             ->get();
 
