@@ -11,17 +11,17 @@
 
     ?>
         <div class="row">
-            <div class="col">
+            <div class="col-lg-6">
 
                 <b>${{ number_format(sprintf("%.2f", $product->price), 2) }} </b>
                 <i> per {{ strtolower($product->uofm) }} </i>
 
             </div>
             <?php
-            if (Auth::user()->role != 'customer') {
+            if (Auth::user()->role != 'customer' && Auth::user()->role != '') {
 
             ?>
-                <div class="col-lg-4">
+                <div class="col">
                     <select id="customers" class="form-control" wire:model="customer">
                         <?php
                         if (session()->get('cust') != "") {

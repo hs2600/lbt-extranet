@@ -331,13 +331,13 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
 
               <?php
 
-              // if ($count >= 50) {
-              //   echo '<p><b><i>50+ items</b></i></p>';
-              // } else {
-              //   echo '<p><b><i>Items found: ' . $count . '</b></i></p>';
-              // }
+              if ($count >= 30) {
+                echo '<p><b><i>30+ items</b></i></p>';
+              } else {
+                echo '<p><b><i>Items found: ' . $count . '</b></i></p>';
+              }
 
-              echo '<p><b><i>Displaying ' . $count . ' items.</b></i></p>';
+              // echo '<p><b><i>Displaying ' . $count . ' items.</b></i></p>';
               ?>      
               @endif
 

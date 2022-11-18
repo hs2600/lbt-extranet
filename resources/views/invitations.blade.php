@@ -38,6 +38,7 @@ if (!isset($success)) {
                                     <th>Email</th>
                                     <th>Created At</th>
                                     <th>Registered At</th>
+                                    <th>Role</th>
                                     <th>Invitation Link</th>
                                 </tr>
                             </thead>
@@ -47,6 +48,7 @@ if (!isset($success)) {
                                     <td><a href="mailto:{{ $invitation->email }}">{{ $invitation->email }}</a></td>
                                     <td>{{ $invitation->created_at }}</td>
                                     <td>{{ $invitation->registered_at }}</td>
+                                    <td>{{ $invitation->role }}</td>
                                     <td>
                                         <kbd>{{ $invitation->getLink() }}</kbd>
                                     </td>
@@ -63,31 +65,49 @@ if (!isset($success)) {
             </div>
 
             <div class="card" style="margin-top: 20px; padding: 15px 20px;">
-                <form class="form-horizontal" method="POST" action="/invitations">
+
+                <form class="form-horizontal" method="POST" action="/invitations" style="padding-bottom: 10px;">
                     {{ csrf_field() }}
 
-                    <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
-                        <label for="email" class="control-label">E-Mail Address</label>
-                        <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus style="width: 300px; margin-top: 5px;">
+                    <div class="row">
+                        <div class="col-sm form-group {{ $errors->has('email') ? ' has-error' : '' }}">
+                            <label for="email" class="control-label">E-Mail Address</label>
+                            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus style="width: 300px; margin-top: 5px;">
+                        </div>
 
-                        @if ($errors->has('email'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('email') }}</strong>
-                        </span>
-                        @endif
+                        <div class="col-sm">
+                            <label for="role" class="control-label">Role</label>
+                            <select id="role" type="text" class="form-control" name="role" required style="width: 300px; margin-top: 5px;">
+                                <option value=""></option>
+                                <option value="customer">Customer</option>
+                                <option value="salesperson">Sales Person</option>
+                                <option value="csr">CSR</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
 
-                        <span class="help-block">
-                            <strong style="padding-top: 10px; color: green;">{{ $success }}</strong>
-                        </span>
-
+                        <div class="col-sm">
+                            <label for="company" class="control-label">Company ID</label>
+                            <input id="company" type="text" class="form-control" placeholder="eg. CERA-001" name="company" style="width: 300px; margin-top: 5px;">
+                        </div>
                     </div>
+
+                    @if ($errors->has('email'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                    @endif
+
+                    <span class="help-block">
+                        <strong style="padding-top: 10px; color: green;">{{ $success }}</strong>
+                    </span>
 
                     <div class="form-group" style="padding-top: 20px;">
 
                         <button type="submit" class="btn btn-primary">
                             Create Invitation
                         </button>
-
+                    </div>
                 </form>
 
             </div>

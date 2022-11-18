@@ -236,7 +236,6 @@ $series = DB::table('collections')
 
         </ul>
       </li>
-      <!-- End Series Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="/products">
@@ -244,22 +243,45 @@ $series = DB::table('collections')
           <span>Product Search</span>
         </a>
       </li>
+      <!-- End Series Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="/products_lot">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <span>Product Search by Lot</span>
-        </a>
-      </li>
+      <hr style="width: 90%;
+      margin-left: 10px;
+      border: 0px;
+      border-bottom: 1px solid #aaa;
+      margin-bottom: 30px;">
 
-      <hr>
+      <li class="nav-heading">Pages</li>
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="/find-a-dealer">
-          <i class="fa-solid fa-store"></i>
-          <span>Dealer Locator v1</span>
-        </a>
-      </li>
+      <?php
+      if (Auth::user()->role == 'csr' || Auth::user()->role == 'admin') {
+      ?>
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="/products_lot">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Stock Status by Lot</span>
+          </a>
+        </li>
+
+      <?php
+      }
+      ?>
+
+      <?php
+      if (Auth::user()->role == 'csr' || Auth::user()->role == 'admin') {
+      ?>
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="/find-a-dealer">
+            <i class="fa-solid fa-store"></i>
+            <span>Dealer Locator</span>
+          </a>
+        </li>
+
+      <?php
+      }
+      ?>
 
       <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="/dealer-locator">
@@ -268,17 +290,23 @@ $series = DB::table('collections')
         </a>
       </li> -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="/dealer_locator/90710">
-          <i class="fa-solid fa-store"></i>
-          <span>Dealer Locator v2</span>
-        </a>
-      </li>
+      <?php
+      if (Auth::user()->role == 'adminx') {
+      ?>
 
-      <li class="nav-heading">Pages</li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="/dealer_locator/90710">
+            <i class="fa-solid fa-store"></i>
+            <span>Dealer Locator v2</span>
+          </a>
+        </li>
+
+      <?php
+      }
+      ?>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/contact">
+        <a class="nav-link collapsed" href="#">
           <i class="fa-regular fa-envelope"></i>
           <span>Contact</span>
         </a>
@@ -305,13 +333,13 @@ $series = DB::table('collections')
   <script src="/assets/dashboard/vendor/tinymce/tinymce.min.js"></script>
 
   @livewireScripts
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
     window.onscroll = function(ev) {
       if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
         window.livewire.emit('load-more');
       }
     };
-  </script>
+  </script> -->
 
   <!-- Product Info Modal -->
   <div class="modal fade p-5" id="exModal" tabindex="-1" style="display: none;" aria-hidden="true">

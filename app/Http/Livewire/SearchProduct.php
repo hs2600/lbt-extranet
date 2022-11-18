@@ -48,13 +48,7 @@ class SearchProduct extends Component
             ->get();
 
         $items = Product::where('item', '=', $this->search)
-            ->leftjoin('collections as series', function ($join) {
-                $join->on('products.material', '=', 'series.material')
-                    ->On('products.series', '=', 'series.series')
-                    ->where('series.category', '=', 'series');
-            })
-            ->selectRaw('products.*')
-            ->where('series.status', '!=', 1)
+            ->where('status', '=', 0)
             ->limit(1)
             ->get();
 
