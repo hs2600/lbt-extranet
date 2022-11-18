@@ -15,7 +15,7 @@ class IsAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (!auth()->check() || (auth()->user()->email != 'horacio@lunadabaytile.com' && auth()->user()->email != 'oscar@lunadabaytile.com' && auth()->user()->email != 'hs2600@gmail.com')
+        if (!auth()->check() || (auth()->user()->role != 'admin')
         ) {
             return redirect(route('login'));
         }
