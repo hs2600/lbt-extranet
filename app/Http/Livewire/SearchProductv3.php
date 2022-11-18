@@ -15,7 +15,7 @@ class SearchProductv3 extends Component
     public $finish = '';
     public $qty = '';
 
-    public $perPage = 18;
+    public $perPage = 30;
     protected $listeners = [
         'load-more' => 'loadMore'
     ];
@@ -47,14 +47,9 @@ class SearchProductv3 extends Component
                     ->On('products.series', '=', 'series.series')
                     ->where('series.category', '=', 'series')
                     ->where('series.status', '!=', 1)
+                    ->where('products.status','=',0)
                     ;
             })
-            ->leftjoin('collections as size', function ($join) {
-                $join->on('products.material', '=', 'size.material')
-                    ->On('products.series', '=', 'size.series')
-                    ->On('products.size', '=', 'size.size')
-                    ->where('size.category', '=', 'size');
-            })            
             ->select(
                 'products.sku',
                 'products.item',
@@ -68,8 +63,7 @@ class SearchProductv3 extends Component
                 'products.qty_p as qty',
                 'products.uofm',
                 'products.img_url',
-                'series.img_url as series_img_url',
-                'size.technical_name as size_technical_name'
+                'series.img_url as series_img_url'
             )
             ->Where('series.status', '!=', 1)
             ->Where('products.material', 'like', '%'.$this->material.'%')
@@ -107,6 +101,7 @@ class SearchProductv3 extends Component
         ->Where('size', 'like', '%'.$this->size.'%')
         ->Where('color', 'like', '%'.$this->color.'%')
         ->Where('finish', 'like', $this->finish.'%')        
+        ->where('status','=',0)
         ->groupBy('size')
         ->orderBy('name', 'asc')
         ->limit(15)
@@ -119,6 +114,7 @@ class SearchProductv3 extends Component
         ->Where('size', 'like', '%'.$this->size.'%')
         ->Where('color', 'like', '%'.$this->color.'%')
         ->Where('finish', 'like', $this->finish.'%')
+        ->where('status','=',0)        
         ->groupBy('color')
         ->orderBy('name', 'asc')
         ->limit(15)
