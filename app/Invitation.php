@@ -12,7 +12,7 @@ class Invitation extends Model
      * @var array
      */
     protected $fillable = [
-        'email', 'invitation_token'
+        'email', 'role', 'company', 'invitation_token'
     ];
 
     /**
