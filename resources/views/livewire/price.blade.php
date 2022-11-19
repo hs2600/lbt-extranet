@@ -7,7 +7,7 @@
     <?php
 
     // only show if price is available
-    if (is_null($price) == false) {
+    if (is_null($price) == false || $price == 0) {
 
     ?>
         <div class="row">
@@ -18,7 +18,9 @@
 
             </div>
             <?php
-            if (Auth::user()->role != 'customer' && Auth::user()->role != '') {
+
+            //Only show customer list (drop-down) if user role is not CUSTOMER and user has LBT email address
+            if (Auth::user()->role != 'customer' && Auth::user()->role != '' && strpos(Auth::user()->email, "lunadabaytile.com") == true) {
 
             ?>
                 <div class="col">
@@ -29,7 +31,7 @@
                         } else {
                             echo '<option value="">--Customer--</option>';
                         }
-
+                        //Add customer list to drop-down
                         ?>
                         @foreach ($customers as $customer)
                         <option value="{{ $customer->customer }}">
