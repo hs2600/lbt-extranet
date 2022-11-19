@@ -71,12 +71,12 @@ if (!isset($success)) {
 
                     <div class="row">
                         <div class="col-sm form-group {{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="control-label">E-Mail Address</label>
+                            <label for="email" class="control-label">* E-Mail Address</label>
                             <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus style="width: 300px; margin-top: 5px;">
                         </div>
 
                         <div class="col-sm">
-                            <label for="role" class="control-label">Role</label>
+                            <label for="role" class="control-label">* Role</label>
                             <select id="role" type="text" class="form-control" name="role" required style="width: 300px; margin-top: 5px;">
                                 <option value=""></option>
                                 <option value="customer">Customer</option>
@@ -103,7 +103,7 @@ if (!isset($success)) {
                     </span>
 
                     <div class="form-group" style="padding-top: 20px;">
-
+                    <span style="margin-right: 30px; font-size: 12px;"></i>* = Required</i></span>
                         <button type="submit" class="btn btn-primary">
                             Create Invitation
                         </button>
