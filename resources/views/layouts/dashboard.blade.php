@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
 $series = DB::table('collections')
   ->where('category', '=', 'series')
@@ -76,7 +75,7 @@ $series = DB::table('collections')
 
         <?php
 
-        $name = Auth::user()->name;
+        $name = auth()->user()->name;
         $name_arr = explode(" ", $name);
 
         if (count($name_arr) == 2) {
@@ -106,15 +105,15 @@ $series = DB::table('collections')
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header" style="text-align: left;">
-              <h6>{{ Auth::user()->name }}</h6>
-              <span><i>{{ Auth::user()->email }}</i></span>
+              <h6>{{ auth()->user()->name }}</h6>
+              <span><i>{{ auth()->user()->email }}</i></span>
             </li>
             <li>
               <hr class="dropdown-divider" />
             </li>
 
             <?php
-            if (Auth::user()->role == 'admin') {
+            if (auth()->user()->role == 'admin') {
 
             ?>
 
@@ -255,7 +254,7 @@ $series = DB::table('collections')
       <li class="nav-heading">Pages</li>
 
       <?php
-      if (Auth::user()->role == 'csr' || Auth::user()->role == 'admin') {
+      if (auth()->user()->role == 'csr' || auth()->user()->role == 'admin') {
       ?>
 
         <li class="nav-item">
@@ -270,7 +269,7 @@ $series = DB::table('collections')
       ?>
 
       <?php
-      if (Auth::user()->role == 'csr' || Auth::user()->role == 'admin') {
+      if (auth()->user()->role == 'csr' || auth()->user()->role == 'admin') {
       ?>
 
         <li class="nav-item">
@@ -292,7 +291,7 @@ $series = DB::table('collections')
       </li> -->
 
       <?php
-      if (Auth::user()->role == 'adminx') {
+      if (auth()->user()->role == 'adminx') {
       ?>
 
         <li class="nav-item">
