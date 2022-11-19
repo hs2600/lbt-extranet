@@ -48,34 +48,35 @@ Route::group([
 
 //Private routes (Login required)
 Route::group(['middleware' => ['auth:sanctum']], function(){
+    //products
     Route::get('/products',[ProductController::class, 'productsSearchv3'])->name('products');
     Route::get('/products_search',[ProductController::class, 'productsSearchv3']);
     Route::get('/products_lot',[ProductController::class, 'productsSearchv4']);
     Route::get('/products/{id}',[ProductController::class, 'productsID']);
     Route::get('/products_all',[ProductController::class, 'productsAll']);
+    
+    //collections
     Route::get('/collections',[ProductController::class, 'collections'])->name('collections');
     Route::get('/collections/material',[ProductController::class, 'collectionsMaterial']);
     Route::get('/collections/{material}',[ProductController::class, 'collectionsByMaterial']);    
     Route::get('/collections/{material}/{series}',[ProductController::class, 'collectionsByMaterialSeries']);
     Route::get('/collections/{material}/{series}/{size}',[ProductController::class, 'collectionsByMaterialSeriesSize']);
+
+    //dealer locator
+    Route::get('/find-a-dealer', function () {
+        return view('find-dealer.dealer_locator_form');
+    });
+    Route::get('/dealer_locator',[Controller::class, 'dealerLocatorJS']);
+    Route::get('/dealer-locator', function () {
+        return view('find-dealer.dealer_locator_livewire');
+    });
+    Route::get('/dealer_locator/{zip}',[Controller::class, 'dealerLocator']);
+    
 });
 
 
 //Public routes
 Route::get('/products_pl',[ProductController::class, 'productsPL']);
-
-Route::get('/find-a-dealer', function () {
-    return view('find-dealer.dealer_locator_form');
-});
-
-Route::get('/dealer_locator',[Controller::class, 'dealerLocatorJS']);
-
-Route::get('/dealer-locator', function () {
-    return view('find-dealer.dealer_locator_livewire');
-});
-
-Route::get('/dealer_locator/{zip}',[Controller::class, 'dealerLocator']);
-
 
 /**  TESTING */
 /**

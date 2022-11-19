@@ -325,7 +325,7 @@ class ProductController extends Controller
         }
 
         $product = Product::where('sku', '=', $id)
-            ->selectraw('sku, item, description, material, series, size, color, finish, qty_p as qty, uofm, pl_' . $price_level . ' as price')
+            ->selectraw('sku, item, description, material, series, size, color, finish, qty_p as qty, uofm, site, pl_' . $price_level . ' as price')
             ->first();
 
         Auth::user()->sku = $product->sku;
@@ -345,7 +345,7 @@ class ProductController extends Controller
             ->where('series', '=', $product->series)
             ->where('color', '=', $product->color)
             ->where('status','=',0)
-            ->selectraw('sku, item, description, material, series, size, color, finish, qty_p as qty')
+            ->selectraw('sku, item, description, material, series, size, color, finish, qty_p as qty, uofm, site')
             ->get();
 
         $product_colors = Product::orderBy('item', 'asc')
@@ -353,7 +353,7 @@ class ProductController extends Controller
             ->where('series', '=', $product->series)
             ->where('size', '=', $product->size)
             ->where('status','=',0)            
-            ->selectraw('sku, item, description, material, series, size, color, finish, qty_p as qty')
+            ->selectraw('sku, item, description, material, series, size, color, finish, qty_p as qty, uofm, site')
             ->get();
 
         $product_lots = Quantity::orderBy('item', 'asc')

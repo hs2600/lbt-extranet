@@ -14,8 +14,12 @@ class IsAdmin
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
-        if (!auth()->check() || (auth()->user()->role != 'admin')
+    {   
+        //check if user is logged in
+        //check if user is admin
+        //check if user is internal (is using LBT email address)
+        //If any condition is false, send user to login page. If user is already logged in, they will be redirectd to main page (collections)
+        if (!auth()->check() || (auth()->user()->role != 'admin' || strpos(auth()->user()->email, "lunadabaytile.com") === false)
         ) {
             return redirect(route('login'));
         }
