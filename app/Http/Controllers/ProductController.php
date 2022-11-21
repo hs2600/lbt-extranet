@@ -314,7 +314,7 @@ class ProductController extends Controller
         $series_desc = '';
         $size_desc = '';
 
-        $customer = Customer::where('customer', Auth::user()->company)->first();
+        $customer = Customer::where('customer', auth()->user()->company)->first();
 
         $price_level = '57';
 
@@ -325,12 +325,8 @@ class ProductController extends Controller
         }
 
         $product = Product::where('sku', '=', $id)
-            ->selectraw('sku, item, description, material, series, size, color, finish, qty_p as qty, uofm, site, pl_' . $price_level . ' as price')
+            ->selectraw('id, sku, item, description, material, series, size, color, finish, qty_p as qty, uofm, site, pl_' . $price_level . ' as price')
             ->first();
-
-        Auth::user()->sku = $product->sku;
-
-        // print_r($product);
 
         $collection = Collection::where('category', '=', 'series')
             ->where('material', '=', $product->material)
@@ -345,7 +341,7 @@ class ProductController extends Controller
             ->where('series', '=', $product->series)
             ->where('color', '=', $product->color)
             ->where('status','=',0)
-            ->selectraw('sku, item, description, material, series, size, color, finish, qty_p as qty, uofm, site')
+            ->selectraw('id, sku, item, description, material, series, size, color, finish, qty_p as qty, uofm, site')
             ->get();
 
         $product_colors = Product::orderBy('item', 'asc')
@@ -353,7 +349,7 @@ class ProductController extends Controller
             ->where('series', '=', $product->series)
             ->where('size', '=', $product->size)
             ->where('status','=',0)            
-            ->selectraw('sku, item, description, material, series, size, color, finish, qty_p as qty, uofm, site')
+            ->selectraw('id, sku, item, description, material, series, size, color, finish, qty_p as qty, uofm, site')
             ->get();
 
         $product_lots = Quantity::orderBy('item', 'asc')
