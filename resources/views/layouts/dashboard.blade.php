@@ -118,7 +118,7 @@ $series = DB::table('collections')
             ?>
 
               <li>
-                <a class="dropdown-item d-flex align-items-center" href="/invitations">
+                <a class="dropdown-item d-flex align-items-center" href="/admin/invitations">
                   <i class="bi bi-envelope"></i>
                   <span>Invitations</span>
                 </a>
