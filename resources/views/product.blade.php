@@ -299,50 +299,51 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
 
             <?php
 
-            $file_brochure = strtolower($product->material) . '/' . strtolower(str_replace(' ', '_', $product->series)) . '_brochure.pdf';
-            $file_brochure = $document_path . $file_brochure;
+            $file_brochure = strtolower(str_replace(' ', '_', $product->series) . '_brochure.pdf');
+            $full_file_brochure = strtolower($document_path . strtolower($product->material) . '/' . $file_brochure);
 
-            $file_tearsheet = strtolower($product->material) . '/' . strtolower(str_replace(' ', '_', $product->series)) . '_tearsheet.pdf';
-            $file_tearsheet = $document_path . $file_tearsheet;
+            $file_tearsheet = strtolower(str_replace(' ', '_', $product->series) . '_tearsheet.pdf');
+            $full_file_tearsheet = strtolower($document_path . strtolower($product->material) . '/' . $file_tearsheet);
 
-            $file_maintenance = strtolower($product->material) . '/' . strtolower($product->material) . '_maintenance.pdf';
-            $file_maintenance = $document_path . $file_maintenance;
+            $file_maintenance = strtolower($product->material . '_maintenance.pdf');
+            $full_file_maintenance = strtolower($document_path . strtolower($product->material) . '/' . $file_maintenance);
 
-            $full_file_brochure = strtolower($server_root . $file_brochure);
-            $full_file_tearsheet = strtolower($server_root . $file_tearsheet);
             // echo $full_file_brochure;
 
             $fb_exists = false;
-            if (file_exists($full_file_brochure)) {
+            if (file_exists($server_root . $full_file_brochure)) {
               $fb_exists = true;
-              // echo 'brochure exists!';
-            } else {
-              $file_brochure = '';
             }
 
             $ft_exists = false;
-            if (file_exists($full_file_tearsheet)) {
+            if (file_exists($server_root . $full_file_tearsheet)) {
               $ft_exists = true;
-              // echo 'tearsheet exists!';
-            } else {
-              $file_tearsheet = '';
             }
 
             ?>
 
             <div class="accordion-body">
-              @if ($file_brochure != '')
-              <a href="{{ $cdn_url.$file_brochure }}" target="_blank">Series Brochures</a>
-              <a href="{{ $file_brochure }}" download><span class="fa fa-download"></span></a><BR>
+              @if ($fb_exists)
+              <a href="{{ $cdn_url.$full_file_brochure }}" target="_blank">Series Brochures
+              <span class="fa-solid fa-arrow-up-right-from-square"></span>
+              </a>
+              <!-- <a href="{{ $full_file_brochure }}" download="{{ $file_brochure }}"><span class="fa fa-download"></span></a> -->
+              <BR>
               @endif
 
-              @if ($file_tearsheet != '')
-              <a href="{{ $cdn_url.$file_tearsheet }}" target="_blank">Applications & Testing</a>
-              <a href="{{ $file_tearsheet }}" download><span class="fa fa-download"></span></a><BR>
+              @if ($ft_exists)
+              <a href="{{ $cdn_url.$full_file_tearsheet }}" target="_blank">Applications & Testing
+              <span class="fa-solid fa-arrow-up-right-from-square"></span>
+              </a>
+              <!-- <a href="{{ $full_file_tearsheet }}" download="{{ $file_tearsheet }}"><span class="fa fa-download"></span></a> -->
+              <BR>
               @endif              
 
-              <a href="{{ $cdn_url.$file_maintenance }}" target="_blank">Care & Maintenance</a>
-              <a href="{{ $file_maintenance }}" download><span class="fa fa-download"></span></a><BR>
+              <a href="{{ $cdn_url.$full_file_maintenance }}" target="_blank">Care & Maintenance
+              <span class="fa-solid fa-arrow-up-right-from-square"></span>
+              </a>
+              <!-- <a href="{{ $full_file_maintenance }}" download="{{ $file_maintenance }}"><span class="fa fa-download"></span></a> -->
+              <BR>
             </div>
           </div>
         </div>
