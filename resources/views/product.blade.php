@@ -307,7 +307,6 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
 
             $file_maintenance = strtolower($product->material) . '/' . strtolower($product->material) . '_maintenance.pdf';
             $file_maintenance = $document_path . $file_maintenance;
-            $file_maintenance = $cdn_url . $file_maintenance;
 
             $full_file_brochure = strtolower($server_root . $file_brochure);
             $full_file_tearsheet = strtolower($server_root . $file_tearsheet);
@@ -316,7 +315,6 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
             $fb_exists = false;
             if (file_exists($full_file_brochure)) {
               $fb_exists = true;
-              $file_brochure = $cdn_url . $file_brochure;
               // echo 'brochure exists!';
             } else {
               $file_brochure = '';
@@ -325,7 +323,6 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
             $ft_exists = false;
             if (file_exists($full_file_tearsheet)) {
               $ft_exists = true;
-              $file_tearsheet = $cdn_url . $file_tearsheet;
               // echo 'tearsheet exists!';
             } else {
               $file_tearsheet = '';
@@ -335,16 +332,16 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
 
             <div class="accordion-body">
               @if ($file_brochure != '')
-              <a href="{{ $file_brochure }}" target="_blank">Series Brochures</a>
+              <a href="{{ $cdn_url.$file_brochure }}" target="_blank">Series Brochures</a>
               <a href="{{ $file_brochure }}" download><span class="fa fa-download"></span></a><BR>
               @endif
 
               @if ($file_tearsheet != '')
-              <a href="{{ $file_tearsheet }}" target="_blank">Applications & Testing</a>
+              <a href="{{ $cdn_url.$file_tearsheet }}" target="_blank">Applications & Testing</a>
               <a href="{{ $file_tearsheet }}" download><span class="fa fa-download"></span></a><BR>
               @endif              
 
-              <a href="{{ $file_maintenance }}" target="_blank">Care & Maintenance</a>
+              <a href="{{ $cdn_url.$file_maintenance }}" target="_blank">Care & Maintenance</a>
               <a href="{{ $file_maintenance }}" download><span class="fa fa-download"></span></a><BR>
             </div>
           </div>
