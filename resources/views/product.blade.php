@@ -299,50 +299,62 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
 
             <?php
 
-            $file_brochure = strtolower(str_replace(' ', '_', $product->series) . '_brochure.pdf');
-            $full_file_brochure = strtolower($document_path . strtolower($product->material) . '/' . $file_brochure);
+            $file_brochure = $product->material . '/' . $product->series . '_brochure.pdf';
+            $file_brochure = str_replace(' ', '_', strtolower($document_path . $file_brochure));
 
-            $file_tearsheet = strtolower(str_replace(' ', '_', $product->series) . '_tearsheet.pdf');
-            $full_file_tearsheet = strtolower($document_path . strtolower($product->material) . '/' . $file_tearsheet);
+            $file_tearsheet = $product->material . '/' . $product->series . '_tearsheet.pdf';
+            $file_tearsheet = str_replace(' ', '_', strtolower($document_path . $file_tearsheet));
 
-            $file_maintenance = strtolower($product->material . '_maintenance.pdf');
-            $full_file_maintenance = strtolower($document_path . strtolower($product->material) . '/' . $file_maintenance);
+            $file_size_tearsheet = $product->material . '/' . $product->series . '_' . $product->size . '_tearsheet.pdf';
+            $file_size_tearsheet = str_replace(' ', '_', strtolower($document_path . $file_size_tearsheet));
+
+            $file_maintenance = $product->material . '/' . $product->material . '_maintenance.pdf';
+            $file_maintenance = strtolower($document_path . $file_maintenance);
 
             // echo $full_file_brochure;
 
             $fb_exists = false;
-            if (file_exists($server_root . $full_file_brochure)) {
+            if (file_exists($server_root . $file_brochure)) {
               $fb_exists = true;
             }
 
             $ft_exists = false;
-            if (file_exists($server_root . $full_file_tearsheet)) {
+            if (file_exists($server_root . $file_tearsheet)) {
               $ft_exists = true;
             }
+
+            $fst_exists = false;
+            if (file_exists($server_root . $file_size_tearsheet)) {
+              $fst_exists = true;
+            }            
 
             ?>
 
             <div class="accordion-body">
               @if ($fb_exists)
-              <a href="{{ $cdn_url.$full_file_brochure }}" target="_blank">Series Brochures
+              <a href="{{ $cdn_url.$file_brochure }}" target="_blank">Series Brochures
               <span class="fa-solid fa-arrow-up-right-from-square"></span>
               </a>
-              <!-- <a href="{{ $full_file_brochure }}" download="{{ $file_brochure }}"><span class="fa fa-download"></span></a> -->
               <BR>
               @endif
 
               @if ($ft_exists)
-              <a href="{{ $cdn_url.$full_file_tearsheet }}" target="_blank">Applications & Testing
+              <a href="{{ $cdn_url.$file_tearsheet }}" target="_blank">Applications & Testing
               <span class="fa-solid fa-arrow-up-right-from-square"></span>
               </a>
-              <!-- <a href="{{ $full_file_tearsheet }}" download="{{ $file_tearsheet }}"><span class="fa fa-download"></span></a> -->
               <BR>
               @endif              
 
-              <a href="{{ $cdn_url.$full_file_maintenance }}" target="_blank">Care & Maintenance
+              @if ($fst_exists)
+              <a href="{{ $cdn_url.$file_size_tearsheet }}" target="_blank">Pattern Tearsheet
               <span class="fa-solid fa-arrow-up-right-from-square"></span>
               </a>
-              <!-- <a href="{{ $full_file_maintenance }}" download="{{ $file_maintenance }}"><span class="fa fa-download"></span></a> -->
+              <BR>
+              @endif
+
+              <a href="{{ $cdn_url.$file_maintenance }}" target="_blank">Care & Maintenance
+              <span class="fa-solid fa-arrow-up-right-from-square"></span>
+              </a>
               <BR>
             </div>
           </div>
