@@ -5,6 +5,9 @@
 /public/assets/images/products/ceramic
 /public/assets/images/products/concrete
 /public/assets/images/products/glass
+/public/assets/documents/products/ceramic
+/public/assets/documents/products/concrete
+/public/assets/documents/products/glass
 /storage/*.key
 /vendor
 .env

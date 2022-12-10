@@ -6,6 +6,7 @@
 <?php
 
 $image_path = '/assets/images/products/';
+$document_path = '/assets/documents/products/';
 $server_root = $_SERVER["DOCUMENT_ROOT"];
 $cdn_url = 'https://cdn.lunadabaytile.com/portal';
 
@@ -295,14 +296,66 @@ if (strpos($_SERVER['HTTP_HOST'], '8000') == false) {
             </button>
           </h2>
           <div id="panelsStayOpen-Docs" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+
+            <?php
+
+            $file_brochure = $product->material . '/' . $product->series . '_brochure.pdf';
+            $file_brochure = str_replace(' ', '_', strtolower($document_path . $file_brochure));
+
+            $file_tearsheet = $product->material . '/' . $product->series . '_tearsheet.pdf';
+            $file_tearsheet = str_replace(' ', '_', strtolower($document_path . $file_tearsheet));
+
+            $file_size_tearsheet = $product->material . '/' . $product->series . '_' . $product->size . '_tearsheet.pdf';
+            $file_size_tearsheet = str_replace(' ', '_', strtolower($document_path . $file_size_tearsheet));
+
+            $file_maintenance = $product->material . '/' . $product->material . '_maintenance.pdf';
+            $file_maintenance = strtolower($document_path . $file_maintenance);
+
+            // echo $full_file_brochure;
+
+            $fb_exists = false;
+            if (file_exists($server_root . $file_brochure)) {
+              $fb_exists = true;
+            }
+
+            $ft_exists = false;
+            if (file_exists($server_root . $file_tearsheet)) {
+              $ft_exists = true;
+            }
+
+            $fst_exists = false;
+            if (file_exists($server_root . $file_size_tearsheet)) {
+              $fst_exists = true;
+            }            
+
+            ?>
+
             <div class="accordion-body">
+              @if ($fb_exists)
+              <a href="{{ $cdn_url.$file_brochure }}" target="_blank">Series Brochures
+              <span class="fa-solid fa-arrow-up-right-from-square"></span>
+              </a>
+              <BR>
+              @endif
 
-              Series Brochures &nbsp;
-              <!-- <i class="fa-solid fa-arrow-up-right-from-square"></i> -->
-              <i class="fa fa-download"></i><BR>
-              Applications & Testing &nbsp;<span class="fa fa-download"></span><BR>
-              Care & Maintenance &nbsp;<span class="fa fa-download"></span><BR>
+              @if ($ft_exists)
+              <a href="{{ $cdn_url.$file_tearsheet }}" target="_blank">Applications & Testing
+              <span class="fa-solid fa-arrow-up-right-from-square"></span>
+              </a>
+              <BR>
+              @endif              
 
+              @if ($fst_exists)
+              <a href="{{ $cdn_url.$file_size_tearsheet }}" target="_blank">Pattern Tearsheet
+              <span class="fa-solid fa-arrow-up-right-from-square"></span>
+              </a>
+              <BR>
+              @endif
+
+              <a href="{{ $cdn_url.$file_maintenance }}" target="_blank">Care & Maintenance
+              <span class="fa-solid fa-arrow-up-right-from-square"></span>
+              </a>
+              <BR>
             </div>
           </div>
         </div>
