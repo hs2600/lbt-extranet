@@ -14,7 +14,7 @@
     }
 
     .find-overlay .find-overlay-top {
-        background: #04403c;
+        background: #cea29d;
         height: 60px;
         padding: 10px 30px;
         position: relative;
@@ -45,8 +45,8 @@
     }
 
     .find-overlay .find-overlay-bottom form button {
-        background: #fab005;
-        color: #363636;
+        background: #04403c;
+        color: #FFF;
         font-weight: 700;
         width: 25%;
         float: right;
