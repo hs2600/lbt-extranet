@@ -35,19 +35,21 @@
                 padding-bottom: 20px;
                 ">
                 <h3 style="font-size: 1.35rem;">
-                    @if ($error != 'invalid' && $zip != '')
-                    Dealers near {{ $zip }}
-                    @endif
-                    &nbsp;</h3>
+                LBT Authorized Dealers
+                </h3>
                 <form method="GET" action="/dealer_locator">
-                    <input type="text" name="location" placeholder="Search by ZIP" title="Search by ZIP code" autocomplete="off" required="">
-                    <button type="submit" class="btn btn-outline-primary" style="transition: all .3s ease-out 0s;
+                    <input type="text" name="location" placeholder="Search by ZIP" value="{{ $zip }}" autocomplete="on" required="" size="10">
+                    <button type="submit" class="btn btn-outline-primary" style="margin-left: 10px; transition: all .3s ease-out 0s;
                     padding: 5px;
                     margin-bottom: 4px;
-                    ">
-                        Update</button><br>
+                    ">Update</button><br>
+                    <input type="checkbox" name="JA" value="1" {{ $JA }}>
+                    <label for="vehicle1"> Jonathan Adler</label><br>
+
+                    <input type="checkbox" name="TB" value="1" {{ $TB }}>
+                    <label for="vehicle2"> Tommy Bahama</label><br>                    
                 </form>
-                <span style="color: red;"><i>@if ($error == 'invalid') Please enter a valid ZIP Code @endif
+                <span style="color: red;"><i>@if ($error == 'invalid') Please enter a valid US ZIP Code @endif
                     </i></span>
                 <div data-lastpass-icon-root="true" style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div>
             </div>
