@@ -62,11 +62,24 @@ class Controller extends BaseController
     public function dealerLocatorJS()
     {
 
+        $error = '';
         $zip = '';
+        $JA = '';
+        $TB = '';
+        $JA_checked = '';
+        $TB_checked = '';
+
         if(isset($_GET['location'])){
             $zip = $_GET['location'];
         }
-        $error = '';
+
+        if(isset($_GET['JA'])){
+            $JA = 'JA';
+        }
+        
+        if(isset($_GET['TB'])){
+            $TB = 'TB';
+        }
 
         $latlon = DB::table('zip_lat_lon')
             ->where('zip', '=', $zip)
@@ -83,18 +96,30 @@ class Controller extends BaseController
 
             $distance_calc = '(6371 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians(' . $lon . ') - radians(lon) ) + sin( radians(' . $lat . ') ) * sin( radians(lat) ) ))';
 
-            $field_list = 'customer_name, address1, address2, city, state, zip, locator_priority, ifnull(' . $distance_calc . ',1) as distance, ifnull(' . $distance_calc . ',10) * locator_priority as distance_priority';
+            $field_list = 'customer_name, address1, address2, city, state, zip, locator_priority, ifnull(' . $distance_calc . ',1) as distance, ifnull(' . $distance_calc . ',10) * locator_priority as distance_priority, authorized';
 
             $showrooms = DB::table('addresses')
                 ->selectRaw($field_list)
+                ->Where('authorized', 'like', '%'.$JA.'%')
+                ->Where('authorized', 'like', '%'.$TB.'%')
                 ->orderBy('distance_priority')
                 ->limit(5)
                 ->get();
         }
 
+        if($JA == 'JA'){
+            $JA_checked = 'checked';
+        }
+
+        if($TB == 'TB'){
+            $TB_checked = 'checked';
+        }
+
         return view('find-dealer.dealer_locator')
         ->with('showrooms', $showrooms)
         ->with('zip', $zip)
+        ->with('JA_checked', $JA_checked)
+        ->with('TB_checked', $TB_checked)
         ->with('error', $error);
 
     }

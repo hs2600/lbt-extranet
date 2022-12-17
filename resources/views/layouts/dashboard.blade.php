@@ -163,14 +163,14 @@ $series = DB::table('collections')
   <aside id="sidebar" class="sidebar" style="box-shadow: inset -1px 0 0 rgb(255 255 255 / 10%);">
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/collections">
+        <a class="nav-link collapsed" href="/collections">
           <i class="fa-solid fa-layer-group"></i>
           <span>Collections</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="/collections/material">
+        <a class="nav-link collapsed" href="/collections/material">
           <i class="fa-solid fa-layer-group"></i>
           <span>Materials</span>
         </a>
@@ -269,7 +269,7 @@ $series = DB::table('collections')
       ?>
 
       <?php
-      if (auth()->user()->role == 'csr' || auth()->user()->role == 'admin') {
+      if (auth()->user()->role == 'csr' || auth()->user()->role == 'admin' || auth()->user()->role == 'sales') {
       ?>
 
         <li class="nav-item">
@@ -283,21 +283,21 @@ $series = DB::table('collections')
       }
       ?>
 
-      <!-- <li class="nav-item">
-        <a class="nav-link collapsed" href="/dealer-locator">
-          <i class="fa-solid fa-store"></i>
-          <span>Dealer Locator v2</span>
-        </a>
-      </li> -->
-
       <?php
-      if (auth()->user()->role == 'adminx') {
+      if (auth()->user()->role == 'admin' || auth()->user()->role == 'sales') {        
       ?>
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="/dealer-locator">
+            <i class="fa-solid fa-store"></i>
+            <span>Dealer Locator v2</span>
+          </a>
+        </li>
 
         <li class="nav-item">
           <a class="nav-link collapsed" href="/dealer_locator/90710">
             <i class="fa-solid fa-store"></i>
-            <span>Dealer Locator v2</span>
+            <span>Dealer Locator v3</span>
           </a>
         </li>
 

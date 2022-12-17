@@ -66,7 +66,7 @@ if (!isset($success)) {
 
             <div class="card" style="margin-top: 20px; padding: 15px 20px;">
 
-                <form class="form-horizontal" method="POST" action="/invitations" style="padding-bottom: 10px;">
+                <form class="form-horizontal" method="POST" action="/admin/invitations" style="padding-bottom: 10px;">
                     {{ csrf_field() }}
 
                     <div class="row">
@@ -80,7 +80,7 @@ if (!isset($success)) {
                             <select id="role" type="text" class="form-control" name="role" required style="width: 300px; margin-top: 5px;">
                                 <option value=""></option>
                                 <option value="customer">Customer</option>
-                                <option value="salesperson">Sales Person</option>
+                                <option value="sales">Sales Person</option>
                                 <option value="csr">CSR</option>
                                 <option value="admin">Admin</option>
                             </select>
