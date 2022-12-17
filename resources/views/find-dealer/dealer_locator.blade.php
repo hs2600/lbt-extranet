@@ -52,10 +52,10 @@
                     padding: 5px;
                     margin-bottom: 4px;
                     ">Update</button><br>
-                    <input type="checkbox" name="JA" value="1" {{ $JA }}>
+                    <input type="checkbox" name="JA" value="1" {{ $JA_checked }}>
                     <label for="JA"> Jonathan Adler</label><br>
 
-                    <input type="checkbox" name="TB" value="1" {{ $TB }}>
+                    <input type="checkbox" name="TB" value="1" {{ $TB_checked }}>
                     <label for="TB"> Tommy Bahama</label><br>                    
                 </form>
                 <span style="color: red;"><i>@if ($error == 'invalid') Please enter a valid US ZIP Code @endif
@@ -64,6 +64,21 @@
             </div>
 
             @foreach ($showrooms as $showroom)
+
+            <?php
+
+            $JA_display = 'none';
+            $TB_display = 'none';
+
+            if(strpos($showroom->authorized, 'JA') !== false ){
+                $JA_display = 'block';
+            }
+
+            if(strpos($showroom->authorized, 'TB') !== false ){
+                $TB_display = 'block';
+            }
+
+            ?>
 
             <div class="card" style="margin-top: 20px;">
                 <div class="card-body" style="padding-bottom: 10px;">
@@ -74,9 +89,9 @@
                         <i><span style="font-size: 14px; color: #555;"><b>{{ round($showroom->distance,2) }}</b> miles away
                             </span></i><br>
                         <span class="card-text">{{ ucwords(strtolower($showroom->address1 . ' ' . $showroom->address2)) }}</span><br>
-                        <span class="card-text">{{ ucwords(strtolower($showroom->city)) . ', ' . $showroom->state . '  ' . $showroom->zip }}</span>
-                        <br>
-                        <span class="card-text"><i>[test/ {{ $showroom->authorized }} ]</i></span>
+                        <span class="card-text">{{ ucwords(strtolower($showroom->city)) . ', ' . $showroom->state . '  ' . $showroom->zip }}</span><br>
+                        <span class="position-absolute top-0 right-0 translate-middle badge rounded-pill text-light" style="display: {{ $JA_display }}; font-size: 10px; border: 1px solid #04403c; color: #FFF !important; background: #cea29d; right: 30px;">J</span>
+                        <span class="position-absolute top-0 right-0 translate-middle badge rounded-pill text-light" style="display: {{ $TB_display }}; font-size: 10px; border: 1px solid #cea29d; color: #04403c !important; background: #FFF;">T</span>
                 </div>
             </div>
 

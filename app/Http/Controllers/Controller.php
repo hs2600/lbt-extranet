@@ -66,6 +66,8 @@ class Controller extends BaseController
         $zip = '';
         $JA = '';
         $TB = '';
+        $JA_checked = '';
+        $TB_checked = '';
 
         if(isset($_GET['location'])){
             $zip = $_GET['location'];
@@ -106,18 +108,18 @@ class Controller extends BaseController
         }
 
         if($JA == 'JA'){
-            $JA = 'checked';
+            $JA_checked = 'checked';
         }
 
         if($TB == 'TB'){
-            $TB = 'checked';
+            $TB_checked = 'checked';
         }
 
         return view('find-dealer.dealer_locator')
         ->with('showrooms', $showrooms)
         ->with('zip', $zip)
-        ->with('JA', $JA)
-        ->with('TB', $TB)
+        ->with('JA_checked', $JA_checked)
+        ->with('TB_checked', $TB_checked)
         ->with('error', $error);
 
     }
