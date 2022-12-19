@@ -96,7 +96,7 @@ class Controller extends BaseController
 
             $distance_calc = '(6371 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians(' . $lon . ') - radians(lon) ) + sin( radians(' . $lat . ') ) * sin( radians(lat) ) ))';
 
-            $field_list = 'customer_name, address1, address2, city, state, zip, locator_priority, ifnull(' . $distance_calc . ',1) as distance, ifnull(' . $distance_calc . ',10) * locator_priority as distance_priority, authorized';
+            $field_list = 'customer_name, address1, address2, city, state, zip, phone1, website, appointment, locator_priority, ifnull(' . $distance_calc . ',1) as distance, ifnull(' . $distance_calc . ',10) * locator_priority as distance_priority, authorized';
 
             $showrooms = DB::table('addresses')
                 ->selectRaw($field_list)
