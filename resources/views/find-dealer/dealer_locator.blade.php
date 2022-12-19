@@ -9,24 +9,29 @@
 
     #map {
         width: 100%;
-        height: calc(100vh - 125px);
+        height: calc(100vh - 110px);
     }
 
     .marker-position {
-    bottom: 0;
-    left: 0;
-    position: relative;
+        bottom: 0;
+        left: 0;
+        position: relative;
     }
 
-    [type=checkbox]:checked,[type=radio]:checked {
-	background-color: #04403c;
-    }    
+    [type=checkbox]:checked,
+    [type=radio]:checked {
+        background-color: #04403c;
+    }
 
-    [type=checkbox],[type=radio] {
-	color: #cea29d;
-	background-color: #fff;
-    }    
+    [type=checkbox],
+    [type=radio] {
+        color: #cea29d;
+        background-color: #fff;
+    }
 
+    input[type=text]:focus {
+        border: 1px solid #04403c;
+    }
 </style>
 
 <section class="section dashboard">
@@ -39,24 +44,32 @@
 
         <div class="col-lg-3">
 
-            <div style="margin: 20px 0px 30px 0px;
-                border-bottom: 1px solid #c1c1c1;
-                padding-bottom: 20px;
+            <div style="/* margin: 0px 0px 0px 0px; */
+            /* border-bottom: 3px solid #efefef; */
+            padding-bottom: 20px;
+            position: sticky;
+            top: 60px;
+            background: white;
+            z-index: 3;
+            padding-top: 15px;
                 ">
-                <h3 style="font-size: 1.35rem;">
-                LBT Authorized Dealers
-                </h3>
+                <h5 style="font-size: 1.35rem;">
+                    <b>LBT Authorized Dealers</b>
+                </h5>
                 <form method="GET" action="/dealer_locator">
                     <input type="text" name="location" placeholder="Search by ZIP" value="{{ $zip }}" autocomplete="on" required="" size="10">
                     <button type="submit" class="btn btn-outline-primary" style="margin-left: 10px; transition: all .3s ease-out 0s;
-                    padding: 5px;
                     margin-bottom: 4px;
+                    background-color: #04403c;
+                    color: #FFF;
+                    border: none;
                     ">Update</button><br>
+                    <h6 style="margin-top: 10px;"><b>Filter by partnership:</b></h6>
                     <input type="checkbox" name="JA" value="1" {{ $JA_checked }}>
                     <label for="JA"> Jonathan Adler</label><br>
 
                     <input type="checkbox" name="TB" value="1" {{ $TB_checked }}>
-                    <label for="TB"> Tommy Bahama</label><br>                    
+                    <label for="TB"> Tommy Bahama</label><br>
                 </form>
                 <span style="color: red;"><i>@if ($error == 'invalid') Please enter a valid US ZIP Code @endif
                     </i></span>
@@ -69,29 +82,88 @@
 
             $JA_display = 'none';
             $TB_display = 'none';
+            $phone_display = 'none';
+            $website_display = 'none';
+            $app_only = '';
 
-            if(strpos($showroom->authorized, 'JA') !== false ){
+            if ($showroom->appointment == 1) {
+                $app_only = 'By appointment only';
+            }
+
+            $phone = '+1' . $showroom->phone1;
+            $website_url = $showroom->website;
+            $website = str_replace("https://", "", $website_url);
+            $website = str_replace("http://", "", $website);
+            $website = str_replace("www.", "", $website);
+
+            if ($showroom->phone1 != '') {
+                $phone_display = 'block';
+            }
+            if ($showroom->website != '') {
+                $website_display = 'block';
+            }
+
+            if (strpos($showroom->authorized, 'JA') !== false) {
                 $JA_display = 'block';
             }
 
-            if(strpos($showroom->authorized, 'TB') !== false ){
+            if (strpos($showroom->authorized, 'TB') !== false) {
                 $TB_display = 'block';
+            }
+
+            if (preg_match('/^\+\d(\d{3})(\d{3})(\d{4})$/', $phone,  $matches)) {
+                $phone_formatted = '(' . $matches[1] . ') ' . $matches[2] . '-' . $matches[3];
             }
 
             ?>
 
-            <div class="card" style="margin-top: 20px;">
-                <div class="card-body" style="padding-bottom: 10px;">
+            <div class="card" style="font-family: Montserrat,sans-serif; line-height: 1.5;">
+                <div class="card-body" style="padding-bottom: 10px; padding-left: 15px; padding-top: 5px;">
                     <h5 class="card-title" style="padding: 8px 0 0px 0;">
-                        <span class="position-absolute top-0 left-0 translate-middle badge rounded-pill text-light" style="background-color: #04403c99;">
+                        {{ ucwords(strtolower($showroom->customer_name)) }}
+                    </h5>
+                    <div>
+                        <span class="position-absolute top-0 left-0 translate-middle badge rounded-pill text-light" style="top: 4px !important; left: 6px; font-size: 9px; z-index: 2; position: relative !important;">
                             {{ $loop->iteration }}</span>
-                        {{ ucwords(strtolower($showroom->customer_name)) }}</h6>
-                        <i><span style="font-size: 14px; color: #555;"><b>{{ round($showroom->distance,2) }}</b> miles away
-                            </span></i><br>
-                        <span class="card-text">{{ ucwords(strtolower($showroom->address1 . ' ' . $showroom->address2)) }}</span><br>
-                        <span class="card-text">{{ ucwords(strtolower($showroom->city)) . ', ' . $showroom->state . '  ' . $showroom->zip }}</span><br>
-                        <span class="position-absolute top-0 right-0 translate-middle badge rounded-pill text-light" style="display: {{ $JA_display }}; font-size: 10px; border: 1px solid #04403c; color: #FFF !important; background: #cea29d; right: 30px;">J</span>
-                        <span class="position-absolute top-0 right-0 translate-middle badge rounded-pill text-light" style="display: {{ $TB_display }}; font-size: 10px; border: 1px solid #cea29d; color: #04403c !important; background: #FFF;">T</span>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 26 37" style="grid-area: 1 / auto / auto / auto; z-index: 1; display: inline; position: relative !important; left: -25px;" class="position-absolute top-0 left-0">
+                            <g fill="none" fill-rule="evenodd" style="pointer-events: auto;">
+                                <path class="RIFvHW-maps-pin-view-background" fill="#04403c" d="M13.0167 35C12.7836 35 12.7171 34.9346 12.3176 33.725C11.9848 32.6789 11.4854 31.0769 10.1873 29.1154C8.92233 27.1866 7.59085 25.6173 6.32594 24.1135C3.36339 20.5174 1 17.7057 1 12.6385C1.03329 6.19808 6.39251 1 13.0167 1C19.6408 1 25 6.23078 25 12.6385C25 17.7057 22.6699 20.55 19.6741 24.1462C18.4425 25.65 17.1443 27.2193 15.8793 29.1154C14.6144 31.0442 14.0818 32.6135 13.749 33.6596C13.3495 34.9346 13.2497 35 13.0167 35Z"></path>
+                            </g>
+                        </svg>
+
+                        <i><span style="margin-left: -15px; font-size: 14px; color: #555;">{{ round($showroom->distance,2) }} miles
+                            </span></i>
+
+                    </div>
+                    <div style="margin-top: 5px; margin-bottom: 5px;">
+                        <address style="margin-bottom: 5px;">
+                            {{ ucwords(strtolower($showroom->address1 . ' ' . $showroom->address2)) }}<br>
+                            {{ ucwords(strtolower($showroom->city)) . ', ' . $showroom->state . '  ' . $showroom->zip }}<br>
+                        </address>
+
+                        <address style="margin-bottom: 10px;">
+                            <span style="display: {{ $website_display }}">
+                                <a target="_blank" href="{{ $website_url }} " style="color: #012970;"><i class="bi bi-globe" style="font-size: 14px;"></i>
+                                    <b> {{ $website }}</b></a></span>
+
+                            <span style="display: {{ $phone_display }}">
+                                <a href="tel: {{ $phone }} " style="color: #012970;"><i class="bi bi-telephone" style="font-size: 14px;"></i>
+                                    <b> {{ $phone_formatted }}</b></a></span>
+
+                            <span style="font-size: 14px; color: #777;">
+                                {{ $app_only }}</span>
+
+                        </address>
+                    </div>
+
+                    <!-- <span class="position-absolute top-0 right-0 translate-middle badge rounded-pill text-light" style="display: {{ $JA_display }}; font-size: 10px; border: 1px solid #04403c; color: #FFF !important; background: #cea29d; right: 30px;">J</span>
+                        <span class="position-absolute top-0 right-0 translate-middle badge rounded-pill text-light" style="display: {{ $TB_display }}; font-size: 10px; border: 1px solid #cea29d; color: #04403c !important; background: #FFF;">T</span> -->
+                    <div style="display: flex;">
+                        <img src="/assets/images/JA_icon.png" style="display: {{ $JA_display }}; border-radius: 15px; margin-right: 10px;" width="24px" title="Jonathan Adler">
+
+                        <img src="/assets/images/TB_logo.jpg" style="display: {{ $TB_display }}; border: 1px solid #04403c; border-radius: 15px;" width="24px" title="Tommy Bahama">
+                    </div>
                 </div>
             </div>
 
@@ -185,17 +257,17 @@
     function codeAddress(address, customer, distance, index) {
 
         var pinColor = "#04403c";
-    
+
         // Pick your pin (hole or no hole)
         var pinSVGHole = "M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z";
-        var labelOriginHole = new google.maps.Point(12,15);
+        var labelOriginHole = new google.maps.Point(12, 15);
         var pinSVGFilled = "M 12,2 C 8.1340068,2 5,5.1340068 5,9 c 0,5.25 7,13 7,13 0,0 7,-7.75 7,-13 0,-3.8659932 -3.134007,-7 -7,-7 z";
-        var labelOriginFilled =  new google.maps.Point(12,9);
+        var labelOriginFilled = new google.maps.Point(12, 9);
 
 
-        var markerImage = {  // https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerLabel
+        var markerImage = { // https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerLabel
             path: pinSVGFilled,
-            anchor: new google.maps.Point(12,17),
+            anchor: new google.maps.Point(12, 17),
             fillOpacity: 1,
             fillColor: pinColor,
             strokeWeight: 2,
@@ -205,22 +277,22 @@
         };
 
         const svgMarker = {
-        path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
-        fillColor: "#04403c",
-        fillOpacity: 1,
-        strokeWeight: 0,
-        rotation: 0,
-        scale: 2,
-        anchor: new google.maps.Point(15, 30),
-    };
-        
+            path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+            fillColor: "#04403c",
+            fillOpacity: 1,
+            strokeWeight: 0,
+            rotation: 0,
+            scale: 2,
+            anchor: new google.maps.Point(15, 30),
+        };
+
         const pin = "https://img.icons8.com/cotton/512/shipping-location.png";
 
         const icon_ = {
             url: "http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_green.png", // url
             scaledSize: new google.maps.Size(0, 0), // scaled size
             opacity: 1,
-            origin: new google.maps.Point(0,0), // origin
+            origin: new google.maps.Point(0, 0), // origin
             anchor: new google.maps.Point(0, 0) // anchor
         };
 
@@ -231,10 +303,10 @@
 
         // Change the background color.
         const pinViewBackground = new google.maps.marker.PinView({
-        background: "#04403c",
-        borderColor: "#cea29d",
-        glyphColor: "#fff",
-        glyph: icon,
+            background: "#04403c",
+            borderColor: "#cea29d",
+            glyphColor: "#fff",
+            glyph: icon,
         });
 
         geocoder.geocode({
