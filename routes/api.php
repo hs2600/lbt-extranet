@@ -28,6 +28,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['throttle:dealer-locator-api']], function(){
 
     //dealer locator
-    Route::get('/find-a-dealer/{zip}.json',[Controller::class, 'dealerLocatorAPI']);
+    Route::post('/find-a-dealer/',[Controller::class, 'dealerLocatorAPI']);
+
+    Route::get('/find-a-dealer/{zip}.json',[Controller::class, 'dealerLocatorAPI_ZIP']);
 
 });
