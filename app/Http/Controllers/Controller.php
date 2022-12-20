@@ -124,4 +124,44 @@ class Controller extends BaseController
 
     }
 
+    /**
+    * Dealer locator API
+    */
+    public function dealerLocatorAPI($zip)
+    {
+
+        $JA = '';
+        $TB = '';
+
+        $latlon = DB::table('zip_lat_lon')
+            ->where('zip', '=', $zip)
+            ->first();
+
+        if (is_null($latlon) || strlen($zip) < 5) {
+            $showrooms = array();
+        } else {
+            $zip =  substr($latlon->zip, 0, 5);
+            $lat =  $latlon->lat;
+            $lon =  $latlon->lon;
+
+            $distance_calc = '(6371 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians(' . $lon . ') - radians(lon) ) + sin( radians(' . $lat . ') ) * sin( radians(lat) ) ))';
+            $JA_col = "case when authorized like '%JA%' then 'true' else 'false' end";
+            $TB_col = "case when authorized like '%TB%' then 'true' else 'false' end";
+
+            $field_list = 'customer_name, address1, address2, city, state, zip, phone1, website, appointment, locator_priority, ifnull(' . $distance_calc . ',1) as distance, ifnull(' . $distance_calc . ',10) * locator_priority as distance_priority, ' . $JA_col . ' as authorized_ja, ' . $TB_col . ' as authorized_tb';
+
+            $showrooms = DB::table('addresses')
+                ->selectRaw($field_list)
+                ->Where('authorized', 'like', '%'.$JA.'%')
+                ->Where('authorized', 'like', '%'.$TB.'%')
+                ->orderBy('distance_priority')
+                ->limit(5)
+                ->get();
+        }
+
+        return $showrooms;
+
+    }
+
+
 }

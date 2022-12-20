@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +21,13 @@ Route::get('/products/sku/{sku}.json', [ProductController::class, 'showSku']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+//Throttle (throttle:{seconds:limit}, or throttle:{name}
+//app\Providers\RouteServiceProvider.php
+Route::group(['middleware' => ['throttle:dealer-locator-api']], function(){
+
+    //dealer locator
+    Route::get('/find-a-dealer/{zip}.json',[Controller::class, 'dealerLocatorAPI']);
+
 });

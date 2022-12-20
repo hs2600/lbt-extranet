@@ -54,13 +54,24 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         RateLimiter::for('dealer-locator', function (Request $request) {
-            $per_minute = 4;
+            $per_minute = 10;
 
             return Limit::perMinute($per_minute)->response(function (Request $request, array $headers) {
                 return response('<h2>Too many requests. Please slow down!</h2> <h3>Wait one minute and try again (F5).</h3>', 429, $headers);
             });
 
         });
+
+        RateLimiter::for('dealer-locator-api', function (Request $request) {
+            $per_minute = 5;
+
+            return Limit::perMinute($per_minute)->response(function (Request $request, array $headers) {
+                return response()->json([
+                    'message' => 'Too many attempts, please slow down the request.',
+                    'status' => false
+                ],201);
+            });
+        });        
 
     }
 }
