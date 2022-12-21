@@ -99,9 +99,9 @@
         position: relative;
         background: #dbdcdd;
         text-align: center;
-        background-image: url("/assets/images/dealer-map-bg.png");
+        background-image: url("/assets/images/pinned_map.png");
         background-repeat: no-repeat;
-        background-position: right left;
+        background-position: top right;
         background-attachment: fixed;
         background-size: auto 100%;
     }
@@ -110,13 +110,18 @@
         position: absolute;
         top: 40%;
         left: 50%;
-        margin-top: -60px;
+        margin-top: -150px;
         margin-left: -400px;
         z-index: 10;
         width: 797px;
         /* box-shadow:0 20px 15px -15px rgba(0,0,0,0.25); */
     }
 
+    .no-outline:focus {
+       border: none;
+       box-shadow: 0 0 5px #777;
+       border-radius: 0px;
+    }
 
     @media (max-width: 767px) {
         .find-a-dealer-banner {
@@ -167,7 +172,7 @@
                 </div>
                 <div class="find-overlay-bottom">
                     <form method="GET" action="/dealer_locator/">
-                        <input type="text" name="location" placeholder="Enter your ZIP Code" required>
+                        <input type="text" class="no-outline" name="location" placeholder="Enter your ZIP Code" required>
                         <button type="submit">SEARCH</button>
                     </form>
                 </div>

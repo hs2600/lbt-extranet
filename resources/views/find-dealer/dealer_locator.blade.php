@@ -29,8 +29,9 @@
         background-color: #fff;
     }
 
-    input[type=text]:focus {
-        border: 1px solid #04403c;
+    .no-outline:focus {
+        border: 2px solid #04403c;
+        box-shadow: none;
     }
 </style>
 
@@ -57,7 +58,7 @@
                     <b>LBT Authorized Dealers</b>
                 </h5>
                 <form method="GET" action="/dealer_locator">
-                    <input type="text" name="location" placeholder="Search by ZIP" value="{{ $zip }}" autocomplete="on" required="" size="10">
+                    <input type="text" class="no-outline" name="location" placeholder="Search by ZIP" value="{{ $zip }}" autocomplete="on" required="" size="10">
                     <button type="submit" class="btn btn-outline-primary" style="margin-left: 10px; transition: all .3s ease-out 0s;
                     margin-bottom: 4px;
                     background-color: #04403c;
@@ -65,14 +66,24 @@
                     border: none;
                     ">Update</button><br>
                     <h6 style="margin-top: 10px;"><b>Filter by partnership:</b></h6>
-                    <input type="checkbox" name="JA" value="1" {{ $JA_checked }}>
-                    <label for="JA"> Jonathan Adler</label><br>
-
-                    <input type="checkbox" name="TB" value="1" {{ $TB_checked }}>
-                    <label for="TB"> Tommy Bahama</label><br>
+                    <div style="display: flex;">
+                        <input style="margin-top: 5px;" type="checkbox" name="JA" value="1" {{ $JA_checked }}>
+                        <img src="/assets/images/JA_icon.png" style="border-radius: 15px; margin: 5px; width: 16px; height: 16px;" title="Jonathan Adler">
+                        <label for="JA"> Jonathan Adler</label>
+                    </div>
+                    <div style="display: flex;">
+                        <input style="margin-top: 5px;" type="checkbox" name="TB" value="1" {{ $TB_checked }}>
+                        <img src="/assets/images/TB_logo.jpg" style="border: 1px solid #122A4F; border-radius: 15px; margin: 5px; width: 16px; height: 16px;" title="Tommy Bahama">
+                        <label for="TB"> Tommy Bahama</label>
+                    </div>
                 </form>
-                <span style="color: red;"><i>@if ($error == 'invalid') Please enter a valid US ZIP Code @endif
-                    </i></span>
+                @if ($error == 'invalid')
+                <span style="color: red;"><i> Please enter a valid US ZIP Code</i></span>
+                <div style="border: 1px solid red; color: red; padding: 5px; margin-top: 5px;">
+                    For customers outside of US, please use the 
+                    <a target="_blank" href="https://lunadabaytile.com/pages/contact" style="color: red;"><b>Contact Form</b></a> to find nearest dealer.
+                </div>
+                @endif
                 <div data-lastpass-icon-root="true" style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div>
             </div>
 
@@ -119,7 +130,7 @@
 
             <div class="card" style="font-family: Montserrat,sans-serif; line-height: 1.5;">
                 <div class="card-body" style="padding-bottom: 10px; padding-left: 15px; padding-top: 5px;">
-                    <h5 class="card-title" style="padding: 8px 0 0px 0;">
+                    <h5 class="card-title" style="padding: 8px 0 0px 0; color: #043F51;">
                         {{ ucwords(strtolower($showroom->customer_name)) }}
                     </h5>
                     <div>
@@ -132,7 +143,7 @@
                             </g>
                         </svg>
 
-                        <i><span style="margin-left: -15px; font-size: 14px; color: #555;">{{ round($showroom->distance,2) }} miles
+                        <i><span style="margin-left: -15px; font-size: 14px; color: #777;">{{ round($showroom->distance,2) }} miles
                             </span></i>
 
                     </div>
@@ -144,11 +155,11 @@
 
                         <address style="margin-bottom: 10px;">
                             <span style="display: {{ $website_display }}">
-                                <a target="_blank" href="{{ $website_url }} " style="color: #012970;"><i class="bi bi-globe" style="font-size: 14px;"></i>
+                                <a target="_blank" href="{{ $website_url }} " style="color: #043F51;"><i class="bi bi-globe" style="font-size: 14px;"></i>
                                     <b> {{ $website }}</b></a></span>
 
                             <span style="display: {{ $phone_display }}">
-                                <a href="tel: {{ $phone }} " style="color: #012970;"><i class="bi bi-telephone" style="font-size: 14px;"></i>
+                                <a href="tel: {{ $phone }} " style="color: #043F51;"><i class="bi bi-telephone" style="font-size: 14px;"></i>
                                     <b> {{ $phone_formatted }}</b></a></span>
 
                             <span style="font-size: 14px; color: #777;">
@@ -157,12 +168,9 @@
                         </address>
                     </div>
 
-                    <!-- <span class="position-absolute top-0 right-0 translate-middle badge rounded-pill text-light" style="display: {{ $JA_display }}; font-size: 10px; border: 1px solid #04403c; color: #FFF !important; background: #cea29d; right: 30px;">J</span>
-                        <span class="position-absolute top-0 right-0 translate-middle badge rounded-pill text-light" style="display: {{ $TB_display }}; font-size: 10px; border: 1px solid #cea29d; color: #04403c !important; background: #FFF;">T</span> -->
                     <div style="display: flex;">
                         <img src="/assets/images/JA_icon.png" style="display: {{ $JA_display }}; border-radius: 15px; margin-right: 10px;" width="24px" title="Jonathan Adler">
-
-                        <img src="/assets/images/TB_logo.jpg" style="display: {{ $TB_display }}; border: 1px solid #04403c; border-radius: 15px;" width="24px" title="Tommy Bahama">
+                        <img src="/assets/images/TB_logo.jpg" style="display: {{ $TB_display }}; border: 1px solid #122A4F; border-radius: 15px;" width="24px" title="Tommy Bahama">
                     </div>
                 </div>
             </div>
