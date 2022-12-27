@@ -45,9 +45,7 @@
 
         <div class="col-lg-3">
 
-            <div style="/* margin: 0px 0px 0px 0px; */
-            /* border-bottom: 3px solid #efefef; */
-            padding-bottom: 20px;
+            <div style="padding-bottom: 5px;
             position: sticky;
             top: 60px;
             background: white;
@@ -57,9 +55,13 @@
                 <h5 style="font-size: 1.35rem;">
                     <b>LBT Authorized Dealers</b>
                 </h5>
+                <div style="border: 1px solid #999;
+                    padding: 10px;
+                    border-radius: 5px;
+                    background-color: #f8f9fa;">
                 <form method="GET" action="/dealer_locator">
-                    <input type="text" class="no-outline" name="location" placeholder="Search by ZIP" value="{{ $zip }}" autocomplete="on" required="" size="10">
-                    <button type="submit" class="btn btn-outline-primary" style="margin-left: 10px; transition: all .3s ease-out 0s;
+                    <input style="margin-right: 10px; margin-bottom: 5px;" type="text" class="no-outline" name="location" placeholder="Search by ZIP" value="{{ $zip }}" autocomplete="on" required="" size="10">
+                    <button type="submit" class="btn btn-outline-primary" style="transition: all .3s ease-out 0s;
                     margin-bottom: 4px;
                     background-color: #04403c;
                     color: #FFF;
@@ -67,16 +69,17 @@
                     ">Update</button><br>
                     <h6 style="margin-top: 10px;"><b>Filter by partnership:</b></h6>
                     <div style="display: flex;">
-                        <input style="margin-top: 5px;" type="checkbox" name="JA" value="1" {{ $JA_checked }}>
-                        <img src="/assets/images/JA_icon.png" style="border-radius: 15px; margin: 5px; width: 16px; height: 16px;" title="Jonathan Adler">
+                        <input style="margin: 5px;" type="checkbox" name="JA" value="1" {{ $JA_checked }}>
                         <label for="JA"> Jonathan Adler</label>
+                        <img src="/assets/images/JA_icon.png" style="border-radius: 15px; margin: 5px; margin-left: 12px; width: 16px; height: 16px;" title="Jonathan Adler">                        
                     </div>
                     <div style="display: flex;">
-                        <input style="margin-top: 5px;" type="checkbox" name="TB" value="1" {{ $TB_checked }}>
-                        <img src="/assets/images/TB_logo.jpg" style="border: 1px solid #122A4F; border-radius: 15px; margin: 5px; width: 16px; height: 16px;" title="Tommy Bahama">
+                        <input style="margin: 5px;" type="checkbox" name="TB" value="1" {{ $TB_checked }}>
                         <label for="TB"> Tommy Bahama</label>
+                        <img src="/assets/images/TB_logo.jpg" style="border: 1px solid #122A4F; border-radius: 15px; margin: 5px; width: 16px; height: 16px;" title="Tommy Bahama">                        
                     </div>
                 </form>
+                </div>
                 @if ($error == 'invalid')
                 <span style="color: red;"><i> Please enter a valid US ZIP Code</i></span>
                 <div style="border: 1px solid red; color: red; padding: 5px; margin-top: 5px;">
