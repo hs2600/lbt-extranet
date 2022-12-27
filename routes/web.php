@@ -67,15 +67,16 @@ Route::group(['middleware' => ['auth', 'verified','throttle:dealer-locator']], f
         return view('find-dealer.dealer_locator_form');
     });
     Route::get('/dealer_locator',[Controller::class, 'dealerLocatorJS']);
-    Route::get('/dealer-locator', function () {
-        return view('find-dealer.dealer_locator_livewire');
-    });
+    // Route::get('/dealer-locator', function () {
+    //     return view('find-dealer.dealer_locator_livewire');
+    // });
     Route::get('/dealer_locator/{zip}',[Controller::class, 'dealerLocator']);
 
 });
 
 //Public routes
 Route::get('/products_pl',[ProductController::class, 'productsPL']);
+Route::get('/dealer-locator',[Controller::class, 'dealerLocatorLBT']);
 
 /**  TESTING */
 /**
