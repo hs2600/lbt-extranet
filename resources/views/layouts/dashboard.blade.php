@@ -284,7 +284,7 @@ $series = DB::table('collections')
       ?>
 
       <?php
-      if (auth()->user()->role == 'admin' || auth()->user()->role == 'sales') {        
+      if (auth()->user()->role == 'adminx') {        
       ?>
 
         <li class="nav-item">
