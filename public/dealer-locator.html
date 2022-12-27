@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+
+        <link
+            rel="stylesheet"
+            href="https://portal.lunadabaytile.com/build/assets/app.7be54770.css"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+            crossorigin="anonymous"
+        />
+        <link
+            href="https://portal.lunadabaytile.com/assets/dashboard/css/style.css"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <style>
+            .text-center {
+                text-align: center;
+            }
+
+            #map {
+                width: 100%;
+                height: calc(100vh - 110px);
+            }
+
+            .marker-position {
+                bottom: 0;
+                left: 0;
+                position: relative;
+            }
+
+            [type="checkbox"]:checked,
+            [type="radio"]:checked {
+                background-color: #04403c;
+            }
+
+            [type="checkbox"],
+            [type="radio"] {
+                color: #cea29d;
+                background-color: #fff;
+            }
+
+            .no-outline:focus {
+                border: 2px solid #04403c;
+                box-shadow: none;
+            }
+        </style>
+
+        <section class="section dashboard">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div
+                        style="
+                            padding-bottom: 5px;
+                            position: sticky;
+                            background: white;
+                            z-index: 3;
+                            padding-top: 15px;
+                        "
+                    >
+                        <h5 style="font-size: 1.35rem">
+                            <b>LBT Authorized Dealers</b>
+                        </h5>
+                        <div
+                            style="
+                                border: 1px solid #999;
+                                padding: 10px;
+                                border-radius: 5px;
+                                background-color: #f8f9fa;
+                            "
+                        >
+                            <form
+                                id="formElem"
+                                method="POST"
+                                action="javascript:void(0);"
+                                onsubmit="submitFormData(this)"
+                            >
+                                <input
+                                    style="
+                                        margin-right: 10px;
+                                        margin-bottom: 5px;
+                                    "
+                                    type="text"
+                                    class="no-outline"
+                                    name="zip"
+                                    placeholder="Search by ZIP"
+                                    value=""
+                                    autocomplete="on"
+                                    required=""
+                                    size="10"
+                                />
+                                <button
+                                    type="submit"
+                                    class="btn btn-outline-primary"
+                                    style="
+                                        transition: all 0.3s ease-out 0s;
+                                        margin-bottom: 4px;
+                                        background-color: #04403c;
+                                        color: #fff;
+                                        border: none;
+                                    "
+                                >
+                                    Update</button
+                                ><br />
+                                <h6 style="margin-top: 10px">
+                                    <b>Filter by partnership:</b>
+                                </h6>
+                                <div style="display: flex">
+                                    <input
+                                        style="margin: 5px"
+                                        type="checkbox"
+                                        name="auth_ja"
+                                    />
+                                    <label for="JA"> Jonathan Adler</label>
+                                    <img
+                                        src="/assets/images/JA_icon.png"
+                                        style="
+                                            border-radius: 15px;
+                                            margin: 5px;
+                                            margin-left: 12px;
+                                            width: 16px;
+                                            height: 16px;
+                                        "
+                                        title="Jonathan Adler"
+                                    />
+                                </div>
+                                <div style="display: flex">
+                                    <input
+                                        style="margin: 5px"
+                                        type="checkbox"
+                                        name="auth_tb"
+                                    />
+                                    <label for="TB"> Tommy Bahama</label>
+                                    <img
+                                        src="/assets/images/TB_logo.jpg"
+                                        style="
+                                            border: 1px solid #122a4f;
+                                            border-radius: 15px;
+                                            margin: 5px;
+                                            width: 16px;
+                                            height: 16px;
+                                        "
+                                        title="Tommy Bahama"
+                                    />
+                                </div>
+                            </form>
+                        </div>
+                        <div
+                            data-lastpass-icon-root="true"
+                            style="
+                                position: relative !important;
+                                height: 0px !important;
+                                width: 0px !important;
+                                float: left !important;
+                            "
+                        ></div>
+                    </div>
+
+                    <div id="dealer_list"></div>
+
+                </div>
+
+                <div
+                    class="col-lg-9"
+                    style="
+                        align-self: flex-start;
+                        position: sticky;
+                        top: 70px;
+                        margin-top: 20px;
+                        height: auto;
+                    "
+                >
+                    <div id="map"></div>
+                </div>
+            </div>
+        </section>
+
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFX6HB-zkjkqf4KNSDjOTNHCl4wGBdpwU&amp;v=beta&amp;libraries=marker&amp;callback=initMap"
+            defer=""
+        ></script>
+
+        <script>
+            // handle form submit
+            function submitFormData(event) {
+                // form values
+                var zip = event.zip.value;
+                var auth_ja = '';
+                var auth_tb = '';
+
+                if(event.auth_ja.checked){
+                    auth_ja = 'JA';
+                }
+
+                if(event.auth_tb.checked){
+                    auth_tb = 'TB';
+                }
+
+                var data = new FormData();
+                data.append("zip", zip);
+                data.append("auth_ja", auth_ja);
+                data.append("auth_tb", auth_tb);
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.responseType = "json";
+
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4 && xhttp.status == 200) {
+                        initMap();
+                        initMarkers(xhttp.response);
+                        drawDealers(xhttp.response);
+                    }
+
+                    if (xhttp.readyState == 4 && xhttp.status == 201) {
+                        initMap();
+                        drawDealers(201);
+                    }
+                    if (xhttp.readyState == 4 && xhttp.status == 202) {
+                        initMap();
+                        drawDealers(202);
+                    }                    
+                };
+
+                var url = "https://portal.lunadabaytile.com/api/find-a-dealer/";
+
+                xhttp.open("POST", url, true);
+                xhttp.send(data);
+
+            }
+
+            /* --------------------------- Dealer list --------------------------- */
+            function drawDealers(dealers) {
+                customer = "";
+                address = "";
+                zip = "";
+                distance = "";
+
+                const target = document.querySelector('#dealer_list');
+
+                if(dealers == 201){                    
+                    target.innerHTML = '<div class="card"><div style="color: red; padding: 10px;">203: too many requests!</div></div>';
+                } else if(dealers == 202){
+                    target.innerHTML = '<div class="card"><div style="color: red; padding: 10px;">Incorrect zip code!</div></div>';
+                 } else {
+
+                    for (let index = 0; index < dealers.length; index++) {
+                        var div = document.getElementById(index);
+
+                        if (div === null){
+                            div = document.createElement('div');
+                            div.id = index;
+                            div.className ="card";
+                            div.style = "font-family: Montserrat, sans-serif; line-height: 1.5;";
+
+                            target.appendChild(div);
+                        }
+                    }
+
+                    for (let index = 0; index < dealers.length; index++) {
+                        const dealerData = dealers[index];
+                        address =
+                            toTitleCase(
+                                (
+                                    dealerData.address1.trim() +
+                                    " " +
+                                    dealerData.address2.trim()
+                                ).trim()
+                            ) +
+                            "<br>" +
+                            toTitleCase(dealerData.city.trim()) +
+                            ", " +
+                            dealerData.state.trim() +
+                            "  " +
+                            dealerData.zip.trim();
+                        customer = toTitleCase(dealerData.customer_name.trim());
+                        zip = dealerData.zip.trim();
+                        distance = Math.round(dealerData.distance * 100) / 100;
+
+                        website_url = dealerData.website;
+                        website = '';
+                        if(dealerData.website !== null){
+                            website = dealerData.website.replace('https://','');
+                            website = website.replace('http://','');
+                            website = website.replace('www.','');
+                        }
+
+                        phone = dealerData.phone1;
+                        
+                        appointment = '';
+                        website_display = 'none';
+                        phone_display = 'none';
+
+                        if (dealerData.website !== '' && dealerData.website !== null){
+                            website_display = 'block';
+                        }
+                        if (dealerData.phone1 != ''){
+                            phone_display = 'block';
+                        }
+
+                        ja_display = 'none';
+                        if (dealerData.authorized_ja == 1){
+                            ja_display = 'block';
+                        }
+                        tb_display = 'none';
+                        if (dealerData.authorized_tb == 1){
+                            tb_display = 'block';
+                        }
+
+                        if (dealerData.appointment == 1){
+                            appointment = 'By appointment only';
+                        }
+                        
+                        const div = document.getElementById(index);
+                        
+                        const contentString =
+                        '<div class="card-body" style="padding-bottom: 10px; padding-left: 15px; padding-top: 5px;">' + 
+                            '<h5 class="card-title" style="padding: 8px 0 0px 0; color: #043F51;">' + 
+                                customer + 
+                            '</h5>' + 
+                            '<div>' + 
+                                '<span class="position-absolute top-0 left-0 translate-middle badge rounded-pill text-light" style="top: 4px !important; left: 6px; font-size: 9px; z-index: 2; position: relative !important;">' + 
+                                    parseInt(index + 1) + '</span>' + 
+
+                                '<svg xmlns="http://www.w3.org/2000/svg" width="20px" viewBox="0 0 26 37" style="grid-area: 1 / auto / auto / auto; z-index: 1; display: inline; position: relative !important; left: -20px;" class="position-absolute top-0 left-0">' + 
+                                    '<g fill="none" fill-rule="evenodd" style="pointer-events: auto;">' + 
+                                        '<path class="RIFvHW-maps-pin-view-background" fill="#04403c" d="M13.0167 35C12.7836 35 12.7171 34.9346 12.3176 33.725C11.9848 32.6789 11.4854 31.0769 10.1873 29.1154C8.92233 27.1866 7.59085 25.6173 6.32594 24.1135C3.36339 20.5174 1 17.7057 1 12.6385C1.03329 6.19808 6.39251 1 13.0167 1C19.6408 1 25 6.23078 25 12.6385C25 17.7057 22.6699 20.55 19.6741 24.1462C18.4425 25.65 17.1443 27.2193 15.8793 29.1154C14.6144 31.0442 14.0818 32.6135 13.749 33.6596C13.3495 34.9346 13.2497 35 13.0167 35Z"></path>' + 
+                                    '</g>' + 
+                                '</svg>' + 
+
+                                '<i><span style="margin-left: 0px; font-size: 14px; color: #777;">' + distance + ' miles' + 
+                                    '</span></i>' + 
+
+                            '</div>' + 
+                            '<div style="margin-top: 5px; margin-bottom: 5px;">' + 
+                                '<address style="margin-bottom: 5px;">' + 
+                                    address + 
+                                '</address>' + 
+
+                                '<address style="margin-bottom: 10px;">' + 
+                                    '<span style="display: ' + website_display + '">' + 
+                                        '<a target="_blank" href="' + website_url + '" style="color: #043F51;"><i class="bi bi-globe" style="font-size: 14px;"></i>' + 
+                                            '<b>' + website + '</b></a></span>' + 
+
+                                    '<span style="display: ' + phone_display + '">' + 
+                                        '<a href="tel: ' + phone + ' " style="color: #043F51;"><i class="bi bi-telephone" style="font-size: 14px;"></i>' + 
+                                            '<b> ' + phone + '</b></a></span>' + 
+
+                                    '<span style="font-size: 14px; color: #777;">' + 
+                                        appointment + '</span>' + 
+
+                                '</address>' + 
+                            '</div>' + 
+
+                            '<div style="display: flex;">' + 
+                                '<img src="/assets/images/JA_icon.png" style="display: ' + ja_display + '; border-radius: 15px; margin-right: 10px;" width="24px" title="Jonathan Adler">' + 
+                                '<img src="/assets/images/TB_logo.jpg" style="display: ' + tb_display + '; border: 1px solid #122A4F; border-radius: 15px;" width="24px" title="Tommy Bahama">' + 
+                            '</div>' + 
+                        '</div>';
+
+                        div.innerHTML = contentString;
+                    }
+                }
+            }
+        </script>
+
+        <script>
+            let map,
+                markers = [];
+            var geocoder;
+
+            /* ----------------------------- Initialize Map ----------------------------- */
+            function initMap() {
+                map = new google.maps.Map(document.getElementById("map"), {
+                    center: {
+                        lat: 33.799904,
+                        lng: -118.298661,
+                    },
+                    zoom: 12,
+                    mapId: "2ea9fe570296658e",
+                    gestureHandling: "greedy",
+                    mapTypeControl: false,
+                    scrollwheel: true,
+                });
+
+                geocoder = new google.maps.Geocoder();
+
+                map.addListener("click", function (event) {
+                    mapClicked(event);
+                });
+
+            }
+
+            /* --------------------------- Initialize Markers --------------------------- */
+            function initMarkers(initialMarkers) {
+                customer = "";
+                address = "";
+                zip = "";
+                lat = "";
+                distance = "";
+
+                for (let index = 0; index < initialMarkers.length; index++) {
+                    const markerData = initialMarkers[index];
+                    address =
+                        toTitleCase(
+                            (
+                                markerData.address1.trim() +
+                                " " +
+                                markerData.address2.trim()
+                            ).trim()
+                        ) +
+                        "<br>" +
+                        toTitleCase(markerData.city.trim()) +
+                        ", " +
+                        markerData.state.trim() +
+                        "  " +
+                        markerData.zip.trim();
+                    customer = toTitleCase(markerData.customer_name.trim());
+                    zip = markerData.zip.trim();
+                    lat = markerData.lat;
+                    distance = markerData.distance;
+
+                    codeAddress(
+                        address,
+                        customer,
+                        distance,
+                        (index + 1).toString()
+                    );
+
+                    if (index == 0) {
+                         centerZip(zip);
+                    }
+
+                    if (index + 1 == initialMarkers.length) {
+                        mapZoom(distance);
+                    }
+                }
+            }
+
+            /* ------------------------- Handle Map Click Event ------------------------- */
+            function mapClicked(event) {
+                console.log(event.latLng.lat(), event.latLng.lng());
+            }
+
+            //Call this to place marker based on address
+            function codeAddress(address, customer, distance, index) {
+                var pinColor = "#04403c";
+
+                var pinSVGFilled =
+                    "M 12,2 C 8.1340068,2 5,5.1340068 5,9 c 0,5.25 7,13 7,13 0,0 7,-7.75 7,-13 0,-3.8659932 -3.134007,-7 -7,-7 z";
+                var labelOriginFilled = new google.maps.Point(12, 9);
+
+                const icon = document.createElement("div");
+                icon.innerHTML = index;
+
+                // Change the background color.
+                const pinViewBackground = new google.maps.marker.PinView({
+                    background: "#04403c",
+                    borderColor: "#cea29d",
+                    glyphColor: "#fff",
+                    glyph: icon,
+                });
+
+                geocoder.geocode(
+                    {
+                        address: address,
+                    },
+                    function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            var marker =
+                                new google.maps.marker.AdvancedMarkerView({
+                                    position: results[0].geometry.location,
+                                    title: customer,
+                                    //icon: pin,
+                                    content: pinViewBackground.element,
+                                    map,
+                                });
+
+                            const contentString =
+                                '<div id="content">' +
+                                '<div id="siteNotice">' +
+                                "</div>" +
+                                '<h5 id="firstHeading" class="firstHeading">' +
+                                customer +
+                                "</h5>" +
+                                '<div id="bodyContent">' +
+                                "<p style='font-size: 16px;'>" +
+                                address +
+                                "</p>" +
+                                "</div>" +
+                                "</div>";
+
+                            const infowindow = new google.maps.InfoWindow({
+                                content: contentString,
+                            });
+
+                            marker.addListener("click", () => {
+                                infowindow.open({
+                                    anchor: marker,
+                                    map,
+                                });
+                            });
+                        }
+                    }
+                );
+            }
+
+            //Call this to center on a zip code
+            function centerZip(zipCode) {
+                zoom = 11;
+
+                geocoder.geocode(
+                    {
+                        address: zipCode,
+                    },
+                    function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            map.setCenter(results[0].geometry.location);
+                            map.setZoom(zoom);
+                        }
+                    }
+                );
+            }
+
+            //Call this to zoom map
+            function mapZoom(distance) {
+                zoom = 11;
+
+                if (parseInt(distance) > 200) {
+                    zoom = 7;
+                }
+
+                /* zoom levels
+                19 = street intersection
+                18 = address
+                17 = street block
+                16 = street
+                15 = small road
+                14
+                13 = village
+                12 = town
+                11 = city
+                10
+                9  = large metro area
+                8
+                7  = US state
+                */
+
+                map.setZoom(zoom);
+            }
+        </script>
+
+        <script>
+            function toTitleCase(str) {
+                return str.replace(/\w\S*/g, function (txt) {
+                    return (
+                        txt.charAt(0).toUpperCase() +
+                        txt.substr(1).toLowerCase()
+                    );
+                });
+            }
+            // example
+            toTitleCase("the pains and gains of self study");
+            // "The Pains And Gains Of Self Study"
+        </script>
+    </body>
+</html>
