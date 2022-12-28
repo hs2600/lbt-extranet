@@ -255,22 +255,26 @@
     function initMarkers() {
         customer = '';
         address = '';
+        website = '';
         zip = '';
         lat = '';
         distance = '';
 
         for (let index = 0; index < initialMarkers.length; index++) {
             const markerData = initialMarkers[index];
-            address = toTitleCase((markerData.address1.trim() + ' ' + markerData.address2.trim()).trim()) + '<br>' +
+            address = toTitleCase((markerData.address1.trim() + ' ' + markerData.address2.trim()).trim()) + 
                 toTitleCase(markerData.city.trim()) + ', ' + markerData.state.trim() + '  ' + markerData.zip.trim();
+            address_formatted = toTitleCase((markerData.address1.trim() + ' ' + markerData.address2.trim()).trim()) + '<br>' +
+                toTitleCase(markerData.city.trim()) + ', ' + markerData.state.trim() + '  ' + markerData.zip.trim();                
             customer = toTitleCase(markerData.customer_name.trim());
+            website = markerData.website;
             zip = markerData.zip.trim();
             lat = markerData.lat;
             distance = markerData.distance;
 
-            codeAddress(address, customer, distance, (index + 1).toString());
+            codeAddress(address, address_formatted, customer, website, distance, (index + 1).toString());
 
-            //console.log("(" + markerData.locator_priority + ")" + customer + "(" + address + ")");
+            //console.log("(" + index + "-" + markerData.locator_priority + ")" + customer + "(" + address + ")");
 
             if (index == 0) {
                 centerZip(zip);
@@ -290,7 +294,7 @@
 
 
     //Call this to place marker based on address
-    function codeAddress(address, customer, distance, index) {
+    function codeAddress(address, address_formatted, customer, website, distance, index) {
 
         var pinColor = "#04403c";
 
@@ -355,6 +359,11 @@
                     content: pinViewBackground.element,
                     map
                 });
+                var website_vis = 'visible';
+
+                if(!website || website == ''){
+                    website_vis = 'hidden';
+                }
 
                 const contentString =
                     '<div id="content">' +
@@ -362,7 +371,9 @@
                     "</div>" +
                     '<h5 id="firstHeading" class="firstHeading">' + customer + '</h5>' +
                     '<div id="bodyContent">' +
-                    "<p style='font-size: 16px;'>" + address + "</p>" +
+                    "<p style='font-size: 16px;'>" + address_formatted + "</p>" +
+                    '<a class="btn btn-light small" style="font-size: 12px; padding: 2px 6px 2px; border-radius: 0; margin-right: 10px; border: 1px solid #ccc;" target="_blank" href="https://maps.google.com?daddr=' + address + '">Get Directions</a>' +
+                    '<a class="btn btn-light" style="visibility: ' + website_vis + '; font-size: 12px; padding: 2px 6px 2px; border-radius: 0; margin-right: 10px; border: 1px solid #ccc;" target="_blank" href="' + website + '">Visit Website</a>' +                    
                     "</div>" +
                     "</div>";
 
