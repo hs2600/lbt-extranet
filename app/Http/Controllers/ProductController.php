@@ -258,25 +258,6 @@ class ProductController extends Controller
     }
 
     /**
-     * [TEST] Show products by price level
-     */
-    public function productsPL()
-    {
-        error_log("INFO: get /");
-
-        $testColumn = 'material as qty';
-
-        $selectedFields = 'sku, item, description, series, size, color, finish, site, uofm, ' . $testColumn;
-
-        return view('products_pl', [
-            'products' => Product::orderBy('item', 'asc')
-                ->selectRaw($selectedFields)
-                ->simplePaginate(30)
-        ])
-            ->with('selectedFields', $selectedFields);
-    }
-
-    /**
      * Show products - Search
      */
     public function productsSearch()
