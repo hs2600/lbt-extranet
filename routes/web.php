@@ -75,8 +75,7 @@ Route::group(['middleware' => ['auth', 'verified','throttle:dealer-locator']], f
 });
 
 //Public routes
-Route::get('/products_pl',[ProductController::class, 'productsPL']);
-Route::get('/dealer-locator',[Controller::class, 'dealerLocatorLBT']);
+Route::get('/dealer-locator',[Controller::class, 'dealerLocatorLBT'])->middleware(['throttle:dealer-locator-lbt']);
 
 /**  TESTING */
 /**

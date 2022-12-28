@@ -59,7 +59,28 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute($per_minute)->response(function (Request $request, array $headers) {
                 return response('<h2>Too many requests. Please slow down!</h2> <h3>Wait one minute and try again (F5).</h3>', 429, $headers);
             });
+        });
 
+        RateLimiter::for('dealer-locator-lbt', function (Request $request) {
+            $per_minute = 5;
+
+            return Limit::perMinute($per_minute)->response(function (Request $request, array $headers) {
+                return response('
+                <div style="max-width: 400px;">
+                    <h5 style="font-size: 1.35rem; margin-bottom: 15px; font-family: "Nunito", sans-serif;">
+                    <b>LBT Authorized Dealers</b>
+                    </h5>
+                    <div style="border: 1px solid #999;
+                    padding: 15px;
+                    border-radius: 5px;
+                    background-color: #f8f9fa;">
+                    <h2 style="margin: 0px;">Too many requests!</h2>
+                    <h3 style="padding: 10px 0px; margin: 0px;">Wait one minute and try again.</h3>
+                    <button style="padding: 5px;" onClick="window.location.reload();">Refresh Page</button>
+                    </div>
+                </div>
+                ', 429, $headers);
+            });
         });
 
         RateLimiter::for('dealer-locator-api', function (Request $request) {
@@ -69,9 +90,8 @@ class RouteServiceProvider extends ServiceProvider
                 return response()->json([
                     'message' => 'Too many attempts, please slow down the request.',
                     'status' => false
-                ],201);
+                ], 201);
             });
-        });        
-
+        });
     }
 }
