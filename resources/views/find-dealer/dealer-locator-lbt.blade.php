@@ -49,7 +49,8 @@
 
     @media only screen and (max-width: 825px) {
         #map {
-        display: none;
+        /* display: none; */
+            height: calc(60vh);
         }
 
         #back-to-top {
@@ -172,8 +173,10 @@
                     </div>
                     <div style="margin-top: 5px; margin-bottom: 5px;">
                         <address style="margin-bottom: 5px;">
-                            {{ ucwords(strtolower($showroom->address1 . ' ' . $showroom->address2)) }}<br>
-                            {{ ucwords(strtolower($showroom->city)) . ', ' . $showroom->state . '  ' . $showroom->zip }}<br>
+                            {{ ucwords(strtolower($showroom->address1 . ' ' . $showroom->address2)) }} <br>
+                            {{ ucwords(strtolower($showroom->city)) . ', ' . $showroom->state . '  ' . $showroom->zip }}
+                            <a style="font-size: 14px; padding-left: 5px; color: #043F51;" target="_blank" href="https://maps.google.com?daddr={{ $showroom->address1 . ' ' . $showroom->city . ' ' . $showroom->state . ' ' . $showroom->zip }}">
+                            <i class="bi bi-car-front"></i></a>
                         </address>
 
                         <address style="margin-bottom: 10px;">
