@@ -411,7 +411,7 @@ if(isset($_GET['location'])){
 <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&v=beta&libraries=marker&callback=initMap" defer></script>
 
 <script>
-    let map, markers = [];
+    let map, markers, locArr = [];
     var geocoder;
     var zip = <?php echo '"' . $zip . '"' ?>;
     const initialMarkers = <?php echo json_encode($showrooms); ?>;
@@ -451,7 +451,7 @@ if(isset($_GET['location'])){
 
         for (let index = 0; index < initialMarkers.length; index++) {
             const markerData = initialMarkers[index];
-            address = toTitleCase((markerData.address1.trim() + ' ' + markerData.address2.trim()).trim()) + 
+            address = toTitleCase((markerData.address1.trim() + ' ' + markerData.address2.trim()).trim()) + ', ' + 
                 toTitleCase(markerData.city.trim()) + ', ' + markerData.state.trim() + '  ' + markerData.zip.trim();
             address_formatted = toTitleCase((markerData.address1.trim() + ' ' + markerData.address2.trim()).trim()) + '<br>' +
                 toTitleCase(markerData.city.trim()) + ', ' + markerData.state.trim() + '  ' + markerData.zip.trim();                
@@ -461,9 +461,8 @@ if(isset($_GET['location'])){
             lat = markerData.lat;
             distance = markerData.distance;
 
-            codeAddress(address, address_formatted, customer, website, distance, (index + 1).toString());
-
-            //console.log("(" + index + "-" + markerData.locator_priority + ")" + customer + "(" + address + ")");
+            codeAddress(address, address_formatted, customer, website, distance, (index + 1).toString(), markerData.id);
+            //myForwardGeocode(address, customer, index + 1, markerData.id);
 
             if (index == 0) {
                 centerZip(zip);
@@ -471,6 +470,7 @@ if(isset($_GET['location'])){
 
             if (index + 1 == initialMarkers.length) {
                 mapZoom(distance);
+                //console.log(locArr);
             }
 
         }
@@ -481,9 +481,33 @@ if(isset($_GET['location'])){
         console.log(event.latLng.lat(), event.latLng.lng());
     }
 
+    function myForwardGeocode(addr, name, index, id) {
+        $.ajax({
+            type: "GET",
+            url: "https://api.opencagedata.com/geocode/v1/json?q=" + encodeURIComponent(addr) + "&key=03c48dae07364cabb7f121d8c1519492&no_annotations=1&language=en",
+            dataType: "json",
+            success: function(data) {
+                if (data.status.code == 200) {
+                        var latres = data.results[0].geometry.lat;
+                        var lngres = data.results[0].geometry.lng;
+                        //console.log("(" + index + ") " + addr + " - " + "lat: " + latres + ", long: " + lngres);
+                        var loc = JSON.stringify({id: id, index: index, name: name, address: addr, lat: latres, long: lngres});
+                        console.log(loc);
+                        //locArr.push(loc);
+                } else {
+                    console.log('error');
+                }
+            }
+        }).always(function() {});
+        
+        //console.log(addr);
+        //console.log(encodeURIComponent(addr));        
+        
+        return false
+    }
 
     //Call this to place marker based on address
-    function codeAddress(address, address_formatted, customer, website, distance, index) {
+    function codeAddress(address, address_formatted, customer, website, distance, index, id) {
 
         var pinColor = "#04403c";
 
@@ -548,6 +572,10 @@ if(isset($_GET['location'])){
                     content: pinViewBackground.element,
                     map
                 });
+
+                //console.log(results[0]);
+                //myForwardGeocode(address, customer, index, id);
+
                 var website_vis = 'visible';
 
                 if(!website || website == ''){
